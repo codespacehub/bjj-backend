@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model UserClient {
+  id    Int    @id @default(autoincrement())
+  name  String
+  email String @unique
+
+  cpf       String @unique
+  birthDate String
+  phone     String
+
+  cep        String
+  state      String
+  city       String
+  street     String
+  number     String
+  district   String
+  complement String
+
+  graduation       String
+  color_graduation String
+
+  plano  String
+  payday String
+}
+
+model Organization {
+  id         Int    @id @default(autoincrement())
+  name       String
+  cnpj       String
+  teachers   String
+  modalities String
+}
+
+
+
+// perguntar se é necessário model para os professores e para modalidades
+// fazer CRUD de todos models 
+// alinha com o front
+// desenhar layout dos usuários
+// alinhar tbm com o back
+// colocar para rodar o modo de teste na academia 
