@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,7 +7,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model UserClient {
+model Organization {
+  id     String @id
+  name   String
+  cnpj   String
+  phone  String
+  email  String
+  domain String
+
+  teachers   Teacher[]
+  modalities Modality[]
+  users      User[]
+
+  updated_at DateTime?
+  created_at DateTime  @default(now())
+}
+
+model Modality {
+  id       String    @id
+  name     String
+  teachers Teacher[]
+  users    User[]
+
+  updated_at DateTime?
+  created_at DateTime  @default(now())
+
+  Organization Organization? @relation(fields: [organization], references: [id])
+  organization String
+}
+
+model Teacher {
   id    Int    @id @default(autoincrement())
   name  String
   email String @unique
@@ -27,26 +53,45 @@ model UserClient {
   district   String
   complement String
 
+  updated_at DateTime?
+  created_at DateTime  @default(now())
+
+  Organization Organization? @relation(fields: [organization], references: [id])
+  organization String?
+  Modalitie    Modality?     @relation(fields: [modality], references: [id])
+  modality     String
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
+  role     String
+
+  cpf         String @unique
+  birthDate   String
+  phone       String
+  total_class String
+
+  cep      String
+  state    String
+  city     String
+  street   String
+  number   String
+  district String
+
   graduation       String
   color_graduation String
 
   plano  String
   payday String
+
+  updated_at DateTime?
+  created_at DateTime  @default(now())
+
+  Organization Organization? @relation(fields: [organization], references: [id])
+  organization String?
+  Modalitie    Modality?     @relation(fields: [modality], references: [id])
+  modality     String
 }
-
-model Organization {
-  id         Int    @id @default(autoincrement())
-  name       String
-  cnpj       String
-  teachers   String
-  modalities String
-}
-
-
-
-// perguntar se é necessário model para os professores e para modalidades
-// fazer CRUD de todos models 
-// alinha com o front
-// desenhar layout dos usuários
-// alinhar tbm com o back
-// colocar para rodar o modo de teste na academia 
