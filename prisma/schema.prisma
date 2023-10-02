@@ -29,11 +29,11 @@ model Modality {
   teachers Teacher[]
   users    User[]
 
-  updated_at DateTime?
-  created_at DateTime  @default(now())
-
   Organization Organization? @relation(fields: [organization], references: [id])
   organization String
+
+  updated_at DateTime?
+  created_at DateTime  @default(now())
 }
 
 model Teacher {
@@ -53,13 +53,13 @@ model Teacher {
   district   String
   complement String
 
-  updated_at DateTime?
-  created_at DateTime  @default(now())
-
   Organization Organization? @relation(fields: [organization], references: [id])
   organization String?
   Modalitie    Modality?     @relation(fields: [modality], references: [id])
   modality     String
+
+  updated_at DateTime?
+  created_at DateTime  @default(now())
 }
 
 model User {
@@ -72,7 +72,7 @@ model User {
   cpf         String @unique
   birthDate   String
   phone       String
-  total_class String
+  total_class Int
 
   cep      String
   state    String
@@ -84,14 +84,17 @@ model User {
   graduation       String
   color_graduation String
 
+  verified Boolean
+  active   Boolean
+
   plano  String
   payday String
-
-  updated_at DateTime?
-  created_at DateTime  @default(now())
 
   Organization Organization? @relation(fields: [organization], references: [id])
   organization String?
   Modalitie    Modality?     @relation(fields: [modality], references: [id])
   modality     String
+
+  updated_at DateTime?
+  created_at DateTime  @default(now())
 }

@@ -2,6 +2,7 @@ import { removeCharacterString } from 'src/shared/utils/remove-character-string'
 import { Replace } from '../helpers/Replace';
 import { randomUUID } from 'crypto';
 import { Injectable } from '@nestjs/common';
+import { PrismaUserRepository } from 'src/infra/database/prisma/repositories/PrismaUserRepository';
 
 interface UserProps {
   name: string;
@@ -26,6 +27,9 @@ interface UserProps {
   graduation: string;
   color_graduation: string;
 
+  active: boolean;
+  verified: boolean;
+
   plano: string;
   payday: string;
 
@@ -42,12 +46,22 @@ export class User {
   private props: UserProps;
 
   constructor(
-    props: Replace<UserProps, { createdAt?: Date; updateAt?: Date }>,
+    props: Replace<
+      UserProps,
+      {
+        active?: boolean;
+        verified?: boolean;
+        createdAt?: Date;
+        updateAt?: Date;
+      }
+    >,
     id?: string,
   ) {
     this._id = id ?? removeCharacterString({ value: randomUUID() });
     this.props = {
       ...props,
+      active: props.active ?? true,
+      verified: props.verified ?? false,
       createdAt: props.createdAt ?? new Date(),
     };
   }
@@ -219,7 +233,20 @@ export class User {
     return this.props.organization;
   }
 
+  public get verified(): boolean {
+    return this.props.verified;
+  }
+
+  public get active(): boolean {
+    return this.props.active;
+  }
+
   public get createdAt(): Date {
     return this.props.createdAt;
   }
 }
+
+export const UserRepositoryProvider = {
+  provide: 'IUserRepository',
+  useClass: PrismaUserRepository,
+};

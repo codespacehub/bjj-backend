@@ -6,15 +6,14 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 
-import { compare } from 'bcryptjs';
 import { Cache } from 'cache-manager';
 
 import { ConfigService } from '@nestjs/config';
 import { JwtPayload, sign } from 'jsonwebtoken';
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
 
 import { IUserRepository } from 'src/application/repositories/user.repository';
 import { IOrganizationRepository } from 'src/application/repositories/organization.repository';
+import { compare } from 'bcrypt';
 
 @Injectable()
 export class LoginService {
@@ -23,7 +22,6 @@ export class LoginService {
   private jwtExpiresIn = this.configService.get('jwtAuth.expiresIn');
 
   constructor(
-    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
     @Inject('IUserRepository')
     private readonly userRepository: IUserRepository,
     private readonly configService: ConfigService,
@@ -39,13 +37,13 @@ export class LoginService {
         findUser.organization,
       );
 
-      if (!findOrganization.active) {
-        throw new ForbiddenException('Sua organização está desabilitada');
-      }
+      // if (!findOrganization.active) {
+      //   throw new ForbiddenException('Sua organização está desabilitada');
+      // }
 
-      if (!findUser.active) {
-        throw new ForbiddenException('Seu usuário está desabilitado');
-      }
+      // if (!findUser.active) {
+      //   throw new ForbiddenException('Seu usuário está desabilitado');
+      // }
 
       const comparePasswordToHash = await compare(
         loginDto.password,
@@ -64,7 +62,7 @@ export class LoginService {
           name: findUser.name,
           role: findUser.role,
           phone: findUser.phone,
-          verified: findUser.verified,
+          // verified: findUser.verified,
           organization: findUser.organization,
         }),
       };
@@ -76,8 +74,6 @@ export class LoginService {
       const access_token = sign(payload, this.jwtSecret, {
         expiresIn: expiresIn,
       });
-
-      await this.cacheManager.set(email, access_token, expiresIn);
 
       return {
         token: access_token.toString(),

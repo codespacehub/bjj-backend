@@ -1,10 +1,10 @@
 /*
   Warnings:
 
-  - You are about to drop the column `complement` on the `User` table. All the data in the column will be lost.
-  - Added the required column `domain` to the `Organization` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `email` to the `Organization` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `phone` to the `Organization` table without a default value. This is not possible if the table is not empty.
+  - You are about to drop the column `active` on the `Organization` table. All the data in the column will be lost.
+  - You are about to drop the column `verified` on the `Organization` table. All the data in the column will be lost.
+  - Added the required column `active` to the `User` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `verified` to the `User` table without a default value. This is not possible if the table is not empty.
 
 */
 -- RedefineTables
@@ -19,7 +19,7 @@ CREATE TABLE "new_Organization" (
     "updated_at" DATETIME,
     "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
-INSERT INTO "new_Organization" ("cnpj", "created_at", "id", "name", "updated_at") SELECT "cnpj", "created_at", "id", "name", "updated_at" FROM "Organization";
+INSERT INTO "new_Organization" ("cnpj", "created_at", "domain", "email", "id", "name", "phone", "updated_at") SELECT "cnpj", "created_at", "domain", "email", "id", "name", "phone", "updated_at" FROM "Organization";
 DROP TABLE "Organization";
 ALTER TABLE "new_Organization" RENAME TO "Organization";
 CREATE TABLE "new_User" (
@@ -40,12 +40,14 @@ CREATE TABLE "new_User" (
     "district" TEXT NOT NULL,
     "graduation" TEXT NOT NULL,
     "color_graduation" TEXT NOT NULL,
+    "verified" BOOLEAN NOT NULL,
+    "active" BOOLEAN NOT NULL,
     "plano" TEXT NOT NULL,
     "payday" TEXT NOT NULL,
-    "updated_at" DATETIME,
-    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "organization" TEXT,
     "modality" TEXT NOT NULL,
+    "updated_at" DATETIME,
+    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT "User_organization_fkey" FOREIGN KEY ("organization") REFERENCES "Organization" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT "User_modality_fkey" FOREIGN KEY ("modality") REFERENCES "Modality" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );

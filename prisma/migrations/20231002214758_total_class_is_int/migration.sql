@@ -1,8 +1,7 @@
 /*
   Warnings:
 
-  - Added the required column `password` to the `User` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `role` to the `User` table without a default value. This is not possible if the table is not empty.
+  - You are about to alter the column `total_class` on the `User` table. The data in that column could be lost. The data in that column will be cast from `String` to `Int`.
 
 */
 -- RedefineTables
@@ -16,26 +15,27 @@ CREATE TABLE "new_User" (
     "cpf" TEXT NOT NULL,
     "birthDate" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
+    "total_class" INTEGER NOT NULL,
     "cep" TEXT NOT NULL,
     "state" TEXT NOT NULL,
     "city" TEXT NOT NULL,
     "street" TEXT NOT NULL,
     "number" TEXT NOT NULL,
     "district" TEXT NOT NULL,
-    "complement" TEXT NOT NULL,
-    "total_class" TEXT NOT NULL,
     "graduation" TEXT NOT NULL,
     "color_graduation" TEXT NOT NULL,
+    "verified" BOOLEAN NOT NULL,
+    "active" BOOLEAN NOT NULL,
     "plano" TEXT NOT NULL,
     "payday" TEXT NOT NULL,
-    "updated_at" DATETIME,
-    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "organization" TEXT,
     "modality" TEXT NOT NULL,
+    "updated_at" DATETIME,
+    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT "User_organization_fkey" FOREIGN KEY ("organization") REFERENCES "Organization" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT "User_modality_fkey" FOREIGN KEY ("modality") REFERENCES "Modality" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
-INSERT INTO "new_User" ("birthDate", "cep", "city", "color_graduation", "complement", "cpf", "created_at", "district", "email", "graduation", "id", "modality", "name", "number", "organization", "payday", "phone", "plano", "state", "street", "total_class", "updated_at") SELECT "birthDate", "cep", "city", "color_graduation", "complement", "cpf", "created_at", "district", "email", "graduation", "id", "modality", "name", "number", "organization", "payday", "phone", "plano", "state", "street", "total_class", "updated_at" FROM "User";
+INSERT INTO "new_User" ("active", "birthDate", "cep", "city", "color_graduation", "cpf", "created_at", "district", "email", "graduation", "id", "modality", "name", "number", "organization", "password", "payday", "phone", "plano", "role", "state", "street", "total_class", "updated_at", "verified") SELECT "active", "birthDate", "cep", "city", "color_graduation", "cpf", "created_at", "district", "email", "graduation", "id", "modality", "name", "number", "organization", "password", "payday", "phone", "plano", "role", "state", "street", "total_class", "updated_at", "verified" FROM "User";
 DROP TABLE "User";
 ALTER TABLE "new_User" RENAME TO "User";
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");

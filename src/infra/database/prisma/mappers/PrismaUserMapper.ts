@@ -24,6 +24,9 @@ export class PrismaUserMapper {
       graduation: user.graduation,
       color_graduation: user.color_graduation,
 
+      active: user.active,
+      verified: user.verified,
+
       plano: user.plano,
       payday: user.payday,
 
