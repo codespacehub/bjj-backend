@@ -33,10 +33,6 @@ export class LoginService {
     const findUser = await this.userRepository.findByEmail(loginDto.email);
 
     if (findUser) {
-      const findOrganization = await this.organizationRepository.findById(
-        findUser.organization,
-      );
-
       // if (!findOrganization.active) {
       //   throw new ForbiddenException('Sua organização está desabilitada');
       // }
@@ -62,7 +58,7 @@ export class LoginService {
           name: findUser.name,
           role: findUser.role,
           phone: findUser.phone,
-          // verified: findUser.verified,
+          verified: findUser.verified,
           organization: findUser.organization,
         }),
       };

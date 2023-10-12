@@ -9,19 +9,24 @@ export class PrismaOrganizationMapper {
       phone: organization.phone,
       email: organization.email,
       domain: organization.domain,
+      active: organization.active,
 
-      createdAt: organization.created_at,
+      created_at: organization.created_at,
     };
   }
 
-  static toDomain(raw: RawOrganization) {
+  static toDomain(raw: RawOrganization): any {
     return {
       id: raw.id,
-      name: raw.name,
-      cnpj: raw.cnpj,
-      phone: raw.phone,
-      email: raw.email,
-      domain: raw.domain,
+      active: raw.active,
+
+      organization_info: {
+        name: raw.name,
+        cnpj: raw.cnpj,
+        email: raw.email,
+        phone: raw.phone,
+        domain: raw.domain,
+      },
     };
   }
 }

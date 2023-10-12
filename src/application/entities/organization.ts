@@ -10,6 +10,7 @@ interface OrganizationProps {
   phone: string;
   email: string;
   domain: string;
+  active: boolean;
 
   updated_at?: Date;
   created_at: Date;
@@ -76,6 +77,14 @@ export class Organization {
 
   public set domain(domain: string) {
     this.props.domain = domain;
+  }
+
+  public get active(): boolean {
+    return this.props.active;
+  }
+
+  public set active(active: boolean) {
+    this.props.active = active;
   }
 
   public get domain(): string {

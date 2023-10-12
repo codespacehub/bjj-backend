@@ -1,43 +1,29 @@
-import { removeCharacterString } from 'src/shared/utils/remove-character-string';
-import { Replace } from '../helpers/Replace';
 import { randomUUID } from 'crypto';
 import { Injectable } from '@nestjs/common';
+import { Replace } from '../helpers/Replace';
+
+import { removeCharacterString } from 'src/shared/utils/remove-character-string';
 import { PrismaUserRepository } from 'src/infra/database/prisma/repositories/PrismaUserRepository';
 
 interface UserProps {
-  name: string;
-  email: string;
-  password: string;
-  role: string;
-
   cpf: string;
+  name: string;
+  plan: string;
+  role: string;
+  email: string;
   phone: string;
-  birthDate: string;
-  total_class: string;
-
-  address: {
-    cep: string;
-    state: string;
-    city: string;
-    street: string;
-    number: string;
-    district: string;
-  };
-
+  payday: number;
+  active: boolean;
+  password: string;
+  verified: boolean;
+  birth_date: string;
   graduation: string;
+  total_class: number;
+  organization: string;
   color_graduation: string;
 
-  active: boolean;
-  verified: boolean;
-
-  plano: string;
-  payday: string;
-
-  modality: string;
-  organization: string;
-
-  updatedAt: Date;
-  createdAt: Date;
+  updatedAt?: Date;
+  created_at: Date;
 }
 
 @Injectable()
@@ -51,8 +37,7 @@ export class User {
       {
         active?: boolean;
         verified?: boolean;
-        createdAt?: Date;
-        updateAt?: Date;
+        created_at?: Date;
       }
     >,
     id?: string,
@@ -62,7 +47,7 @@ export class User {
       ...props,
       active: props.active ?? true,
       verified: props.verified ?? false,
-      createdAt: props.createdAt ?? new Date(),
+      created_at: props.created_at ?? new Date(),
     };
   }
 
@@ -118,72 +103,21 @@ export class User {
     return this.props.phone;
   }
 
-  public get birthDate(): string {
-    return this.props.birthDate;
+  public get birth_date(): string {
+    return this.props.birth_date;
   }
 
-  public set birthDate(birthDate: string) {
-    this.props.birthDate = birthDate;
+  public set birth_date(birth_date: string) {
+    this.props.birth_date = birth_date;
   }
 
-  public get total_class(): string {
+  public get total_class(): number {
     return this.props.total_class;
   }
 
-  public set total_class(total_class: string) {
+  public set total_class(total_class: number) {
     this.props.total_class = total_class;
   }
-
-  // -- addresses --------------------------------
-  public set cep(cep: string) {
-    this.props.address.cep = cep;
-  }
-
-  public get cep(): string {
-    return this.props.address.cep;
-  }
-
-  public set state(state: string) {
-    this.props.address.state = state;
-  }
-
-  public get state(): string {
-    return this.props.address.state;
-  }
-
-  public set city(city: string) {
-    this.props.address.city = city;
-  }
-
-  public get city(): string {
-    return this.props.address.city;
-  }
-
-  public set street(street: string) {
-    this.props.address.street = street;
-  }
-
-  public get street(): string {
-    return this.props.address.street;
-  }
-
-  public set number(number: string) {
-    this.props.address.number = number;
-  }
-
-  public get number(): string {
-    return this.props.address.number;
-  }
-
-  public set district(district: string) {
-    this.props.address.district = district;
-  }
-
-  public get district(): string {
-    return this.props.address.district;
-  }
-
-  // -- addresses --------------------------------
 
   public set graduation(graduation: string) {
     this.props.graduation = graduation;
@@ -201,28 +135,20 @@ export class User {
     return this.props.color_graduation;
   }
 
-  public set plano(plano: string) {
-    this.props.plano = plano;
+  public set plan(plan: string) {
+    this.props.plan = plan;
   }
 
-  public get plano(): string {
-    return this.props.plano;
+  public get plan(): string {
+    return this.props.plan;
   }
 
-  public set payday(payday: string) {
+  public set payday(payday: number) {
     this.props.payday = payday;
   }
 
-  public get payday(): string {
+  public get payday(): number {
     return this.props.payday;
-  }
-
-  public set modality(modality: string) {
-    this.props.modality = modality;
-  }
-
-  public get modality(): string {
-    return this.props.modality;
   }
 
   public set organization(organization: string) {
@@ -241,8 +167,8 @@ export class User {
     return this.props.active;
   }
 
-  public get createdAt(): Date {
-    return this.props.createdAt;
+  public get created__at(): Date {
+    return this.props.created_at;
   }
 }
 

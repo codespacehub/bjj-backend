@@ -1,0 +1,12 @@
+import { Modality } from '@/application/entities/modality';
+
+export class PrismaModalityMapper {
+  static toPrisma(modality: Modality) {
+    return {
+      id: modality.id,
+      name: modality.name,
+      description: modality.description,
+      organization: modality.organization,
+    };
+  }
+}

@@ -10,34 +10,38 @@ datasource db {
 model Organization {
   id     String @id
   name   String
-  cnpj   String
+  cnpj   String @unique
   phone  String
   email  String
   domain String
 
+  active Boolean?
+
+  users      User[]
   teachers   Teacher[]
   modalities Modality[]
-  users      User[]
 
-  updated_at DateTime?
+  updated_at DateTime? @default(now())
   created_at DateTime  @default(now())
 }
 
 model Modality {
-  id       String    @id
-  name     String
+  id          String @id
+  name        String
+  description String
+
   teachers Teacher[]
   users    User[]
 
   Organization Organization? @relation(fields: [organization], references: [id])
-  organization String
+  organization String?
 
   updated_at DateTime?
   created_at DateTime  @default(now())
 }
 
 model Teacher {
-  id    Int    @id @default(autoincrement())
+  id    String @id
   name  String
   email String @unique
 
@@ -55,45 +59,35 @@ model Teacher {
 
   Organization Organization? @relation(fields: [organization], references: [id])
   organization String?
-  Modalitie    Modality?     @relation(fields: [modality], references: [id])
-  modality     String
+  Modalitiy    Modality?     @relation(fields: [modality], references: [id])
+  modality     String?
 
   updated_at DateTime?
   created_at DateTime  @default(now())
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  name     String
-  email    String @unique
-  password String
-  role     String
-
-  cpf         String @unique
-  birthDate   String
-  phone       String
-  total_class Int
-
-  cep      String
-  state    String
-  city     String
-  street   String
-  number   String
-  district String
-
+  id               String  @id
+  name             String
+  email            String  @unique
+  password         String
+  role             String
+  cpf              String  @unique
+  birth_date       String
+  phone            String
+  total_class      Int
   graduation       String
   color_graduation String
-
-  verified Boolean
-  active   Boolean
-
-  plano  String
-  payday String
+  verified         Boolean
+  active           Boolean
+  plan             String
+  payday           Int
 
   Organization Organization? @relation(fields: [organization], references: [id])
   organization String?
-  Modalitie    Modality?     @relation(fields: [modality], references: [id])
-  modality     String
+
+  Modality Modality? @relation(fields: [modality], references: [id])
+  modality String?
 
   updated_at DateTime?
   created_at DateTime  @default(now())

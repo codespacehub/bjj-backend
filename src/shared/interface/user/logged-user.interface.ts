@@ -6,10 +6,6 @@ export type TLoggedUser = {
   cpf?: string;
   phone?: string;
   tokenId?: string;
-  birthDate?: string;
-  total_class?: string;
-  plano?: string;
-  payday?: string;
-  modality?: string;
   organization?: string;
+  modality?: string;
 };
