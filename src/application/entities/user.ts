@@ -14,13 +14,22 @@ interface UserProps {
   phone: string;
   payday: number;
   active: boolean;
+  degree: string;
   password: string;
+  modality?: string;
   verified: boolean;
   birth_date: string;
   graduation: string;
-  total_class: number;
   organization: string;
+  amount_class: number;
   color_graduation: string;
+
+  uf: string;
+  cep: string;
+  city: string;
+  street: string;
+  district: string;
+  house_number: string;
 
   updatedAt?: Date;
   created_at: Date;
@@ -111,14 +120,6 @@ export class User {
     this.props.birth_date = birth_date;
   }
 
-  public get total_class(): number {
-    return this.props.total_class;
-  }
-
-  public set total_class(total_class: number) {
-    this.props.total_class = total_class;
-  }
-
   public set graduation(graduation: string) {
     this.props.graduation = graduation;
   }
@@ -151,12 +152,84 @@ export class User {
     return this.props.payday;
   }
 
+  public set amount_class(amount_class: number) {
+    this.props.amount_class = amount_class;
+  }
+
+  public get amount_class(): number {
+    return this.props.amount_class;
+  }
+
+  public set degree(degree: string) {
+    this.props.degree = degree;
+  }
+
+  public get degree(): string {
+    return this.props.degree;
+  }
+
+  public set uf(uf: string) {
+    this.props.uf = uf;
+  }
+
+  public get uf(): string {
+    return this.props.uf;
+  }
+
+  public set cep(cep: string) {
+    this.props.cep = cep;
+  }
+
+  public get cep(): string {
+    return this.props.cep;
+  }
+
+  public set city(city: string) {
+    this.props.city = city;
+  }
+
+  public get city(): string {
+    return this.props.city;
+  }
+
+  public set street(street: string) {
+    this.props.street = street;
+  }
+
+  public get street(): string {
+    return this.props.street;
+  }
+
+  public set district(district: string) {
+    this.props.district = district;
+  }
+
+  public get district(): string {
+    return this.props.district;
+  }
+
+  public set house_number(house_number: string) {
+    this.props.house_number = house_number;
+  }
+
+  public get house_number(): string {
+    return this.props.house_number;
+  }
+
   public set organization(organization: string) {
     this.props.organization = organization;
   }
 
   public get organization(): string {
     return this.props.organization;
+  }
+
+  public set modality(modality: string) {
+    this.props.modality = modality;
+  }
+
+  public get modality(): string {
+    return this.props.modality;
   }
 
   public get verified(): boolean {

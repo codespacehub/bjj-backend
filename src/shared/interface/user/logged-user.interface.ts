@@ -8,4 +8,13 @@ export type TLoggedUser = {
   tokenId?: string;
   organization?: string;
   modality?: string;
+  graduation?: string;
+  uf?: string;
+  cep?: string;
+  plan?: string;
+  city?: string;
+  degree?: string;
+  payday?: number;
+  street?: string;
+  district?: string;
 };

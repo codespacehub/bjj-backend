@@ -6,6 +6,8 @@ import { DeleteUserService } from './services/delete-user.service';
 import { UpdateUserService } from './services/update-user.service';
 import { UpdatePasswordService } from './services/update-password.service';
 import { UpdateGraduationService } from './services/update-graduation.service';
+import { findUserByIdService } from './services/find-by-id.service';
+import { CreateUserOwnerService } from './services/create-user-owner.service';
 
 @Module({
   controllers: [UserController],
@@ -13,6 +15,7 @@ import { UpdateGraduationService } from './services/update-graduation.service';
     CreateUserService,
     DeleteUserService,
     UpdateUserService,
+    findUserByIdService,
     UpdatePasswordService,
     UpdateGraduationService,
   ],

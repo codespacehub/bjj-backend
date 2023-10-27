@@ -68,20 +68,30 @@ model Teacher {
 
 model User {
   id               String  @id
-  name             String
-  email            String  @unique
-  password         String
-  role             String
   cpf              String  @unique
-  birth_date       String
+  name             String
+  role             String
+  email            String  @unique
   phone            String
-  total_class      Int
+  password         String
+  birth_date       String
+
+  uf           String
+  cep          String
+  city         String
+  street       String
+  district     String
+  house_number String
+
+  degree           String
   graduation       String
+  amount_class     Int
   color_graduation String
-  verified         Boolean
-  active           Boolean
+
   plan             String
+  active           Boolean
   payday           Int
+  verified         Boolean
 
   Organization Organization? @relation(fields: [organization], references: [id])
   organization String?

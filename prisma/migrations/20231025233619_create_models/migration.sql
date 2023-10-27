@@ -15,10 +15,11 @@ CREATE TABLE "Organization" (
 CREATE TABLE "Modality" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "name" TEXT NOT NULL,
-    "organization" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "organization" TEXT,
     "updated_at" DATETIME,
     "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "Modality_organization_fkey" FOREIGN KEY ("organization") REFERENCES "Organization" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "Modality_organization_fkey" FOREIGN KEY ("organization") REFERENCES "Organization" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -37,36 +38,44 @@ CREATE TABLE "Teacher" (
     "district" TEXT NOT NULL,
     "complement" TEXT NOT NULL,
     "organization" TEXT,
-    "modality" TEXT NOT NULL,
+    "modality" TEXT,
     "updated_at" DATETIME,
     "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT "Teacher_organization_fkey" FOREIGN KEY ("organization") REFERENCES "Organization" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT "Teacher_modality_fkey" FOREIGN KEY ("modality") REFERENCES "Modality" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "Teacher_modality_fkey" FOREIGN KEY ("modality") REFERENCES "Modality" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL PRIMARY KEY,
-    "name" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
-    "role" TEXT NOT NULL,
     "cpf" TEXT NOT NULL,
-    "birth_date" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "role" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
-    "total_class" INTEGER NOT NULL,
+    "password" TEXT NOT NULL,
+    "birth_date" TEXT NOT NULL,
+    "uf" TEXT NOT NULL,
+    "cep" TEXT NOT NULL,
+    "city" TEXT NOT NULL,
+    "street" TEXT NOT NULL,
+    "district" TEXT NOT NULL,
+    "house_number" TEXT NOT NULL,
+    "degree" TEXT NOT NULL,
     "graduation" TEXT NOT NULL,
+    "total_class" INTEGER NOT NULL,
+    "amount_class" INTEGER NOT NULL,
     "color_graduation" TEXT NOT NULL,
-    "verified" BOOLEAN NOT NULL,
-    "active" BOOLEAN NOT NULL,
     "plan" TEXT NOT NULL,
+    "active" BOOLEAN NOT NULL,
     "payday" INTEGER NOT NULL,
+    "verified" BOOLEAN NOT NULL,
     "organization" TEXT,
-    "modality" TEXT NOT NULL,
+    "modality" TEXT,
     "updated_at" DATETIME,
     "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT "User_organization_fkey" FOREIGN KEY ("organization") REFERENCES "Organization" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT "User_modality_fkey" FOREIGN KEY ("modality") REFERENCES "Modality" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "User_modality_fkey" FOREIGN KEY ("modality") REFERENCES "Modality" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -- CreateIndex
@@ -79,7 +88,7 @@ CREATE UNIQUE INDEX "Teacher_email_key" ON "Teacher"("email");
 CREATE UNIQUE INDEX "Teacher_cpf_key" ON "Teacher"("cpf");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+CREATE UNIQUE INDEX "User_cpf_key" ON "User"("cpf");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_cpf_key" ON "User"("cpf");
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");

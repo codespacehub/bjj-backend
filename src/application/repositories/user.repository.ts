@@ -6,6 +6,7 @@ export interface IUserRepository {
   remove(userId: string): Promise<void>;
   findById(userId: string): Promise<User>;
   findByEmail(email: string): Promise<User>;
-  update(userId: string, updateUserDto: CreateAndUpdateUserDto): Promise<User>;
   updatePassword(userId: string, newPassword: string): Promise<User>;
+  updateGraduation(userId: string, newGraduation: string): Promise<User>;
+  update(userId: string, updateUserDto: CreateAndUpdateUserDto): Promise<User>;
 }

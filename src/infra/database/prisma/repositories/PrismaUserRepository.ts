@@ -8,6 +8,7 @@ import { CreateAndUpdateUserDto } from '@/infra/http/modules/user/dtos/create-an
 @Injectable()
 export class PrismaUserRepository implements IUserRepository {
   constructor(private prisma: PrismaService) {}
+
   async findByEmail(email: string): Promise<any> {
     const findUserByEmail = await this.prisma.user.findUnique({
       where: {
@@ -38,7 +39,7 @@ export class PrismaUserRepository implements IUserRepository {
     });
 
     if (!findUser) {
-      throw new Error('User not found not');
+      throw new Error('Usuário não encontrado');
     }
 
     return findUser;
@@ -88,5 +89,19 @@ export class PrismaUserRepository implements IUserRepository {
     });
 
     return updatePassword;
+  }
+
+  async updateGraduation(userId: string, newGraduation: string): Promise<any> {
+    console.log(newGraduation);
+    const updateGraduation = await this.prisma.user.update({
+      where: {
+        id: String(userId),
+      },
+      data: {
+        graduation: String(newGraduation),
+      },
+    });
+
+    return updateGraduation;
   }
 }

@@ -2,11 +2,11 @@ import { ConflictException, Inject, Injectable } from '@nestjs/common';
 
 import { Organization } from '@/application/entities/organization';
 import { CreateOrganizationDto } from '../dtos/create-organization.dto';
-import { CreateUserService } from '../../user/services/create-user.service';
 import { ICreateHash } from '@/shared/interface/bcryptjs/create-hash.interface';
 import { generateTemporaryPassword } from '@/shared/utils/generate-temporary-password';
 import { IOrganizationRepository } from '@/application/repositories/organization.repository';
 import { IMailer } from '@/shared/interface/mail/mailer.interface';
+import { CreateUserOwnerService } from '../../user/services/create-user-owner.service';
 
 @Injectable()
 export class CreateOrganizationService {
@@ -19,7 +19,7 @@ export class CreateOrganizationService {
     private readonly createHashAdapterProvider: ICreateHash,
 
     // Service para criação do usuário
-    private readonly createUserService: CreateUserService,
+    private readonly createUserOwnerService: CreateUserOwnerService,
   ) {}
 
   async execute(createOrganizationDto: CreateOrganizationDto): Promise<any> {
@@ -82,7 +82,9 @@ export class CreateOrganizationService {
   }
 
   async handlerGeneratePassword() {
-    const password = generateTemporaryPassword();
+    const password =
+      Math.random().toString(36).slice(2) +
+      Math.random().toString(36).toUpperCase().slice(2);
     const passwordHash = await this.createHashAdapterProvider.execute(password);
 
     return {
@@ -100,20 +102,24 @@ export class CreateOrganizationService {
       role: 'Owner',
       organization,
       password: passwordHashed,
-      cpf: createOrganizationDto.organization_master.cpf,
-      name: createOrganizationDto.organization_master.name,
-      plan: createOrganizationDto.organization_master.plan,
-      email: createOrganizationDto.organization_master.email,
-      phone: createOrganizationDto.organization_master.phone,
-      payday: createOrganizationDto.organization_master.payday,
-      modality: createOrganizationDto.organization_master.modality,
-      birth_date: createOrganizationDto.organization_master.birth_date,
-      graduation: createOrganizationDto.organization_master.graduation,
-      total_class: createOrganizationDto.organization_master.total_class,
-      color_graduation:
-        createOrganizationDto.organization_master.color_graduation,
+      uf: createOrganizationDto.user_master.uf,
+      cpf: createOrganizationDto.user_master.cpf,
+      cep: createOrganizationDto.user_master.cep,
+      name: createOrganizationDto.user_master.name,
+      plan: createOrganizationDto.user_master.plan,
+      city: createOrganizationDto.user_master.city,
+      email: createOrganizationDto.user_master.email,
+      phone: createOrganizationDto.user_master.phone,
+      street: createOrganizationDto.user_master.street,
+      payday: createOrganizationDto.user_master.payday,
+      degree: createOrganizationDto.user_master.degree,
+      district: createOrganizationDto.user_master.district,
+      birth_date: createOrganizationDto.user_master.birth_date,
+      graduation: createOrganizationDto.user_master.graduation,
+      amount_class: createOrganizationDto.user_master.amount_class,
+      house_number: createOrganizationDto.user_master.house_number,
+      color_graduation: createOrganizationDto.user_master.color_graduation,
     };
-
-    return await this.createUserService.execute(content);
+    return await this.createUserOwnerService.execute(content);
   }
 }

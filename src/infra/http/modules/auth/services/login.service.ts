@@ -31,7 +31,6 @@ export class LoginService {
 
   async execute(loginDto: any) {
     const findUser = await this.userRepository.findByEmail(loginDto.email);
-
     if (findUser) {
       // if (!findOrganization.active) {
       //   throw new ForbiddenException('Sua organização está desabilitada');

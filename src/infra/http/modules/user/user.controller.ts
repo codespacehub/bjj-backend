@@ -8,6 +8,7 @@ import {
   Patch,
   Put,
   UseGuards,
+  Get,
 } from '@nestjs/common';
 
 import { CreateUserService } from './services/create-user.service';
@@ -18,6 +19,8 @@ import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
 import { User } from '@/shared/decorators/user.decorator';
 import { UpdateUserService } from './services/update-user.service';
 import { UpdatePasswordService } from './services/update-password.service';
+import { UpdateGraduationService } from './services/update-graduation.service';
+import { findUserByIdService } from './services/find-by-id.service';
 
 @Controller('users')
 export class UserController {
@@ -26,44 +29,18 @@ export class UserController {
     private readonly deleteUserService: DeleteUserService,
     private readonly updateUserService: UpdateUserService,
     private readonly updatePasswordService: UpdatePasswordService,
-    private readonly updateGraduation: UpdatePasswordService,
+    private readonly updateGraduationService: UpdateGraduationService,
+    private readonly findUserById: findUserByIdService,
   ) {}
 
   @Post()
-  createUser(@Body() CreateAndUpdateUserDto: CreateAndUpdateUserDto) {
-    const {
-      cpf,
-      name,
-      plan,
-      role,
-      email,
-      phone,
-      payday,
-      modality,
-      password,
-      birth_date,
-      graduation,
-      total_class,
-      organization,
-      color_graduation,
-    } = CreateAndUpdateUserDto;
-
-    return this.createUserService.execute({
-      cpf,
-      name,
-      role,
-      plan,
-      email,
-      phone,
-      payday,
-      modality,
-      password,
-      birth_date,
-      graduation,
-      total_class,
-      organization,
-      color_graduation,
-    });
+  @ApiSecurity('bearerAuth')
+  @UseGuards(JwtAuthzGuard)
+  createUser(
+    @User() user: TLoggedUser,
+    @Body() createAndUpdateUserDto: CreateAndUpdateUserDto,
+  ) {
+    return this.createUserService.execute(createAndUpdateUserDto, user);
   }
 
   @Delete(':UserId')
@@ -96,5 +73,15 @@ export class UserController {
   @Patch('graduation')
   @ApiSecurity('bearerAuth')
   @UseGuards(JwtAuthzGuard)
-  updateGraduation(@User()) {}
+  updateGraduation(
+    @User() user: TLoggedUser,
+    @Body('newGraduation') newGraduation: string,
+  ) {
+    return this.updateGraduationService.execute(user, newGraduation);
+  }
+
+  @Get(':userId')
+  findById(@Param('userId') userId: string) {
+    this.findUserById.execute(userId);
+  }
 }
