@@ -104,4 +104,14 @@ export class PrismaUserRepository implements IUserRepository {
 
     return updateGraduation;
   }
+
+  async findAll(organization: string): Promise<any> {
+    const users = await this.prisma.user.findMany({
+      where: {
+        organization,
+      },
+    });
+
+    return users;
+  }
 }

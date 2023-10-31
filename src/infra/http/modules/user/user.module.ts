@@ -8,6 +8,7 @@ import { UpdatePasswordService } from './services/update-password.service';
 import { UpdateGraduationService } from './services/update-graduation.service';
 import { findUserByIdService } from './services/find-by-id.service';
 import { CreateUserOwnerService } from './services/create-user-owner.service';
+import { FindAllModalitiesService } from '../modality/services/find-all-modalities.service';
 
 @Module({
   controllers: [UserController],
@@ -18,6 +19,7 @@ import { CreateUserOwnerService } from './services/create-user-owner.service';
     findUserByIdService,
     UpdatePasswordService,
     UpdateGraduationService,
+    FindAllModalitiesService,
   ],
 })
 export class UserModule {}

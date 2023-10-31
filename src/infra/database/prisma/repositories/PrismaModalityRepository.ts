@@ -18,4 +18,14 @@ export class PrismaModalityRepository implements IModalityRepository {
       },
     });
   }
+
+  async findAll(organizationId: string): Promise<any> {
+    const modalities = this.prisma.modality.findMany({
+      where: {
+        organization: organizationId,
+      },
+    });
+
+    return modalities;
+  }
 }
