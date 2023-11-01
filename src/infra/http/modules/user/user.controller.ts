@@ -20,7 +20,8 @@ import { User } from '@/shared/decorators/user.decorator';
 import { UpdateUserService } from './services/update-user.service';
 import { UpdatePasswordService } from './services/update-password.service';
 import { UpdateGraduationService } from './services/update-graduation.service';
-import { findUserByIdService } from './services/find-by-id.service';
+import { FindUserByIdService } from './services/find-by-id.service';
+import { findAllUsersService } from './services/find-all-users.service';
 
 @Controller('users')
 export class UserController {
@@ -28,9 +29,10 @@ export class UserController {
     private readonly createUserService: CreateUserService,
     private readonly deleteUserService: DeleteUserService,
     private readonly updateUserService: UpdateUserService,
+    private readonly findUserByIdService: FindUserByIdService,
+    private readonly findAllUsersService: findAllUsersService,
     private readonly updatePasswordService: UpdatePasswordService,
     private readonly updateGraduationService: UpdateGraduationService,
-    private readonly findUserById: findUserByIdService,
   ) {}
 
   @Post()
@@ -82,6 +84,14 @@ export class UserController {
 
   @Get(':userId')
   findById(@Param('userId') userId: string) {
-    this.findUserById.execute(userId);
+    return this.findUserByIdService.execute(userId);
+  }
+
+  @Get()
+  @ApiSecurity('bearerAuth')
+  @UseGuards(JwtAuthzGuard)
+  findAll(@User() user: TLoggedUser) {
+    console.log(user);
+    return this.findAllUsersService.execute(user);
   }
 }

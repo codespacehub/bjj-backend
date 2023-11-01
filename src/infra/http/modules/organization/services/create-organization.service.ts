@@ -22,47 +22,6 @@ export class CreateOrganizationService {
     private readonly createUserOwnerService: CreateUserOwnerService,
   ) {}
 
-  async execute(createOrganizationDto: CreateOrganizationDto): Promise<any> {
-    const findOrganizationExists = await this.organizationRepository.findByCnpj(
-      createOrganizationDto.organization_info.cnpj,
-    );
-
-    if (findOrganizationExists) {
-      throw new ConflictException(
-        '🥲 Essa organização já foi criada, tente novamente',
-      );
-    }
-
-    const createOrganizationResponse = await this.handlerCreateOrganization(
-      createOrganizationDto,
-    );
-
-    const passwordHashed = await this.handlerGeneratePassword();
-
-    const createUserResponse = await this.handlerCreateUser(
-      createOrganizationDto,
-      createOrganizationResponse.id,
-      passwordHashed.passwordHash,
-    );
-
-    if (createOrganizationResponse.id) {
-      await this.mailer.sendMail({
-        subject: `🚀 ${createOrganizationResponse.name}! Chegou seu novo acesso ao Mioli Jiu Jitsu`,
-        to: [createUserResponse.email],
-        context: {
-          user: createUserResponse.email,
-          password: passwordHashed.password,
-          url: 'url de login do sistema',
-        },
-        template: 'credentials-user',
-      });
-    }
-
-    return {
-      response: createOrganizationResponse,
-    };
-  }
-
   async handlerCreateOrganization(
     createOrganizationDto: CreateOrganizationDto,
   ) {
@@ -121,5 +80,55 @@ export class CreateOrganizationService {
       color_graduation: createOrganizationDto.user_master.color_graduation,
     };
     return await this.createUserOwnerService.execute(content);
+  }
+
+  async execute(createOrganizationDto: CreateOrganizationDto): Promise<any> {
+    const findOrganizationExists = await this.organizationRepository.findByCnpj(
+      createOrganizationDto.organization_info.cnpj,
+    );
+
+    if (findOrganizationExists) {
+      throw new ConflictException(
+        '🥲 Essa organização já foi criada, tente novamente',
+      );
+    }
+
+    const createOrganizationResponse = await this.handlerCreateOrganization(
+      createOrganizationDto,
+    );
+
+    const passwordHashed = await this.handlerGeneratePassword();
+
+    const createUserResponse = await this.handlerCreateUser(
+      createOrganizationDto,
+      createOrganizationResponse.id,
+      passwordHashed.passwordHash,
+    );
+
+    if (!createUserResponse) {
+      throw new ConflictException(
+        '🥲 O usuário nõ foi criado por favor, verifique se os dados estão corretos.',
+      );
+    }
+
+    if (createOrganizationResponse.id) {
+      await this.mailer.sendMail({
+        subject: `🚀 ${createOrganizationResponse.name}! Chegou seu novo acesso ao Mioli Jiu Jitsu`,
+        to: [createUserResponse.email],
+        context: {
+          user: createUserResponse.email,
+          password: passwordHashed.password,
+          url: 'url de login do sistema',
+        },
+        template: 'credentials-user',
+      });
+    }
+
+    return {
+      response: {
+        createOrganizationResponse,
+        createUserResponse,
+      },
+    };
   }
 }
