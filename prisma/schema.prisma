@@ -41,26 +41,39 @@ model Modality {
 }
 
 model Teacher {
-  id    String @id
-  name  String
-  email String @unique
+  id        String @id
+  name      String
+  email     String @unique
+  active    Boolean
+  verified  Boolean
+  password  String
 
   cpf       String @unique
-  birthDate String
+  birth_date String
   phone     String
 
-  cep        String
-  state      String
-  city       String
-  street     String
-  number     String
-  district   String
-  complement String
+  cep              String
+  uf               String
+  city             String
+  street           String
+  house_number     String
+  district         String
+  
 
   Organization Organization? @relation(fields: [organization], references: [id])
   organization String?
   Modalitiy    Modality?     @relation(fields: [modality], references: [id])
   modality     String?
+
+  updated_at DateTime?
+  created_at DateTime  @default(now())
+}
+
+model Graduation {
+  id            String @id
+  name          String
+  degree       Int?
+  color_degree String?
 
   updated_at DateTime?
   created_at DateTime  @default(now())
@@ -82,11 +95,7 @@ model User {
   street       String
   district     String
   house_number String
-
-  degree           String
-  graduation       String
   amount_class     Int
-  color_graduation String
 
   plan             String
   active           Boolean

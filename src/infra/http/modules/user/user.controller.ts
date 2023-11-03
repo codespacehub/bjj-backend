@@ -19,7 +19,6 @@ import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
 import { User } from '@/shared/decorators/user.decorator';
 import { UpdateUserService } from './services/update-user.service';
 import { UpdatePasswordService } from './services/update-password.service';
-import { UpdateGraduationService } from './services/update-graduation.service';
 import { FindUserByIdService } from './services/find-by-id.service';
 import { findAllUsersService } from './services/find-all-users.service';
 
@@ -32,7 +31,6 @@ export class UserController {
     private readonly findUserByIdService: FindUserByIdService,
     private readonly findAllUsersService: findAllUsersService,
     private readonly updatePasswordService: UpdatePasswordService,
-    private readonly updateGraduationService: UpdateGraduationService,
   ) {}
 
   @Post()
@@ -70,16 +68,6 @@ export class UserController {
     @Body('newPassword') newPassword: string,
   ) {
     return this.updatePasswordService.execute(user, newPassword);
-  }
-
-  @Patch('graduation')
-  @ApiSecurity('bearerAuth')
-  @UseGuards(JwtAuthzGuard)
-  updateGraduation(
-    @User() user: TLoggedUser,
-    @Body('newGraduation') newGraduation: string,
-  ) {
-    return this.updateGraduationService.execute(user, newGraduation);
   }
 
   @Get(':userId')

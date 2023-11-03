@@ -8,6 +8,5 @@ export interface IUserRepository {
   findByEmail(email: string): Promise<User>;
   findAll(organization: string): Promise<User>;
   updatePassword(userId: string, newPassword: string): Promise<User>;
-  updateGraduation(userId: string, newGraduation: string): Promise<User>;
   update(userId: string, updateUserDto: CreateAndUpdateUserDto): Promise<User>;
 }

@@ -15,18 +15,6 @@ export class CreateAndUpdateUserDto {
 
   @IsString({ message: 'Esse campo precisa ser um texto' })
   @IsNotEmpty({
-    message: 'Por favor preencha o campo de "cor de graduação" do usuário',
-  })
-  color_graduation: string;
-
-  @IsString({ message: 'Esse campo precisa ser um texto' })
-  @IsNotEmpty({
-    message: 'Por favor preencha o campo de "graduação" do usuário',
-  })
-  graduation: string;
-
-  @IsString({ message: 'Esse campo precisa ser um texto' })
-  @IsNotEmpty({
     message: 'Por favor preencha o campo de "modalidade" do usuário',
   })
   modality?: string;
@@ -86,12 +74,6 @@ export class CreateAndUpdateUserDto {
     message: 'Por favor preencha o campo de "cidade" do usuário',
   })
   city: string;
-
-  @IsString({ message: 'Esse campo precisa ser um texto' })
-  @IsNotEmpty({
-    message: 'Por favor preencha o campo de "grau" do usuário',
-  })
-  degree: string;
 
   @IsString({ message: 'Esse campo precisa ser um texto' })
   @IsNotEmpty({

@@ -5,7 +5,6 @@ import { CreateOrganizationService } from './services/create-organization.servic
 import { UpdateOrganizationService } from './services/update-organization.service';
 import { DeleteOrganizationService } from './services/delete-organization.service';
 import { FindAllOrganizationService } from './services/find-all-organization.service';
-import { UpdateGraduationService } from '../user/services/update-graduation.service';
 import { CreateUserOwnerService } from '../user/services/create-user-owner.service';
 
 @Module({
@@ -17,7 +16,6 @@ import { CreateUserOwnerService } from '../user/services/create-user-owner.servi
     FindOrganizationByIdService,
     DeleteOrganizationService,
     FindAllOrganizationService,
-    UpdateGraduationService,
   ],
 })
 export class OrganizationModule {}

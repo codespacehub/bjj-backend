@@ -69,7 +69,6 @@ export class PrismaUserRepository implements IUserRepository {
         phone: updateUserDto.birth_date,
         role: updateUserDto.role,
         password: updateUserDto.password,
-        color_graduation: updateUserDto.color_graduation,
         plan: updateUserDto.plan,
         payday: updateUserDto.payday,
       },
@@ -89,20 +88,6 @@ export class PrismaUserRepository implements IUserRepository {
     });
 
     return updatePassword;
-  }
-
-  async updateGraduation(userId: string, newGraduation: string): Promise<any> {
-    console.log(newGraduation);
-    const updateGraduation = await this.prisma.user.update({
-      where: {
-        id: String(userId),
-      },
-      data: {
-        graduation: String(newGraduation),
-      },
-    });
-
-    return updateGraduation;
   }
 
   async findAll(organization: string): Promise<any> {

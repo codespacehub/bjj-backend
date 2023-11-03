@@ -40,16 +40,13 @@ export class CreateUserService {
       role,
       email,
       phone,
-      degree,
       payday,
       street,
       modality,
       district,
       birth_date,
-      graduation,
       amount_class,
       house_number,
-      color_graduation,
     } = userDto;
     const new_user = new User({
       uf,
@@ -61,18 +58,15 @@ export class CreateUserService {
       role,
       email,
       phone,
-      degree,
       payday,
       street,
       password: passwordHash,
       district,
       modality,
       birth_date,
-      graduation,
       organization: org,
       amount_class,
       house_number,
-      color_graduation,
     });
 
     await this.mailer.sendMail({

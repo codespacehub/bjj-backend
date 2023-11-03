@@ -34,7 +34,7 @@ CREATE TABLE "Teacher" (
     "state" TEXT NOT NULL,
     "city" TEXT NOT NULL,
     "street" TEXT NOT NULL,
-    "number" TEXT NOT NULL,
+    "house_number" TEXT NOT NULL,
     "district" TEXT NOT NULL,
     "complement" TEXT NOT NULL,
     "organization" TEXT,
@@ -43,6 +43,16 @@ CREATE TABLE "Teacher" (
     "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT "Teacher_organization_fkey" FOREIGN KEY ("organization") REFERENCES "Organization" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT "Teacher_modality_fkey" FOREIGN KEY ("modality") REFERENCES "Modality" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Graduation" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "name" TEXT NOT NULL,
+    "deggree" INTEGER,
+    "color_deggree" TEXT,
+    "updated_at" DATETIME,
+    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- CreateTable
@@ -61,11 +71,7 @@ CREATE TABLE "User" (
     "street" TEXT NOT NULL,
     "district" TEXT NOT NULL,
     "house_number" TEXT NOT NULL,
-    "degree" TEXT NOT NULL,
-    "graduation" TEXT NOT NULL,
-    "total_class" INTEGER NOT NULL,
     "amount_class" INTEGER NOT NULL,
-    "color_graduation" TEXT NOT NULL,
     "plan" TEXT NOT NULL,
     "active" BOOLEAN NOT NULL,
     "payday" INTEGER NOT NULL,

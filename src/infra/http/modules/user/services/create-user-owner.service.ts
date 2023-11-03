@@ -24,18 +24,15 @@ export class CreateUserOwnerService {
       role,
       email,
       phone,
-      degree,
       payday,
       street,
       password,
       modality,
       district,
       birth_date,
-      graduation,
       amount_class,
       organization,
       house_number,
-      color_graduation,
     } = userDto;
     const new_user = new User({
       uf,
@@ -47,18 +44,15 @@ export class CreateUserOwnerService {
       role,
       email,
       phone,
-      degree,
       payday,
       street,
       password,
       district,
       modality,
       birth_date,
-      graduation,
       organization,
       amount_class,
       house_number,
-      color_graduation,
     });
 
     return await this.userRepository.create(new_user);

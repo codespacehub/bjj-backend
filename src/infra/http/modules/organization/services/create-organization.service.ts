@@ -71,13 +71,10 @@ export class CreateOrganizationService {
       phone: createOrganizationDto.user_master.phone,
       street: createOrganizationDto.user_master.street,
       payday: createOrganizationDto.user_master.payday,
-      degree: createOrganizationDto.user_master.degree,
       district: createOrganizationDto.user_master.district,
       birth_date: createOrganizationDto.user_master.birth_date,
-      graduation: createOrganizationDto.user_master.graduation,
       amount_class: createOrganizationDto.user_master.amount_class,
       house_number: createOrganizationDto.user_master.house_number,
-      color_graduation: createOrganizationDto.user_master.color_graduation,
     };
     return await this.createUserOwnerService.execute(content);
   }

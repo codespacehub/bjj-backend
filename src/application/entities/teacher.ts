@@ -1,25 +1,19 @@
-import { randomUUID } from 'crypto';
 import { Injectable } from '@nestjs/common';
 import { Replace } from '../helpers/Replace';
-
 import { removeCharacterString } from 'src/shared/utils/remove-character-string';
-import { PrismaUserRepository } from 'src/infra/database/prisma/repositories/PrismaUserRepository';
+import { randomUUID } from 'crypto';
+import { PrismaTeacherRepository } from '@/infra/database/prisma/repositories/PrismaTeacherRepository';
 
-interface UserProps {
+interface TeacherProps {
   cpf: string;
   name: string;
-  plan: string;
-  role: string;
   email: string;
   phone: string;
-  payday: number;
+  birth_date: string;
+
   active: boolean;
   password: string;
-  modality?: string;
   verified: boolean;
-  birth_date: string;
-  organization: string;
-  amount_class: number;
 
   uf: string;
   cep: string;
@@ -28,18 +22,21 @@ interface UserProps {
   district: string;
   house_number: string;
 
-  updatedAt?: Date;
+  modality: string;
+  organization: string;
+
   created_at: Date;
+  updated_at?: Date;
 }
 
 @Injectable()
-export class User {
+export class Teacher {
   private _id: string;
-  private props: UserProps;
+  private props: TeacherProps;
 
   constructor(
     props: Replace<
-      UserProps,
+      TeacherProps,
       {
         active?: boolean;
         verified?: boolean;
@@ -57,10 +54,12 @@ export class User {
     };
   }
 
+  // Get id value or generate
   public get id(): string {
     return this._id;
   }
 
+  // Set name value
   public set name(name: string) {
     this.props.name = name;
   }
@@ -68,7 +67,6 @@ export class User {
   public get name(): string {
     return this.props.name;
   }
-
   public set email(email: string) {
     this.props.email = email;
   }
@@ -83,14 +81,6 @@ export class User {
 
   public get password(): string {
     return this.props.password;
-  }
-
-  public set role(role: string) {
-    this.props.role = role;
-  }
-
-  public get role(): string {
-    return this.props.role;
   }
 
   public set cpf(cpf: string) {
@@ -115,30 +105,6 @@ export class User {
 
   public set birth_date(birth_date: string) {
     this.props.birth_date = birth_date;
-  }
-
-  public set plan(plan: string) {
-    this.props.plan = plan;
-  }
-
-  public get plan(): string {
-    return this.props.plan;
-  }
-
-  public set payday(payday: number) {
-    this.props.payday = payday;
-  }
-
-  public get payday(): number {
-    return this.props.payday;
-  }
-
-  public set amount_class(amount_class: number) {
-    this.props.amount_class = amount_class;
-  }
-
-  public get amount_class(): number {
-    return this.props.amount_class;
   }
 
   public set uf(uf: string) {
@@ -189,20 +155,20 @@ export class User {
     return this.props.house_number;
   }
 
-  public set organization(organization: string) {
-    this.props.organization = organization;
-  }
-
-  public get organization(): string {
-    return this.props.organization;
-  }
-
   public set modality(modality: string) {
     this.props.modality = modality;
   }
 
   public get modality(): string {
     return this.props.modality;
+  }
+
+  public set organization(organization: string) {
+    this.props.organization = organization;
+  }
+
+  public get organization(): string {
+    return this.props.organization;
   }
 
   public get verified(): boolean {
@@ -213,12 +179,12 @@ export class User {
     return this.props.active;
   }
 
-  public get created__at(): Date {
+  public get created_at(): Date {
     return this.props.created_at;
   }
 }
 
-export const UserRepositoryProvider = {
-  provide: 'IUserRepository',
-  useClass: PrismaUserRepository,
+export const TeacherRepositoryProvider = {
+  provide: 'ITeacherRepository',
+  useClass: PrismaTeacherRepository,
 };

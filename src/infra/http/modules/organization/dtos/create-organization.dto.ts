@@ -43,18 +43,6 @@ class UserMaster {
 
   @IsString({ message: 'Esse campo precisa ser um texto' })
   @IsNotEmpty({
-    message: 'Por favor preencha o campo de "cor de graduação" do usuário',
-  })
-  color_graduation: string;
-
-  @IsString({ message: 'Esse campo precisa ser um texto' })
-  @IsNotEmpty({
-    message: 'Por favor preencha o campo de "graduação" do usuário',
-  })
-  graduation: string;
-
-  @IsString({ message: 'Esse campo precisa ser um texto' })
-  @IsNotEmpty({
     message: 'Por favor preencha o campo de "cpf" do usuário',
   })
   cpf: string;
@@ -112,12 +100,6 @@ class UserMaster {
     message: 'Por favor preencha o campo de "cidade" do usuário',
   })
   city: string;
-
-  @IsString({ message: 'Esse campo precisa ser um texto' })
-  @IsNotEmpty({
-    message: 'Por favor preencha o campo de "grau" do usuário',
-  })
-  degree: string;
 
   @IsString({ message: 'Esse campo precisa ser um texto' })
   @IsNotEmpty({
