@@ -53,6 +53,12 @@ export class CreateAndUpdateUserDto {
 
   @IsString({ message: 'Esse campo precisa ser um texto' })
   @IsNotEmpty({
+    message: 'Por favor preencha o campo de "graduação" do usuário',
+  })
+  graduation: string;
+
+  @IsString({ message: 'Esse campo precisa ser um texto' })
+  @IsNotEmpty({
     message: 'Por favor preencha o campo de "organização" do usuário',
   })
   organization: string;
@@ -86,6 +92,12 @@ export class CreateAndUpdateUserDto {
     message: 'Por favor preencha o campo de "bairro" do usuário',
   })
   district: string;
+
+  @IsNumber()
+  @IsNotEmpty({
+    message: 'Por favor preencha o campo de "Graus" do usuário',
+  })
+  degree: number;
 
   @IsNumber()
   @IsNotEmpty({

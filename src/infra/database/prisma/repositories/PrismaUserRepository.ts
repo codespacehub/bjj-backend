@@ -84,6 +84,7 @@ export class PrismaUserRepository implements IUserRepository {
       },
       data: {
         password: String(newPassword),
+        verified: true,
       },
     });
 

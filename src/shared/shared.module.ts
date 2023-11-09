@@ -5,6 +5,8 @@ import { PrismaService } from 'src/infra/database/prisma/prisma.service';
 import { CreateHashAdapterProvider } from './libs/bcryptjs/create-hash.adapter';
 import { NodeMailerAdapterProvider } from './libs/nodemailer/nodemailer.adapter';
 import { ModalityRepositoryProvider } from '@/application/entities/modality';
+import { GraduationRepositoryProvider } from '@/application/entities/graduation';
+import { TeacherRepositoryProvider } from '@/application/entities/teacher';
 
 @Global()
 @Module({
@@ -13,7 +15,9 @@ import { ModalityRepositoryProvider } from '@/application/entities/modality';
     UserRepositoryProvider,
     CreateHashAdapterProvider,
     NodeMailerAdapterProvider,
+    TeacherRepositoryProvider,
     ModalityRepositoryProvider,
+    GraduationRepositoryProvider,
     OrganizationRepositoryProvider,
   ],
   exports: [
@@ -21,7 +25,9 @@ import { ModalityRepositoryProvider } from '@/application/entities/modality';
     UserRepositoryProvider,
     CreateHashAdapterProvider,
     NodeMailerAdapterProvider,
+    TeacherRepositoryProvider,
     ModalityRepositoryProvider,
+    GraduationRepositoryProvider,
     OrganizationRepositoryProvider,
   ],
 })

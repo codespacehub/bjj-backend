@@ -11,12 +11,14 @@ export class CreateModalityService {
     private readonly modalityRepository: IModalityRepository,
   ) {}
 
-  async execute(user: TLoggedUser, createModalityDto: CreateModalityDto) {
+  async execute(user: TLoggedUser, createModality: CreateModalityDto) {
     const modality = new Modality({
-      name: createModalityDto.name,
-      description: createModalityDto.description,
+      name: createModality.name,
+      description: createModality.description,
       organization: user.organization,
     });
+
+    console.log(modality, user);
 
     return this.modalityRepository.create(modality);
   }

@@ -35,7 +35,6 @@ export class OrganizationController {
   }
 
   @Post()
-  @ApiSecurity('bearerAuth')
   async create(@Body() createOrganizationDto: CreateOrganizationDto) {
     return this.createOrganizationService.execute(createOrganizationDto);
   }

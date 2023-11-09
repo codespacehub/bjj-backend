@@ -1,4 +1,3 @@
-import { PrismaOrganizationRepository } from 'src/infra/database/prisma/repositories/PrismaOrganizationRepository';
 import { Injectable } from '@nestjs/common';
 import { Replace } from '../helpers/Replace';
 import { removeCharacterString } from 'src/shared/utils/remove-character-string';
@@ -7,9 +6,7 @@ import { PrismaGraduationRepository } from '@/infra/database/prisma/repositories
 
 interface GraduationProps {
   name: string;
-  degree: number;
   color_degree: string;
-
   updated_at?: Date;
   created_at: Date;
 }
@@ -47,14 +44,6 @@ export class Graduation {
 
   public get name(): string {
     return this.props.name;
-  }
-
-  public set degree(degree: number) {
-    this.props.degree = degree;
-  }
-
-  public get degree(): number {
-    return this.props.degree;
   }
 
   public set color_degree(color_degree: string) {

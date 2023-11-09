@@ -3,8 +3,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { User } from 'src/application/entities/user';
 import { CreateAndUpdateUserDto } from '../dtos/create-and-update-user.dto';
 import { IUserRepository } from 'src/application/repositories/user.repository';
-import { ICreateHash } from '@/shared/interface/bcryptjs/create-hash.interface';
-import { generateTemporaryPassword } from '@/shared/utils/generate-temporary-password';
 
 @Injectable()
 export class CreateUserOwnerService {
@@ -23,6 +21,7 @@ export class CreateUserOwnerService {
       plan,
       role,
       email,
+      degree,
       phone,
       payday,
       street,
@@ -30,8 +29,9 @@ export class CreateUserOwnerService {
       modality,
       district,
       birth_date,
-      amount_class,
+      graduation,
       organization,
+      amount_class,
       house_number,
     } = userDto;
     const new_user = new User({
@@ -44,12 +44,14 @@ export class CreateUserOwnerService {
       role,
       email,
       phone,
+      degree,
       payday,
       street,
       password,
       district,
       modality,
       birth_date,
+      graduation,
       organization,
       amount_class,
       house_number,

@@ -3,7 +3,6 @@ import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { Organization } from '@/application/entities/organization';
 import { CreateOrganizationDto } from '../dtos/create-organization.dto';
 import { ICreateHash } from '@/shared/interface/bcryptjs/create-hash.interface';
-import { generateTemporaryPassword } from '@/shared/utils/generate-temporary-password';
 import { IOrganizationRepository } from '@/application/repositories/organization.repository';
 import { IMailer } from '@/shared/interface/mail/mailer.interface';
 import { CreateUserOwnerService } from '../../user/services/create-user-owner.service';
@@ -69,10 +68,12 @@ export class CreateOrganizationService {
       city: createOrganizationDto.user_master.city,
       email: createOrganizationDto.user_master.email,
       phone: createOrganizationDto.user_master.phone,
-      street: createOrganizationDto.user_master.street,
+      degree: createOrganizationDto.user_master.degree,
       payday: createOrganizationDto.user_master.payday,
+      street: createOrganizationDto.user_master.street,
       district: createOrganizationDto.user_master.district,
       birth_date: createOrganizationDto.user_master.birth_date,
+      graduation: createOrganizationDto.user_master.graduation,
       amount_class: createOrganizationDto.user_master.amount_class,
       house_number: createOrganizationDto.user_master.house_number,
     };

@@ -1,12 +1,11 @@
-import { Graduation } from '@prisma/client';
+import { Graduation } from '@/application/entities/graduation';
 
-export class PrismaModalityMapper {
+export class PrismaGraduationMapper {
   static toPrisma(graduation: Graduation) {
     return {
       id: graduation.id,
       name: graduation.name,
-      organization: graduation.degree,
-      description: graduation.color_degree,
+      color_degree: graduation.color_degree,
     };
   }
 }

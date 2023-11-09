@@ -113,6 +113,18 @@ class UserMaster {
   })
   district: string;
 
+  @IsString({ message: 'Esse campo precisa ser um texto' })
+  @IsNotEmpty({
+    message: 'Por favor preencha o campo de "graduação" do usuário',
+  })
+  graduation: string;
+
+  @IsNumber()
+  @IsNotEmpty({
+    message: 'Por favor preencha o campo de "Graus" do usuário',
+  })
+  degree: number;
+
   @IsNumber()
   @IsNotEmpty({
     message:

@@ -19,9 +19,9 @@ export class ModalityController {
   @UseGuards(JwtAuthzGuard)
   createModality(
     @User() user: TLoggedUser,
-    @Body() createModalityDto: CreateModalityDto,
+    @Body() createModality: CreateModalityDto,
   ) {
-    return this.createModalityService.execute(user, createModalityDto);
+    return this.createModalityService.execute(user, createModality);
   }
 
   @Get()

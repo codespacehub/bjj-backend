@@ -48,9 +48,9 @@ model Teacher {
   verified  Boolean
   password  String
 
-  cpf       String @unique
-  birth_date String
-  phone     String
+  cpf         String @unique
+  birth_date  String
+  phone       String
 
   cep              String
   uf               String
@@ -72,8 +72,9 @@ model Teacher {
 model Graduation {
   id            String @id
   name          String
-  degree       Int?
-  color_degree String?
+  color_degree  String?
+
+  users User[]
 
   updated_at DateTime?
   created_at DateTime  @default(now())
@@ -89,18 +90,22 @@ model User {
   password         String
   birth_date       String
 
-  uf           String
-  cep          String
-  city         String
-  street       String
-  district     String
-  house_number String
+  uf               String
+  cep              String
+  city             String
+  street           String
+  district         String
+  house_number     String
   amount_class     Int
 
+  degree           Int
   plan             String
   active           Boolean
   payday           Int
   verified         Boolean
+  
+  Graduation Graduation? @relation(fields: [graduation], references: [id])
+  graduation String?
 
   Organization Organization? @relation(fields: [organization], references: [id])
   organization String?

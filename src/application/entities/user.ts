@@ -12,12 +12,14 @@ interface UserProps {
   role: string;
   email: string;
   phone: string;
+  degree: number;
   payday: number;
   active: boolean;
   password: string;
   modality?: string;
   verified: boolean;
   birth_date: string;
+  graduation: string;
   organization: string;
   amount_class: number;
 
@@ -133,6 +135,14 @@ export class User {
     return this.props.payday;
   }
 
+  public set degree(degree: number) {
+    this.props.degree = degree;
+  }
+
+  public get degree(): number {
+    return this.props.degree;
+  }
+
   public set amount_class(amount_class: number) {
     this.props.amount_class = amount_class;
   }
@@ -187,6 +197,14 @@ export class User {
 
   public get house_number(): string {
     return this.props.house_number;
+  }
+
+  public set graduation(graduation: string) {
+    this.props.graduation = graduation;
+  }
+
+  public get graduation(): string {
+    return this.props.graduation;
   }
 
   public set organization(organization: string) {

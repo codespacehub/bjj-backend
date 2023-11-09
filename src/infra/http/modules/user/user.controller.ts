@@ -21,6 +21,7 @@ import { UpdateUserService } from './services/update-user.service';
 import { UpdatePasswordService } from './services/update-password.service';
 import { FindUserByIdService } from './services/find-by-id.service';
 import { findAllUsersService } from './services/find-all-users.service';
+import { CreateUserOwnerService } from './services/create-user-owner.service';
 
 @Controller('users')
 export class UserController {
@@ -31,11 +32,17 @@ export class UserController {
     private readonly findUserByIdService: FindUserByIdService,
     private readonly findAllUsersService: findAllUsersService,
     private readonly updatePasswordService: UpdatePasswordService,
+    private readonly createUserOwnerService: CreateUserOwnerService,
   ) {}
 
   @Post()
   @ApiSecurity('bearerAuth')
   @UseGuards(JwtAuthzGuard)
+  createUserOwner(@Body() createAndUpdateUserDto: CreateAndUpdateUserDto) {
+    return this.createUserOwnerService.execute(createAndUpdateUserDto);
+  }
+
+  @Post()
   createUser(
     @User() user: TLoggedUser,
     @Body() createAndUpdateUserDto: CreateAndUpdateUserDto,

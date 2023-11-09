@@ -4,11 +4,11 @@ import { UserController } from './user.controller';
 import { CreateUserService } from './services/create-user.service';
 import { DeleteUserService } from './services/delete-user.service';
 import { UpdateUserService } from './services/update-user.service';
-import { UpdatePasswordService } from './services/update-password.service';
 import { FindUserByIdService } from './services/find-by-id.service';
-import { CreateUserOwnerService } from './services/create-user-owner.service';
-import { FindAllModalitiesService } from '../modality/services/find-all-modalities.service';
 import { findAllUsersService } from './services/find-all-users.service';
+import { UpdatePasswordService } from './services/update-password.service';
+import { FindAllModalitiesService } from '../modality/services/find-all-modalities.service';
+import { CreateUserOwnerService } from './services/create-user-owner.service';
 
 @Module({
   controllers: [UserController],
@@ -19,6 +19,7 @@ import { findAllUsersService } from './services/find-all-users.service';
     FindUserByIdService,
     findAllUsersService,
     UpdatePasswordService,
+    CreateUserOwnerService,
     FindAllModalitiesService,
   ],
 })
