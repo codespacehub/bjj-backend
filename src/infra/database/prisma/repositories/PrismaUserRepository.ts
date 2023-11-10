@@ -18,7 +18,7 @@ export class PrismaUserRepository implements IUserRepository {
     });
 
     if (!findUserByEmail) {
-      throw new Error('User not found');
+      throw new Error('Esse usuário não existe');
     }
 
     return findUserByEmail;
