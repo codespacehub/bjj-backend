@@ -1,20 +1,23 @@
 import {
-  Body,
-  Controller,
-  Param,
-  Patch,
-  Post,
   Get,
+  Body,
+  Post,
+  Patch,
+  Param,
   Delete,
+  Controller,
 } from '@nestjs/common';
-import { CreateGraduationService } from './service/create-graduation.service';
-import { CreateAndUpdateGraduationDto } from './dto/create-and-update-graduation';
-import { UpdateGraduationService } from './service/update-graduation.service';
-import { FindAllGraduationService } from './service/find-all-graduation.service';
-import { FindGraduationByIdService } from './service/find-by-id-graduation.service';
-import { DeleteGraduationService } from './service/delete-graduation.service';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('graduation')
+import { CreateGraduationService } from './service/create-graduation.service';
+import { UpdateGraduationService } from './service/update-graduation.service';
+import { DeleteGraduationService } from './service/delete-graduation.service';
+import { FindAllGraduationService } from './service/find-all-graduation.service';
+import { CreateAndUpdateGraduationDto } from './dto/create-and-update-graduation';
+import { FindGraduationByIdService } from './service/find-by-id-graduation.service';
+
+@ApiTags('Graduações')
+@Controller({ version: '1', path: 'graduations' })
 export class GraduationController {
   constructor(
     private readonly createGraduationService: CreateGraduationService,

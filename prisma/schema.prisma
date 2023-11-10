@@ -18,7 +18,6 @@ model Organization {
   active Boolean?
 
   users      User[]
-  teachers   Teacher[]
   modalities Modality[]
 
   updated_at DateTime? @default(now())
@@ -30,80 +29,55 @@ model Modality {
   name        String
   description String
 
-  teachers Teacher[]
-  users    User[]
+  users User[]
+
+  graduations Graduation[]
 
   Organization Organization? @relation(fields: [organization], references: [id])
   organization String?
-
-  updated_at DateTime?
-  created_at DateTime  @default(now())
-}
-
-model Teacher {
-  id        String @id
-  name      String
-  email     String @unique
-  active    Boolean
-  verified  Boolean
-  password  String
-
-  cpf         String @unique
-  birth_date  String
-  phone       String
-
-  cep              String
-  uf               String
-  city             String
-  street           String
-  house_number     String
-  district         String
-  
-
-  Organization Organization? @relation(fields: [organization], references: [id])
-  organization String?
-  Modalitiy    Modality?     @relation(fields: [modality], references: [id])
-  modality     String?
 
   updated_at DateTime?
   created_at DateTime  @default(now())
 }
 
 model Graduation {
-  id            String @id
-  name          String
-  color_degree  String?
+  id           String  @id
+  name         String
+  color_degree String?
 
   users User[]
+
+  Modality    Modality? @relation(fields: [modality_id], references: [id])
+  modality_id String?
 
   updated_at DateTime?
   created_at DateTime  @default(now())
 }
 
 model User {
-  id               String  @id
-  cpf              String  @unique
-  name             String
-  role             String
-  email            String  @unique
-  phone            String
-  password         String
-  birth_date       String
+  id         String @id
+  cpf        String @unique
+  name       String
+  role       String
+  email      String @unique
+  phone      String
+  password   String
+  birth_date String
 
-  uf               String
-  cep              String
-  city             String
-  street           String
-  district         String
-  house_number     String
-  amount_class     Int
+  uf           String
+  cep          String
+  city         String
+  street       String
+  district     String
+  house_number String
+  amount_class Int
 
-  degree           Int
-  plan             String
-  active           Boolean
-  payday           Int
-  verified         Boolean
-  
+  degree   Int
+  plan     String
+  active   Boolean
+  payday   Int
+  verified Boolean
+
   Graduation Graduation? @relation(fields: [graduation], references: [id])
   graduation String?
 

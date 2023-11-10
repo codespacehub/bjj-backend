@@ -1,25 +1,24 @@
-import { ApiSecurity } from '@nestjs/swagger';
-
 import {
-  Body,
-  Controller,
   Get,
-  Param,
+  Body,
   Post,
+  Param,
   Patch,
   Delete,
+  Controller,
 } from '@nestjs/common';
-import { CreateOrganizationDto } from './dtos/create-organization.dto';
-import { FindOrganizationByIdService } from './services/find-organization-by-id.service';
-import { CreateOrganizationService } from './services/create-organization.service';
-import { UpdateOrganizationService } from './services/update-organization.service';
-import { updateOrganizationDto } from './dtos/update-organization.dto';
-import { DeleteOrganizationService } from './services/delete-organization.service';
-import { FindAllOrganizationService } from './services/find-all-organization.service';
-import { User } from '@/shared/decorators/user.decorator';
-import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
 
-@Controller('organization')
+import { CreateOrganizationDto } from './dtos/create-organization.dto';
+import { updateOrganizationDto } from './dtos/update-organization.dto';
+import { CreateOrganizationService } from './services/create-organization.service';
+import { DeleteOrganizationService } from './services/delete-organization.service';
+import { UpdateOrganizationService } from './services/update-organization.service';
+import { FindAllOrganizationService } from './services/find-all-organization.service';
+import { FindOrganizationByIdService } from './services/find-organization-by-id.service';
+import { ApiTags } from '@nestjs/swagger';
+
+@ApiTags('Organização')
+@Controller({ version: '1', path: 'organizations' })
 export class OrganizationController {
   constructor(
     private readonly createOrganizationService: CreateOrganizationService,
@@ -28,6 +27,11 @@ export class OrganizationController {
     private readonly findAllOrganizationService: FindAllOrganizationService,
     private readonly findOrganizationByIdService: FindOrganizationByIdService,
   ) {}
+
+  @Get()
+  findAll() {
+    return this.findAllOrganizationService.execute();
+  }
 
   @Get(':organizationId')
   async findById(@Param('organizationId') organizationId: string) {
@@ -50,10 +54,5 @@ export class OrganizationController {
   @Delete(':organizationId')
   deleteOrganization(@Param('organizationId') organizationId: string) {
     return this.deleteOrganizationService.execute(organizationId);
-  }
-
-  @Get()
-  findAll() {
-    return this.findAllOrganizationService.execute();
   }
 }

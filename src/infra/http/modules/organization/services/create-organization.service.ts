@@ -1,11 +1,11 @@
 import { ConflictException, Inject, Injectable } from '@nestjs/common';
 
 import { Organization } from '@/application/entities/organization';
+import { IMailer } from '@/shared/interface/mail/mailer.interface';
 import { CreateOrganizationDto } from '../dtos/create-organization.dto';
 import { ICreateHash } from '@/shared/interface/bcryptjs/create-hash.interface';
-import { IOrganizationRepository } from '@/application/repositories/organization.repository';
-import { IMailer } from '@/shared/interface/mail/mailer.interface';
 import { CreateUserOwnerService } from '../../user/services/create-user-owner.service';
+import { IOrganizationRepository } from '@/application/repositories/organization.repository';
 
 @Injectable()
 export class CreateOrganizationService {

@@ -1,6 +1,7 @@
-import { IModalityRepository } from '@/application/repositories/modality.repository';
-import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
 import { Inject, Injectable } from '@nestjs/common';
+
+import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
+import { IModalityRepository } from '@/application/repositories/modality.repository';
 
 @Injectable()
 export class FindAllModalitiesService {
@@ -9,9 +10,9 @@ export class FindAllModalitiesService {
     private readonly modalityRepository: IModalityRepository,
   ) {}
 
-  execute(user: TLoggedUser) {
+  async execute(user: TLoggedUser) {
     const organization = user.organization;
 
-    return this.modalityRepository.findAll(organization);
+    return await this.modalityRepository.findAll(organization);
   }
 }

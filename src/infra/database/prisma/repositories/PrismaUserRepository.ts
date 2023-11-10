@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { IUserRepository } from 'src/application/repositories/user.repository';
+
 import { PrismaService } from '../prisma.service';
 import { User } from 'src/application/entities/user';
 import { PrismaUserMapper } from '../mappers/PrismaUserMapper';
+import { IUserRepository } from 'src/application/repositories/user.repository';
 import { CreateAndUpdateUserDto } from '@/infra/http/modules/user/dtos/create-and-update-user.dto';
 
 @Injectable()
@@ -64,13 +65,13 @@ export class PrismaUserRepository implements IUserRepository {
       data: {
         cpf: updateUserDto.cpf,
         name: updateUserDto.name,
-        email: updateUserDto.email,
-        birth_date: updateUserDto.birth_date,
-        phone: updateUserDto.birth_date,
         role: updateUserDto.role,
-        password: updateUserDto.password,
         plan: updateUserDto.plan,
+        email: updateUserDto.email,
         payday: updateUserDto.payday,
+        phone: updateUserDto.birth_date,
+        password: updateUserDto.password,
+        birth_date: updateUserDto.birth_date,
       },
     });
 

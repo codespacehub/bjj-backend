@@ -1,6 +1,6 @@
-import { IUserRepository } from '@/application/repositories/user.repository';
-import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
 import { Inject, Injectable } from '@nestjs/common';
+import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
+import { IUserRepository } from '@/application/repositories/user.repository';
 
 @Injectable()
 export class findAllUsersService {

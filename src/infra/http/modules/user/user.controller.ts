@@ -1,29 +1,29 @@
-import { CreateAndUpdateUserDto } from './dtos/create-and-update-user.dto';
 import {
-  Body,
-  Controller,
-  Delete,
-  Param,
-  Post,
-  Patch,
-  Put,
-  UseGuards,
   Get,
+  Body,
+  Post,
+  Param,
+  Patch,
+  Delete,
+  UseGuards,
+  Controller,
 } from '@nestjs/common';
 
-import { CreateUserService } from './services/create-user.service';
-import { ApiSecurity } from '@nestjs/swagger';
+import { ApiSecurity, ApiTags } from '@nestjs/swagger';
+
 import { JwtAuthzGuard } from '../auth/guards/auth-guard';
-import { DeleteUserService } from './services/delete-user.service';
-import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
 import { User } from '@/shared/decorators/user.decorator';
+import { DeleteUserService } from './services/delete-user.service';
 import { UpdateUserService } from './services/update-user.service';
-import { UpdatePasswordService } from './services/update-password.service';
+import { CreateUserService } from './services/create-user.service';
 import { FindUserByIdService } from './services/find-by-id.service';
 import { findAllUsersService } from './services/find-all-users.service';
-import { CreateUserOwnerService } from './services/create-user-owner.service';
+import { UpdatePasswordService } from './services/update-password.service';
+import { CreateAndUpdateUserDto } from './dtos/create-and-update-user.dto';
+import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
 
-@Controller('users')
+@ApiTags('Usuário')
+@Controller({ version: '1', path: 'users' })
 export class UserController {
   constructor(
     private readonly createUserService: CreateUserService,
@@ -32,14 +32,18 @@ export class UserController {
     private readonly findUserByIdService: FindUserByIdService,
     private readonly findAllUsersService: findAllUsersService,
     private readonly updatePasswordService: UpdatePasswordService,
-    private readonly createUserOwnerService: CreateUserOwnerService,
   ) {}
 
-  @Post()
+  @Get()
   @ApiSecurity('bearerAuth')
   @UseGuards(JwtAuthzGuard)
-  createUserOwner(@Body() createAndUpdateUserDto: CreateAndUpdateUserDto) {
-    return this.createUserOwnerService.execute(createAndUpdateUserDto);
+  findAll(@User() user: TLoggedUser) {
+    return this.findAllUsersService.execute(user);
+  }
+
+  @Get(':userId')
+  findById(@Param('userId') userId: string) {
+    return this.findUserByIdService.execute(userId);
   }
 
   @Post()
@@ -75,18 +79,5 @@ export class UserController {
     @Body('newPassword') newPassword: string,
   ) {
     return this.updatePasswordService.execute(user, newPassword);
-  }
-
-  @Get(':userId')
-  findById(@Param('userId') userId: string) {
-    return this.findUserByIdService.execute(userId);
-  }
-
-  @Get()
-  @ApiSecurity('bearerAuth')
-  @UseGuards(JwtAuthzGuard)
-  findAll(@User() user: TLoggedUser) {
-    console.log(user);
-    return this.findAllUsersService.execute(user);
   }
 }

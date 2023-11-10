@@ -7,8 +7,8 @@ import { UpdateUserService } from './services/update-user.service';
 import { FindUserByIdService } from './services/find-by-id.service';
 import { findAllUsersService } from './services/find-all-users.service';
 import { UpdatePasswordService } from './services/update-password.service';
-import { FindAllModalitiesService } from '../modality/services/find-all-modalities.service';
 import { CreateUserOwnerService } from './services/create-user-owner.service';
+import { FindAllModalitiesService } from '../modality/services/find-all-modalities.service';
 
 @Module({
   controllers: [UserController],

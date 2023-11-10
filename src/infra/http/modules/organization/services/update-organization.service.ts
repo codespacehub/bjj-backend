@@ -1,7 +1,7 @@
-import { IOrganizationRepository } from '@/application/repositories/organization.repository';
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+
 import { updateOrganizationDto } from '../dtos/update-organization.dto';
-import { Organization } from '@/application/entities/organization';
+import { IOrganizationRepository } from '@/application/repositories/organization.repository';
 
 @Injectable()
 export class UpdateOrganizationService {

@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { GraduationController } from './graduation.controller';
+
 import { CreateGraduationService } from './service/create-graduation.service';
 import { UpdateGraduationService } from './service/update-graduation.service';
 import { DeleteGraduationService } from './service/delete-graduation.service';

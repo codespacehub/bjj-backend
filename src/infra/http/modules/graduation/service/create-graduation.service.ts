@@ -11,11 +11,12 @@ export class CreateGraduationService {
   ) {}
 
   execute(graduation: CreateAndUpdateGraduationDto) {
-    const { name, color_degree } = graduation;
+    const { name, color_degree, modality_id } = graduation;
 
     const new_graduation = new Graduation({
       name,
       color_degree,
+      modality_id,
     });
 
     return this.graduationRepository.create(new_graduation);

@@ -1,5 +1,5 @@
-import { CreateAndUpdateUserDto } from '@/infra/http/modules/user/dtos/create-and-update-user.dto';
 import { User } from '../entities/user';
+import { CreateAndUpdateUserDto } from '@/infra/http/modules/user/dtos/create-and-update-user.dto';
 
 export interface IUserRepository {
   create(user: User): Promise<User>;

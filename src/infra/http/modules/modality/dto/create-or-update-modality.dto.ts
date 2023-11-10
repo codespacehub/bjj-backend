@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateModalityDto {
+export class CreateOrUpdateModalityDto {
   @IsString()
   @IsNotEmpty()
   name: string;

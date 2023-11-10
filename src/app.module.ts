@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { HttpModule } from './infra/http/http.module';
-import { DatabaseModule } from './infra/database/database.module';
-import { SharedModule } from './shared/shared.module';
+
 import { CacheModule } from '@nestjs/cache-manager';
+import { HttpModule } from './infra/http/http.module';
+import { SharedModule } from './shared/shared.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { DatabaseModule } from './infra/database/database.module';
 
 import config from './config';
 
@@ -18,8 +19,8 @@ import config from './config';
       isGlobal: true,
     }),
     HttpModule,
-    DatabaseModule,
     SharedModule,
+    DatabaseModule,
   ],
   providers: [ConfigService],
 })

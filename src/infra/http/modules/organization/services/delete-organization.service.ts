@@ -1,11 +1,7 @@
-import { IOrganizationRepository } from '@/application/repositories/organization.repository';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+
 import { IMailer } from '@/shared/interface/mail/mailer.interface';
-import {
-  Inject,
-  Injectable,
-  NotFoundException,
-  BadRequestException,
-} from '@nestjs/common';
+import { IOrganizationRepository } from '@/application/repositories/organization.repository';
 
 @Injectable()
 export class DeleteOrganizationService {

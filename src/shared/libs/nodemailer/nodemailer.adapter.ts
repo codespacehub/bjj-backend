@@ -3,14 +3,12 @@ import { Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
 import * as hbs from 'nodemailer-express-handlebars';
 
-// Interfaces
 import {
   IMailer,
   TSendMailParams,
 } from '@/shared/interface/mail/mailer.interface';
 import { ConfigService } from '@nestjs/config';
 
-// ADPT: Esse adapter de nodemailer cria o transport para o envio de e-mail
 @Injectable()
 export class NodeMailerAdapter implements IMailer {
   transport: nodemailer.Transporter;
@@ -55,7 +53,7 @@ export class NodeMailerAdapter implements IMailer {
       hbs({
         viewEngine: {
           extname: '.hbs',
-          defaultLayout: false,
+          defaultLayout: 'false',
           layoutsDir: TEMPLATES_PATH,
           partialsDir: TEMPLATES_PATH,
         },

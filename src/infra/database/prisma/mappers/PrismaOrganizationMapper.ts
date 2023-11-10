@@ -1,5 +1,6 @@
-import { Organization } from 'src/application/entities/organization';
 import { Organization as RawOrganization } from '@prisma/client';
+import { Organization } from 'src/application/entities/organization';
+
 export class PrismaOrganizationMapper {
   static toPrisma(organization: Organization) {
     return {
@@ -10,7 +11,6 @@ export class PrismaOrganizationMapper {
       email: organization.email,
       domain: organization.domain,
       active: organization.active,
-
       created_at: organization.created_at,
     };
   }

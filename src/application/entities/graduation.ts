@@ -1,12 +1,15 @@
+import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import { Replace } from '../helpers/Replace';
+
 import { removeCharacterString } from 'src/shared/utils/remove-character-string';
-import { randomUUID } from 'crypto';
 import { PrismaGraduationRepository } from '@/infra/database/prisma/repositories/PrismaGraduationRepository';
 
 interface GraduationProps {
   name: string;
   color_degree: string;
+  modality_id: string;
+
   updated_at?: Date;
   created_at: Date;
 }
@@ -32,18 +35,24 @@ export class Graduation {
     };
   }
 
-  // Get id value or generate
   public get id(): string {
     return this._id;
   }
 
-  // Set name value
   public set name(name: string) {
     this.props.name = name;
   }
 
   public get name(): string {
     return this.props.name;
+  }
+
+  public set modality_id(modality_id: string) {
+    this.props.modality_id = modality_id;
+  }
+
+  public get modality_id(): string {
+    return this.props.modality_id;
   }
 
   public set color_degree(color_degree: string) {

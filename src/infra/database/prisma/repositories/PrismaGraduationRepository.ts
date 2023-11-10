@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
+
 import { PrismaService } from '../prisma.service';
-import { IGraduationRepository } from '@/application/repositories/graduation.repository';
 import { Graduation } from '@/application/entities/graduation';
 import { PrismaGraduationMapper } from '../mappers/PrismaGraduationMapper';
+import { IGraduationRepository } from '@/application/repositories/graduation.repository';
 
 @Injectable()
 export class PrismaGraduationRepository implements IGraduationRepository {
@@ -32,7 +33,12 @@ export class PrismaGraduationRepository implements IGraduationRepository {
     return graduation;
   }
   async findAll(): Promise<any[]> {
-    const graduations = await this.prisma.graduation.findMany({});
+    const graduations = await this.prisma.graduation.findMany({
+      include: {
+        Modality: true,
+        users: true,
+      },
+    });
 
     return graduations;
   }

@@ -1,12 +1,43 @@
-import { IModalityRepository } from '@/application/repositories/modality.repository';
 import { Injectable } from '@nestjs/common';
+
 import { PrismaService } from '../prisma.service';
 import { Modality } from '@/application/entities/modality';
 import { PrismaModalityMapper } from '../mappers/PrismaModalityMapper';
+import { IModalityRepository } from '@/application/repositories/modality.repository';
 
 @Injectable()
 export class PrismaModalityRepository implements IModalityRepository {
   constructor(private prisma: PrismaService) {}
+
+  async findAll(organizationId: string): Promise<any> {
+    const modalities = this.prisma.modality.findMany({
+      where: {
+        organization: organizationId,
+      },
+      include: {
+        graduations: true,
+      },
+    });
+
+    return modalities;
+  }
+
+  async findById(modalityId: string): Promise<any> {
+    const modality = await this.prisma.modality.findUnique({
+      where: {
+        id: modalityId,
+      },
+      include: {
+        graduations: true,
+      },
+    });
+
+    if (!modality) {
+      return null;
+    }
+
+    return modality;
+  }
 
   async create(modality: Modality): Promise<any> {
     const raw = PrismaModalityMapper.toPrisma(modality);
@@ -19,13 +50,11 @@ export class PrismaModalityRepository implements IModalityRepository {
     });
   }
 
-  async findAll(organizationId: string): Promise<any> {
-    const modalities = this.prisma.modality.findMany({
+  async remove(modalityId: string) {
+    await this.prisma.modality.delete({
       where: {
-        organization: organizationId,
+        id: modalityId,
       },
     });
-
-    return modalities;
   }
 }

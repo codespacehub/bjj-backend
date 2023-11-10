@@ -1,8 +1,8 @@
-import { PrismaOrganizationRepository } from 'src/infra/database/prisma/repositories/PrismaOrganizationRepository';
+import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import { Replace } from '../helpers/Replace';
+
 import { removeCharacterString } from 'src/shared/utils/remove-character-string';
-import { randomUUID } from 'crypto';
 import { PrismaModalityRepository } from '@/infra/database/prisma/repositories/PrismaModalityRepository';
 
 interface ModalityProps {

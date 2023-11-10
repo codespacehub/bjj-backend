@@ -1,7 +1,7 @@
-import { IUserRepository } from '@/application/repositories/user.repository';
-import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
 import { Inject, Injectable } from '@nestjs/common';
-import { CreateAndUpdateUserDto } from '../dtos/create-and-update-user.dto';
+
+import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
+import { IUserRepository } from '@/application/repositories/user.repository';
 import { ICreateHash } from '@/shared/interface/bcryptjs/create-hash.interface';
 
 @Injectable()

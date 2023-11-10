@@ -1,13 +1,13 @@
+import { ConfigService } from '@nestjs/config';
 import { Inject, Injectable } from '@nestjs/common';
 
 import { User } from 'src/application/entities/user';
+import { IMailer } from '@/shared/interface/mail/mailer.interface';
 import { CreateAndUpdateUserDto } from '../dtos/create-and-update-user.dto';
+import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
 import { IUserRepository } from 'src/application/repositories/user.repository';
 import { ICreateHash } from '@/shared/interface/bcryptjs/create-hash.interface';
-import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
-import { IMailer } from '@/shared/interface/mail/mailer.interface';
 import { generateTemporaryPassword } from '@/shared/utils/generate-temporary-password';
-import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class CreateUserService {
@@ -26,7 +26,7 @@ export class CreateUserService {
   ): Promise<any> {
     const org = user.organization;
 
-    const crypt_password = await generateTemporaryPassword();
+    const crypt_password = generateTemporaryPassword();
     const passwordHash =
       await this.createHashAdapterProvider.execute(crypt_password);
 
@@ -47,7 +47,6 @@ export class CreateUserService {
       district,
       birth_date,
       graduation,
-      organization,
       amount_class,
       house_number,
     } = userDto;
