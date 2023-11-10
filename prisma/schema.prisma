@@ -22,6 +22,8 @@ model Organization {
 
   updated_at DateTime? @default(now())
   created_at DateTime  @default(now())
+
+  @@map("organizations")
 }
 
 model Modality {
@@ -32,12 +34,15 @@ model Modality {
   users User[]
 
   graduations Graduation[]
+  times       Times[]
 
   Organization Organization? @relation(fields: [organization], references: [id])
   organization String?
 
   updated_at DateTime?
   created_at DateTime  @default(now())
+
+  @@map("modalities")
 }
 
 model Graduation {
@@ -52,6 +57,8 @@ model Graduation {
 
   updated_at DateTime?
   created_at DateTime  @default(now())
+
+  @@map("graduations")
 }
 
 model User {
@@ -86,6 +93,18 @@ model User {
 
   Modality Modality? @relation(fields: [modality], references: [id])
   modality String?
+
+  updated_at DateTime?
+  created_at DateTime  @default(now())
+
+  @@map("users")
+}
+
+model Times {
+  id String @id
+
+  Modality   Modality? @relation(fields: [modalityId], references: [id])
+  modalityId String?
 
   updated_at DateTime?
   created_at DateTime  @default(now())

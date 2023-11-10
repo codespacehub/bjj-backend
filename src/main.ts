@@ -6,7 +6,7 @@ import { join } from 'path';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
-const port = process.env.PORT || 5454;
+const port = process.env.PORT || 3001;
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);

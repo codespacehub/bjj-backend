@@ -1,15 +1,14 @@
 export default () => ({
   jwtAuth: {
     expiresIn: 3600,
-    jwtSecret:
-      '7afdec9d711948f59943fbe9ad82eefe0ccd6ec3208944079986290944f3364f',
+    jwtSecret: process.env.JWT_SECRET,
   },
   mail: {
-    port: 587,
-    host: 'smtp.office365.com',
+    port: process.env.MAIL_PORT,
+    host: process.env.MAIL_HOST,
     globalMail: {
-      user: 'andreypp@hotmail.com',
-      password: 'R@afa151203',
+      user: process.env.MAIL_USER,
+      password: process.env.MAIL_PASSWORD,
     },
   },
 });
