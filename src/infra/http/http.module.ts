@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { UserModule } from './modules/user/user.module';
 
 import { AuthModule } from './modules/auth/auth.module';
+import { PlanModule } from './modules/plan/plan.module';
 import { ModalityModule } from './modules/modality/modality.module';
 import { GraduationModule } from './modules/graduation/graduation.module';
 import { OrganizationModule } from './modules/organization/organization.module';
@@ -10,6 +11,7 @@ import { OrganizationModule } from './modules/organization/organization.module';
   imports: [
     AuthModule,
     UserModule,
+    PlanModule,
     ModalityModule,
     GraduationModule,
     OrganizationModule,

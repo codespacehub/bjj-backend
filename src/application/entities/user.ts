@@ -20,7 +20,7 @@ interface UserProps {
   verified: boolean;
   birth_date: string;
   graduation: string;
-  organization: string;
+  organization_id: string;
   amount_class: number;
 
   uf: string;
@@ -207,12 +207,12 @@ export class User {
     return this.props.graduation;
   }
 
-  public set organization(organization: string) {
-    this.props.organization = organization;
+  public set organization_id(organization_id: string) {
+    this.props.organization_id = organization_id;
   }
 
-  public get organization(): string {
-    return this.props.organization;
+  public get organization_id(): string {
+    return this.props.organization_id;
   }
 
   public set modality(modality: string) {

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { PrismaService } from '../prisma.service';
 import { User } from 'src/application/entities/user';
@@ -18,7 +18,7 @@ export class PrismaUserRepository implements IUserRepository {
     });
 
     if (!findUserByEmail) {
-      throw new Error('Esse usuário não existe');
+      throw new NotFoundException('Usuário informado não existe');
     }
 
     return findUserByEmail;
@@ -92,10 +92,10 @@ export class PrismaUserRepository implements IUserRepository {
     return updatePassword;
   }
 
-  async findAll(organization: string): Promise<any> {
+  async findAll(organization_id: string): Promise<any> {
     const users = await this.prisma.user.findMany({
       where: {
-        organization,
+        organization_id,
       },
     });
 

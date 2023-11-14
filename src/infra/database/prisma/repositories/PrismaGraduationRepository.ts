@@ -32,11 +32,14 @@ export class PrismaGraduationRepository implements IGraduationRepository {
 
     return graduation;
   }
-  async findAll(): Promise<any[]> {
+  async findAll(organization_id: string): Promise<any[]> {
     const graduations = await this.prisma.graduation.findMany({
       include: {
         Modality: true,
         users: true,
+      },
+      where: {
+        organization_id,
       },
     });
 

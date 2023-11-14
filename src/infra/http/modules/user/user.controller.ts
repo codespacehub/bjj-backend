@@ -13,14 +13,15 @@ import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
 import { JwtAuthzGuard } from '../auth/guards/auth-guard';
 import { User } from '@/shared/decorators/user.decorator';
+import { CreateAndUpdateUserDto } from './dtos/create-and-update-user.dto';
+import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
+
 import { DeleteUserService } from './services/delete-user.service';
 import { UpdateUserService } from './services/update-user.service';
 import { CreateUserService } from './services/create-user.service';
 import { FindUserByIdService } from './services/find-by-id.service';
 import { findAllUsersService } from './services/find-all-users.service';
 import { UpdatePasswordService } from './services/update-password.service';
-import { CreateAndUpdateUserDto } from './dtos/create-and-update-user.dto';
-import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
 
 @ApiTags('Usuário')
 @Controller({ version: '1', path: 'users' })
@@ -42,11 +43,15 @@ export class UserController {
   }
 
   @Get(':userId')
+  @ApiSecurity('bearerAuth')
+  @UseGuards(JwtAuthzGuard)
   findById(@Param('userId') userId: string) {
     return this.findUserByIdService.execute(userId);
   }
 
   @Post()
+  @ApiSecurity('bearerAuth')
+  @UseGuards(JwtAuthzGuard)
   createUser(
     @User() user: TLoggedUser,
     @Body() createAndUpdateUserDto: CreateAndUpdateUserDto,
@@ -54,11 +59,11 @@ export class UserController {
     return this.createUserService.execute(createAndUpdateUserDto, user);
   }
 
-  @Delete(':UserId')
+  @Delete(':userId')
   @ApiSecurity('bearerAuth')
   @UseGuards(JwtAuthzGuard)
-  deleteUser(@Param('UserId') UserId: string) {
-    return this.deleteUserService.execute(UserId);
+  deleteUser(@Param('userId') userId: string) {
+    return this.deleteUserService.execute(userId);
   }
 
   @Patch()

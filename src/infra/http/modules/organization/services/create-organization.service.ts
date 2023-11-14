@@ -3,8 +3,8 @@ import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { Organization } from '@/application/entities/organization';
 import { IMailer } from '@/shared/interface/mail/mailer.interface';
 import { CreateOrganizationDto } from '../dtos/create-organization.dto';
+import { CreateUserService } from '../../user/services/create-user.service';
 import { ICreateHash } from '@/shared/interface/bcryptjs/create-hash.interface';
-import { CreateUserOwnerService } from '../../user/services/create-user-owner.service';
 import { IOrganizationRepository } from '@/application/repositories/organization.repository';
 
 @Injectable()
@@ -12,13 +12,10 @@ export class CreateOrganizationService {
   constructor(
     @Inject('IOrganizationRepository')
     private readonly organizationRepository: IOrganizationRepository,
-
     @Inject('IMailer') private readonly mailer: IMailer,
     @Inject('ICreateHash')
     private readonly createHashAdapterProvider: ICreateHash,
-
-    // Service para criação do usuário
-    private readonly createUserOwnerService: CreateUserOwnerService,
+    private readonly createUserService: CreateUserService,
   ) {}
 
   async handlerCreateOrganization(
@@ -58,7 +55,12 @@ export class CreateOrganizationService {
   ) {
     const content = {
       role: 'Owner',
+      active: true,
+      degree: 0,
       organization,
+      graduation: null,
+      modality: null,
+      amount_class: 0,
       password: passwordHashed,
       uf: createOrganizationDto.user_master.uf,
       cpf: createOrganizationDto.user_master.cpf,
@@ -68,16 +70,15 @@ export class CreateOrganizationService {
       city: createOrganizationDto.user_master.city,
       email: createOrganizationDto.user_master.email,
       phone: createOrganizationDto.user_master.phone,
-      degree: createOrganizationDto.user_master.degree,
       payday: createOrganizationDto.user_master.payday,
       street: createOrganizationDto.user_master.street,
       district: createOrganizationDto.user_master.district,
       birth_date: createOrganizationDto.user_master.birth_date,
-      graduation: createOrganizationDto.user_master.graduation,
-      amount_class: createOrganizationDto.user_master.amount_class,
       house_number: createOrganizationDto.user_master.house_number,
     };
-    return await this.createUserOwnerService.execute(content);
+    return await this.createUserService.execute(content, {
+      organization,
+    });
   }
 
   async execute(createOrganizationDto: CreateOrganizationDto): Promise<any> {
@@ -105,28 +106,21 @@ export class CreateOrganizationService {
 
     if (!createUserResponse) {
       throw new ConflictException(
-        '🥲 O usuário nõ foi criado por favor, verifique se os dados estão corretos.',
+        '🥲 O usuário não foi criado por favor, verifique se os dados estão corretos.',
       );
     }
 
     if (createOrganizationResponse.id) {
       await this.mailer.sendMail({
-        subject: `🚀 ${createOrganizationResponse.name}! Chegou seu novo acesso ao Mioli Jiu Jitsu`,
+        subject: `🚀 ${createUserResponse.name}! Chegou seu novo acesso ao BJJ Stars`,
         to: [createUserResponse.email],
         context: {
           user: createUserResponse.email,
           password: passwordHashed.password,
-          url: 'url de login do sistema',
+          url: 'http://locahost:3000',
         },
         template: 'credentials-user',
       });
     }
-
-    return {
-      response: {
-        createOrganizationResponse,
-        createUserResponse,
-      },
-    };
   }
 }

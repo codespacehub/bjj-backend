@@ -4,11 +4,12 @@ import { Replace } from '../helpers/Replace';
 
 import { removeCharacterString } from 'src/shared/utils/remove-character-string';
 import { PrismaGraduationRepository } from '@/infra/database/prisma/repositories/PrismaGraduationRepository';
+import { PrismaPlanRepository } from '@/infra/database/prisma/repositories/PrismaPlanRepository';
 
-interface GraduationProps {
+interface PlanProps {
   name: string;
-  color_degree: string;
-  modality_id: string;
+  description: string;
+  value: number;
 
   organization_id: string;
 
@@ -17,13 +18,13 @@ interface GraduationProps {
 }
 
 @Injectable()
-export class Graduation {
+export class Plan {
   private _id: string;
-  private props: GraduationProps;
+  private props: PlanProps;
 
   constructor(
     props: Replace<
-      GraduationProps,
+      PlanProps,
       {
         organization_id?: string;
         created_at?: Date;
@@ -51,20 +52,20 @@ export class Graduation {
     return this.props.name;
   }
 
-  public set modality_id(modality_id: string) {
-    this.props.modality_id = modality_id;
+  public set description(description: string) {
+    this.props.description = description;
   }
 
-  public get modality_id(): string {
-    return this.props.modality_id;
+  public get description(): string {
+    return this.props.description;
   }
 
-  public set color_degree(color_degree: string) {
-    this.props.color_degree = color_degree;
+  public set value(value: number) {
+    this.props.value = value;
   }
 
-  public get color_degree(): string {
-    return this.props.color_degree;
+  public get value(): number {
+    return this.props.value;
   }
 
   public set organization_id(organization_id: string) {
@@ -80,7 +81,7 @@ export class Graduation {
   }
 }
 
-export const GraduationRepositoryProvider = {
-  provide: 'IGraduationRepository',
-  useClass: PrismaGraduationRepository,
+export const PlanRepositoryProvider = {
+  provide: 'IPlanRepository',
+  useClass: PrismaPlanRepository,
 };

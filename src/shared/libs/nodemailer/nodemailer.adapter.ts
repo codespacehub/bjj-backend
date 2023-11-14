@@ -24,7 +24,7 @@ export class NodeMailerAdapter implements IMailer {
       subject: params.subject,
       context: params.context,
       template: params.template,
-      from: `Sofia Alpha tecnologia <${this.mail.globalMail.user}>`,
+      from: `BJJ Stars <${this.mail.globalMail.user}>`,
     };
 
     const result = await transport.sendMail(options);
@@ -53,7 +53,7 @@ export class NodeMailerAdapter implements IMailer {
       hbs({
         viewEngine: {
           extname: '.hbs',
-          defaultLayout: 'false',
+          defaultLayout: false,
           layoutsDir: TEMPLATES_PATH,
           partialsDir: TEMPLATES_PATH,
         },

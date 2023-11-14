@@ -6,7 +6,7 @@ export class PrismaModalityMapper {
       id: modality.id,
       name: modality.name,
       description: modality.description,
-      organization: modality.organization,
+      organization_id: modality.organization,
     };
   }
 }

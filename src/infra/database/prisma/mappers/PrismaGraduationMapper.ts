@@ -7,6 +7,7 @@ export class PrismaGraduationMapper {
       name: graduation.name,
       modality_id: graduation.modality_id,
       color_degree: graduation.color_degree,
+      organization_id: graduation.organization_id,
     };
   }
 }

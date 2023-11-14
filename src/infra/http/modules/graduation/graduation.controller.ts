@@ -6,9 +6,13 @@ import {
   Param,
   Delete,
   Controller,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
+import { JwtAuthzGuard } from '../auth/guards/auth-guard';
+import { User } from '@/shared/decorators/user.decorator';
+import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
 import { CreateGraduationService } from './service/create-graduation.service';
 import { UpdateGraduationService } from './service/update-graduation.service';
 import { DeleteGraduationService } from './service/delete-graduation.service';
@@ -16,7 +20,7 @@ import { FindAllGraduationService } from './service/find-all-graduation.service'
 import { CreateAndUpdateGraduationDto } from './dto/create-and-update-graduation';
 import { FindGraduationByIdService } from './service/find-by-id-graduation.service';
 
-@ApiTags('Graduações')
+@ApiTags('Graduação')
 @Controller({ version: '1', path: 'graduations' })
 export class GraduationController {
   constructor(
@@ -28,30 +32,44 @@ export class GraduationController {
   ) {}
 
   @Post()
-  create(@Body() graduation: CreateAndUpdateGraduationDto) {
-    return this.createGraduationService.execute(graduation);
+  @ApiSecurity('bearerAuth')
+  @UseGuards(JwtAuthzGuard)
+  create(
+    @User() user: TLoggedUser,
+    @Body() graduation: CreateAndUpdateGraduationDto,
+  ) {
+    console.log(user);
+    return this.createGraduationService.execute(graduation, user.organization);
   }
 
-  @Patch(':idGraduation')
+  @Patch(':graduationId')
+  @ApiSecurity('bearerAuth')
+  @UseGuards(JwtAuthzGuard)
   update(
     @Body() newGraduation: CreateAndUpdateGraduationDto,
-    @Param('idGraduation') idGraduation: string,
+    @Param('graduationId') graduationId: string,
   ) {
-    return this.updateGraduationService.execute(newGraduation, idGraduation);
+    return this.updateGraduationService.execute(newGraduation, graduationId);
   }
 
-  @Get(':idGraduation')
-  async findById(@Param('idGraduation') idGraduation: string) {
-    return await this.findGraduationByIdService.execute(idGraduation);
+  @Get(':graduationId')
+  @ApiSecurity('bearerAuth')
+  @UseGuards(JwtAuthzGuard)
+  async findById(@Param('graduationId') graduationId: string) {
+    return await this.findGraduationByIdService.execute(graduationId);
   }
 
   @Get()
-  findAll() {
-    return this.findAllGraduationService.execute();
+  @ApiSecurity('bearerAuth')
+  @UseGuards(JwtAuthzGuard)
+  findAll(@User() user: TLoggedUser) {
+    return this.findAllGraduationService.execute(user.organization);
   }
 
-  @Delete(':idGraduation')
-  delete(@Param('idGraduation') idGraduation: string) {
-    return this.deleteGraduationService.execute(idGraduation);
+  @Delete(':graduationId')
+  @ApiSecurity('bearerAuth')
+  @UseGuards(JwtAuthzGuard)
+  delete(@Param('graduationId') graduationId: string) {
+    return this.deleteGraduationService.execute(graduationId);
   }
 }

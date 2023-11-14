@@ -68,13 +68,13 @@ export class CreateUserService {
       modality,
       birth_date,
       graduation,
-      organization: org,
+      organization_id: org,
       amount_class,
       house_number,
     });
 
     await this.mailer.sendMail({
-      subject: `🚀 ${userDto.name}! Chegou seu novo acesso ao Conector Alpha`,
+      subject: `🚀 ${userDto.name}! Chegou seu novo acesso ao BJJ Stars`,
       to: [userDto.email],
       context: {
         user: userDto.email,

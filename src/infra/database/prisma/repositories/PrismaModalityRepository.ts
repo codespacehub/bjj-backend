@@ -9,10 +9,10 @@ import { IModalityRepository } from '@/application/repositories/modality.reposit
 export class PrismaModalityRepository implements IModalityRepository {
   constructor(private prisma: PrismaService) {}
 
-  async findAll(organizationId: string): Promise<any> {
+  async findAll(organization_id: string): Promise<any> {
     const modalities = this.prisma.modality.findMany({
       where: {
-        organization: organizationId,
+        organization_id,
       },
       include: {
         graduations: true,

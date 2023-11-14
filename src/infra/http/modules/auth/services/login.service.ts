@@ -58,7 +58,7 @@ export class LoginService {
           role: findUser.role,
           phone: findUser.phone,
           verified: findUser.verified,
-          organization: findUser.organization,
+          organization: findUser.organization_id,
         }),
       };
 

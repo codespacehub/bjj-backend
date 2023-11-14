@@ -1,5 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 
+import { PlanRepositoryProvider } from '@/application/entities/plan';
 import { UserRepositoryProvider } from 'src/application/entities/user';
 import { PrismaService } from 'src/infra/database/prisma/prisma.service';
 import { ModalityRepositoryProvider } from '@/application/entities/modality';
@@ -13,6 +14,7 @@ import { OrganizationRepositoryProvider } from 'src/application/entities/organiz
   providers: [
     PrismaService,
     UserRepositoryProvider,
+    PlanRepositoryProvider,
     CreateHashAdapterProvider,
     NodeMailerAdapterProvider,
     ModalityRepositoryProvider,
@@ -22,6 +24,7 @@ import { OrganizationRepositoryProvider } from 'src/application/entities/organiz
   exports: [
     PrismaService,
     UserRepositoryProvider,
+    PlanRepositoryProvider,
     CreateHashAdapterProvider,
     NodeMailerAdapterProvider,
     ModalityRepositoryProvider,

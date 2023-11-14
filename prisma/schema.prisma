@@ -17,8 +17,10 @@ model Organization {
 
   active Boolean?
 
-  users      User[]
-  modalities Modality[]
+  users       User[]
+  modalities  Modality[]
+  graduations Graduation[]
+  plans       Plan[]
 
   updated_at DateTime? @default(now())
   created_at DateTime  @default(now())
@@ -36,8 +38,8 @@ model Modality {
   graduations Graduation[]
   times       Times[]
 
-  Organization Organization? @relation(fields: [organization], references: [id])
-  organization String?
+  Organization    Organization? @relation(fields: [organization_id], references: [id])
+  organization_id String?
 
   updated_at DateTime?
   created_at DateTime  @default(now())
@@ -54,6 +56,9 @@ model Graduation {
 
   Modality    Modality? @relation(fields: [modality_id], references: [id])
   modality_id String?
+
+  Organization    Organization? @relation(fields: [organization_id], references: [id])
+  organization_id String?
 
   updated_at DateTime?
   created_at DateTime  @default(now())
@@ -85,14 +90,17 @@ model User {
   payday   Int
   verified Boolean
 
-  Graduation Graduation? @relation(fields: [graduation], references: [id])
-  graduation String?
+  Graduation    Graduation? @relation(fields: [graduation_id], references: [id])
+  graduation_id String?
 
-  Organization Organization? @relation(fields: [organization], references: [id])
-  organization String?
+  Organization    Organization? @relation(fields: [organization_id], references: [id])
+  organization_id String?
 
-  Modality Modality? @relation(fields: [modality], references: [id])
-  modality String?
+  Modality    Modality? @relation(fields: [modality_id], references: [id])
+  modality_id String?
+
+  Plan    Plan?   @relation(fields: [plan_id], references: [id])
+  plan_id String?
 
   updated_at DateTime?
   created_at DateTime  @default(now())
@@ -103,9 +111,26 @@ model User {
 model Times {
   id String @id
 
-  Modality   Modality? @relation(fields: [modalityId], references: [id])
-  modalityId String?
+  Modality    Modality? @relation(fields: [modality_id], references: [id])
+  modality_id String?
 
   updated_at DateTime?
   created_at DateTime  @default(now())
+}
+
+model Plan {
+  id          String @id
+  name        String
+  description String
+  value       Int
+
+  users User[]
+
+  Organization    Organization? @relation(fields: [organization_id], references: [id])
+  organization_id String?
+
+  updated_at DateTime?
+  created_at DateTime  @default(now())
+
+  @@map("plans")
 }

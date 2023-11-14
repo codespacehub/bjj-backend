@@ -8,7 +8,7 @@ export class FindAllGraduationService {
     private readonly graduationRepository: IGraduationRepository,
   ) {}
 
-  execute() {
-    return this.graduationRepository.findAll();
+  async execute(organizationId: string) {
+    return await this.graduationRepository.findAll(organizationId);
   }
 }

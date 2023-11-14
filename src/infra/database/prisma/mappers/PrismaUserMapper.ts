@@ -20,11 +20,11 @@ export class PrismaUserMapper {
       verified: user.verified,
       district: user.district,
       password: user.password,
-      modality: user.modality,
-      graduation: user.graduation,
+      modality_id: user.modality,
       birth_date: user.birth_date,
+      graduation_id: user.graduation,
       house_number: user.house_number,
-      organization: user.organization,
+      organization_id: user.organization_id,
       amount_class: user.amount_class,
     };
   }

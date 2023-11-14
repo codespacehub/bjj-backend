@@ -10,15 +10,19 @@ export class CreateGraduationService {
     private readonly graduationRepository: IGraduationRepository,
   ) {}
 
-  execute(graduation: CreateAndUpdateGraduationDto) {
+  async execute(
+    graduation: CreateAndUpdateGraduationDto,
+    organization_id: string,
+  ) {
     const { name, color_degree, modality_id } = graduation;
 
     const new_graduation = new Graduation({
       name,
       color_degree,
       modality_id,
+      organization_id,
     });
 
-    return this.graduationRepository.create(new_graduation);
+    return await this.graduationRepository.create(new_graduation);
   }
 }
