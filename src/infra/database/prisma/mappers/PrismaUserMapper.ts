@@ -13,7 +13,6 @@ export class PrismaUserMapper {
       plan: user.plan,
       phone: user.phone,
       email: user.email,
-      degree: user.degree,
       payday: user.payday,
       street: user.street,
       active: user.active,

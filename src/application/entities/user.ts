@@ -12,7 +12,6 @@ interface UserProps {
   role: string;
   email: string;
   phone: string;
-  degree: number;
   payday: number;
   active: boolean;
   password: string;
@@ -133,14 +132,6 @@ export class User {
 
   public get payday(): number {
     return this.props.payday;
-  }
-
-  public set degree(degree: number) {
-    this.props.degree = degree;
-  }
-
-  public get degree(): number {
-    return this.props.degree;
   }
 
   public set amount_class(amount_class: number) {

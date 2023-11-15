@@ -16,6 +16,7 @@ export class PrismaModalityRepository implements IModalityRepository {
       },
       include: {
         graduations: true,
+        times: true,
       },
     });
 

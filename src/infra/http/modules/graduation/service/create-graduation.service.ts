@@ -1,7 +1,7 @@
-import { IGraduationRepository } from '@/application/repositories/graduation.repository';
 import { Injectable, Inject } from '@nestjs/common';
-import { CreateAndUpdateGraduationDto } from '../dto/create-and-update-graduation';
 import { Graduation } from '@/application/entities/graduation';
+import { CreateAndUpdateGraduationDto } from '../dto/create-and-update-graduation';
+import { IGraduationRepository } from '@/application/repositories/graduation.repository';
 
 @Injectable()
 export class CreateGraduationService {
@@ -14,12 +14,13 @@ export class CreateGraduationService {
     graduation: CreateAndUpdateGraduationDto,
     organization_id: string,
   ) {
-    const { name, color_degree, modality_id } = graduation;
+    const { name, color_degree, modality_id, amount_class } = graduation;
 
     const new_graduation = new Graduation({
       name,
-      color_degree,
       modality_id,
+      color_degree,
+      amount_class,
       organization_id,
     });
 

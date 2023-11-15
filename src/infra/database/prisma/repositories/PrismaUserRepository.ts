@@ -66,8 +66,8 @@ export class PrismaUserRepository implements IUserRepository {
         cpf: updateUserDto.cpf,
         name: updateUserDto.name,
         role: updateUserDto.role,
-        plan: updateUserDto.plan,
         email: updateUserDto.email,
+        plan: updateUserDto.plan_id,
         payday: updateUserDto.payday,
         phone: updateUserDto.birth_date,
         password: updateUserDto.password,
@@ -96,6 +96,10 @@ export class PrismaUserRepository implements IUserRepository {
     const users = await this.prisma.user.findMany({
       where: {
         organization_id,
+      },
+      include: {
+        Modality: true,
+        Plan: true,
       },
     });
 

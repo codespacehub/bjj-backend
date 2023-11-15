@@ -12,4 +12,8 @@ export class CreateAndUpdateGraduationDto {
   @IsString()
   @IsNotEmpty()
   modality_id: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  amount_class: number;
 }

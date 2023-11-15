@@ -24,6 +24,7 @@ model Organization {
 
   updated_at DateTime? @default(now())
   created_at DateTime  @default(now())
+  Time       Time[]
 
   @@map("organizations")
 }
@@ -36,7 +37,7 @@ model Modality {
   users User[]
 
   graduations Graduation[]
-  times       Times[]
+  times       Time[]
 
   Organization    Organization? @relation(fields: [organization_id], references: [id])
   organization_id String?
@@ -51,6 +52,7 @@ model Graduation {
   id           String  @id
   name         String
   color_degree String?
+  amount_class Int?
 
   users User[]
 
@@ -84,11 +86,11 @@ model User {
   house_number String
   amount_class Int
 
-  degree   Int
-  plan     String
   active   Boolean
   payday   Int
   verified Boolean
+
+  times Time[]
 
   Graduation    Graduation? @relation(fields: [graduation_id], references: [id])
   graduation_id String?
@@ -99,8 +101,8 @@ model User {
   Modality    Modality? @relation(fields: [modality_id], references: [id])
   modality_id String?
 
-  Plan    Plan?   @relation(fields: [plan_id], references: [id])
-  plan_id String?
+  Plan Plan?   @relation(fields: [plan], references: [id])
+  plan String?
 
   updated_at DateTime?
   created_at DateTime  @default(now())
@@ -108,14 +110,23 @@ model User {
   @@map("users")
 }
 
-model Times {
-  id String @id
+model Time {
+  id   String @id
+  hour String
+
+  Organization    Organization? @relation(fields: [organization_id], references: [id])
+  organization_id String?
 
   Modality    Modality? @relation(fields: [modality_id], references: [id])
   modality_id String?
 
+  User    User?   @relation(fields: [user_id], references: [id])
+  user_id String?
+
   updated_at DateTime?
   created_at DateTime  @default(now())
+
+  @@map("times")
 }
 
 model Plan {

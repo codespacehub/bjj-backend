@@ -9,6 +9,7 @@ interface GraduationProps {
   name: string;
   color_degree: string;
   modality_id: string;
+  amount_class: number;
 
   organization_id: string;
 
@@ -49,6 +50,14 @@ export class Graduation {
 
   public get name(): string {
     return this.props.name;
+  }
+
+  public set amount_class(amount_class: number) {
+    this.props.amount_class = amount_class;
+  }
+
+  public get amount_class(): number {
+    return this.props.amount_class;
   }
 
   public set modality_id(modality_id: string) {
