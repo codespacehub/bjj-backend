@@ -3,6 +3,7 @@ import { CreateAndUpdateUserDto } from '@/infra/http/modules/user/dtos/create-an
 
 export interface IUserRepository {
   create(user: User): Promise<User>;
+  updateAmountClass(userId: string);
   remove(userId: string): Promise<void>;
   findById(userId: string): Promise<User>;
   findByEmail(email: string): Promise<User>;

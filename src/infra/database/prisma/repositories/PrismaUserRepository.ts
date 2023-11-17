@@ -106,4 +106,21 @@ export class PrismaUserRepository implements IUserRepository {
 
     return users;
   }
+
+  async updateAmountClass(userId: string): Promise<any> {
+    const findUser = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    const user = await this.prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        amount_class: findUser.amount_class + 1,
+      },
+    });
+  }
 }

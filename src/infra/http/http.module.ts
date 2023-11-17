@@ -7,6 +7,7 @@ import { TimeModule } from './modules/time/time.module';
 import { ModalityModule } from './modules/modality/modality.module';
 import { GraduationModule } from './modules/graduation/graduation.module';
 import { OrganizationModule } from './modules/organization/organization.module';
+import { PresenceModule } from './modules/presence/presence.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { OrganizationModule } from './modules/organization/organization.module';
     PlanModule,
     TimeModule,
     ModalityModule,
+    PresenceModule,
     GraduationModule,
     OrganizationModule,
   ],

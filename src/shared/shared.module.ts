@@ -9,6 +9,7 @@ import { CreateHashAdapterProvider } from './libs/bcryptjs/create-hash.adapter';
 import { NodeMailerAdapterProvider } from './libs/nodemailer/nodemailer.adapter';
 import { GraduationRepositoryProvider } from '@/application/entities/graduation';
 import { OrganizationRepositoryProvider } from 'src/application/entities/organization';
+import { PresenceRepositoryProvider } from '@/application/entities/presence';
 
 @Global()
 @Module({
@@ -20,6 +21,7 @@ import { OrganizationRepositoryProvider } from 'src/application/entities/organiz
     CreateHashAdapterProvider,
     NodeMailerAdapterProvider,
     ModalityRepositoryProvider,
+    PresenceRepositoryProvider,
     GraduationRepositoryProvider,
     OrganizationRepositoryProvider,
   ],
@@ -31,6 +33,7 @@ import { OrganizationRepositoryProvider } from 'src/application/entities/organiz
     CreateHashAdapterProvider,
     NodeMailerAdapterProvider,
     ModalityRepositoryProvider,
+    PresenceRepositoryProvider,
     GraduationRepositoryProvider,
     OrganizationRepositoryProvider,
   ],
