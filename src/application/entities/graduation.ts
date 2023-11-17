@@ -11,6 +11,8 @@ interface GraduationProps {
   modality_id: string;
   amount_class: number;
 
+  order: number;
+
   organization_id: string;
 
   updated_at?: Date;
@@ -58,6 +60,14 @@ export class Graduation {
 
   public get amount_class(): number {
     return this.props.amount_class;
+  }
+
+  public set order(order: number) {
+    this.props.order = order;
+  }
+
+  public get order(): number {
+    return this.props.order;
   }
 
   public set modality_id(modality_id: string) {

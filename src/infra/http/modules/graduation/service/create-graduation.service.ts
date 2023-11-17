@@ -14,10 +14,11 @@ export class CreateGraduationService {
     graduation: CreateAndUpdateGraduationDto,
     organization_id: string,
   ) {
-    const { name, color_degree, modality_id, amount_class } = graduation;
+    const { name, order, color_degree, modality_id, amount_class } = graduation;
 
     const new_graduation = new Graduation({
       name,
+      order,
       modality_id,
       color_degree,
       amount_class,

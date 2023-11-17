@@ -98,8 +98,9 @@ export class PrismaUserRepository implements IUserRepository {
         organization_id,
       },
       include: {
-        Modality: true,
         Plan: true,
+        Modality: true,
+        Graduation: true,
       },
     });
 

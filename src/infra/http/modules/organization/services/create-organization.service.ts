@@ -3,7 +3,7 @@ import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { Organization } from '@/application/entities/organization';
 import { IMailer } from '@/shared/interface/mail/mailer.interface';
 import { CreateOrganizationDto } from '../dtos/create-organization.dto';
-import { CreateUserService } from '../../user/services/create-user.service';
+import { CreateAdminService } from '../../user/services/create-admin.service';
 import { ICreateHash } from '@/shared/interface/bcryptjs/create-hash.interface';
 import { IOrganizationRepository } from '@/application/repositories/organization.repository';
 
@@ -15,7 +15,7 @@ export class CreateOrganizationService {
     @Inject('IMailer') private readonly mailer: IMailer,
     @Inject('ICreateHash')
     private readonly createHashAdapterProvider: ICreateHash,
-    private readonly createUserService: CreateUserService,
+    private readonly createAdminService: CreateAdminService,
   ) {}
 
   async handlerCreateOrganization(
@@ -54,11 +54,13 @@ export class CreateOrganizationService {
     passwordHashed: string,
   ) {
     const content = {
-      role: 'Owner',
+      payday: 0,
+      role: createOrganizationDto.admin ? 'AdminGestor' : 'Admin',
       active: true,
-      graduation_id: null,
-      modality_id: null,
+      plan_id: null,
       amount_class: 0,
+      modality_id: null,
+      graduation_id: null,
       password: passwordHashed,
       organization_id: organization,
       uf: createOrganizationDto.user_master.uf,
@@ -68,14 +70,12 @@ export class CreateOrganizationService {
       city: createOrganizationDto.user_master.city,
       email: createOrganizationDto.user_master.email,
       phone: createOrganizationDto.user_master.phone,
-      plan_id: createOrganizationDto.user_master.plan,
-      payday: createOrganizationDto.user_master.payday,
       street: createOrganizationDto.user_master.street,
       district: createOrganizationDto.user_master.district,
       birth_date: createOrganizationDto.user_master.birth_date,
       house_number: createOrganizationDto.user_master.house_number,
     };
-    return await this.createUserService.execute(content, {
+    return await this.createAdminService.execute(content, {
       organization,
     });
   }

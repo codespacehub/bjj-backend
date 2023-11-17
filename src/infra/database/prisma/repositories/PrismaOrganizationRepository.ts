@@ -77,7 +77,14 @@ export class PrismaOrganizationRepository implements IOrganizationRepository {
   }
 
   async findAll(): Promise<any[]> {
-    const organization = await this.prisma.organization.findMany({});
+    const organization = await this.prisma.organization.findMany({
+      include: {
+        users: true,
+        plans: true,
+        modalities: true,
+        graduations: true,
+      },
+    });
 
     return organization;
   }

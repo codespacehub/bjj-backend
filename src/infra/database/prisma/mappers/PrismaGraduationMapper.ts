@@ -5,6 +5,7 @@ export class PrismaGraduationMapper {
     return {
       id: graduation.id,
       name: graduation.name,
+      order: graduation.order,
       modality_id: graduation.modality_id,
       color_degree: graduation.color_degree,
       amount_class: graduation.amount_class,

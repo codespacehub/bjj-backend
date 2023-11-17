@@ -1,4 +1,10 @@
-import { IsBoolean, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 class OrganizationInfo {
   @IsString({ message: 'Esse campo precisa ser um texto' })
@@ -132,12 +138,6 @@ class UserMaster {
   })
   amount_class: number;
 
-  @IsNumber()
-  @IsNotEmpty({
-    message: 'Por favor preencha o campo de "dia de pagamento" do usuário',
-  })
-  payday: number;
-
   @IsString({ message: 'Esse campo precisa ser um texto' })
   @IsNotEmpty({
     message: 'Por favor preencha o campo de "Número" do usuário',
@@ -146,6 +146,9 @@ class UserMaster {
 }
 
 export class CreateOrganizationDto {
+  @IsOptional()
+  admin?: boolean;
+
   @IsBoolean()
   active: boolean;
 

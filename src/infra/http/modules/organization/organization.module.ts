@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { OrganizationController } from './organization.controller';
 
-import { CreateUserService } from '../user/services/create-user.service';
+import { CreateAdminService } from '../user/services/create-admin.service';
 import { CreateOrganizationService } from './services/create-organization.service';
 import { UpdateOrganizationService } from './services/update-organization.service';
 import { DeleteOrganizationService } from './services/delete-organization.service';
@@ -11,12 +11,12 @@ import { FindOrganizationByIdService } from './services/find-organization-by-id.
 @Module({
   controllers: [OrganizationController],
   providers: [
-    CreateUserService,
+    CreateAdminService,
     CreateOrganizationService,
     UpdateOrganizationService,
-    FindOrganizationByIdService,
     DeleteOrganizationService,
     FindAllOrganizationService,
+    FindOrganizationByIdService,
   ],
 })
 export class OrganizationModule {}

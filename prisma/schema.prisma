@@ -54,6 +54,8 @@ model Graduation {
   color_degree String?
   amount_class Int?
 
+  order Int?
+
   users User[]
 
   Modality    Modality? @relation(fields: [modality_id], references: [id])

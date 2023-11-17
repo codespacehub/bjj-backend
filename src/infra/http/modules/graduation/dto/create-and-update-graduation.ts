@@ -16,4 +16,8 @@ export class CreateAndUpdateGraduationDto {
   @IsNumber()
   @IsNotEmpty()
   amount_class: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  order: number;
 }
