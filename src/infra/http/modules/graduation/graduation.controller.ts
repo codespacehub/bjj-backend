@@ -38,7 +38,6 @@ export class GraduationController {
     @User() user: TLoggedUser,
     @Body() graduation: CreateAndUpdateGraduationDto,
   ) {
-    console.log(user);
     return this.createGraduationService.execute(graduation, user.organization);
   }
 

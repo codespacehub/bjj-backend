@@ -1,5 +1,10 @@
 import { IGraduationRepository } from '@/application/repositories/graduation.repository';
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
 @Injectable()
 export class DeleteGraduationService {
@@ -8,7 +13,20 @@ export class DeleteGraduationService {
     private readonly graduationRepository: IGraduationRepository,
   ) {}
 
-  execute(idGraduation: string) {
-    return this.graduationRepository.remove(idGraduation);
+  async execute(graduationId: string) {
+    const findGraduation =
+      await this.graduationRepository.findById(graduationId);
+
+    if (!findGraduation) {
+      throw new NotFoundException('Graduação informada não existe');
+    }
+
+    if (findGraduation.users.length > 0) {
+      throw new ConflictException(
+        'Existem usuários conectados a essa graduação',
+      );
+    }
+
+    return this.graduationRepository.remove(graduationId);
   }
 }
