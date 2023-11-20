@@ -24,6 +24,9 @@ export class PrismaGraduationRepository implements IGraduationRepository {
       where: {
         id,
       },
+      include: {
+        users: true,
+      },
     });
 
     if (!graduation) {

@@ -3,6 +3,7 @@ import {
   Injectable,
   NotFoundException,
   NotAcceptableException,
+  ConflictException,
 } from '@nestjs/common';
 import { IModalityRepository } from '@/application/repositories/modality.repository';
 
@@ -23,6 +24,14 @@ export class RemoveModalityService {
     if (findModality.graduations.length > 0) {
       throw new NotAcceptableException(
         'Remova as graduações vinculadas para depois excluir essa modalidade',
+      );
+    }
+
+    console.log(findModality);
+
+    if (findModality.users.length > 0) {
+      throw new ConflictException(
+        'Existem usuários conectados a essa graduação',
       );
     }
 
