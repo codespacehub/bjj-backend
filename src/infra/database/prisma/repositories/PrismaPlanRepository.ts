@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
-
 import { PrismaService } from '../prisma.service';
 import { Graduation } from '@/application/entities/graduation';
-import { PrismaGraduationMapper } from '../mappers/PrismaGraduationMapper';
 import { IPlanRepository } from '@/application/repositories/plan.repository';
 import { PrismaPlanMapper } from '../mappers/PrismaPlanMapper';
 import { Plan } from '@/application/entities/plan';
+import { CreateAndUpdatePlanDto } from '@/infra/http/modules/plan/services/dtos/create-and-update-plan.dto';
 
 @Injectable()
 export class PrismaPlanRepository implements IPlanRepository {
@@ -56,14 +55,15 @@ export class PrismaPlanRepository implements IPlanRepository {
     });
   }
 
-  async update(new_graduation: Graduation, planId: string): Promise<any> {
-    const updateGraduation = await this.prisma.graduation.update({
+  async update(planId: string, planDto: CreateAndUpdatePlanDto): Promise<any> {
+    const updateGraduation = await this.prisma.plan.update({
       where: {
         id: planId,
       },
       data: {
-        name: new_graduation.name,
-        color_degree: new_graduation.color_degree,
+        name: planDto.name,
+        value: planDto.value,
+        description: planDto.description,
       },
     });
 

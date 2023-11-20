@@ -4,6 +4,7 @@ import { PrismaService } from '../prisma.service';
 import { Modality } from '@/application/entities/modality';
 import { PrismaModalityMapper } from '../mappers/PrismaModalityMapper';
 import { IModalityRepository } from '@/application/repositories/modality.repository';
+import { CreateOrUpdateModalityDto } from '@/infra/http/modules/modality/dto/create-or-update-modality.dto';
 
 @Injectable()
 export class PrismaModalityRepository implements IModalityRepository {
@@ -55,6 +56,18 @@ export class PrismaModalityRepository implements IModalityRepository {
     await this.prisma.modality.delete({
       where: {
         id: modalityId,
+      },
+    });
+  }
+
+  async update(modalityId: string, modalityDto: CreateOrUpdateModalityDto) {
+    const updateModality = await this.prisma.modality.update({
+      where: {
+        id: modalityId,
+      },
+      data: {
+        name: modalityDto.name,
+        description: modalityDto.description,
       },
     });
   }

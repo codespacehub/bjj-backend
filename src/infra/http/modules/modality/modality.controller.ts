@@ -54,12 +54,12 @@ export class ModalityController {
     return this.createModalityService.execute(user, createModalityDto);
   }
 
-  @Patch()
+  @Patch(':modalityId')
   updateModality(
-    @User() user: TLoggedUser,
-    @Body() updateModalityDto: CreateOrUpdateModalityDto,
+    @Param('modalityId') modalityId: string,
+    @Body() modalityDto: CreateOrUpdateModalityDto,
   ) {
-    return this.updateModalityService.execute(user, updateModalityDto);
+    return this.updateModalityService.execute(modalityId, modalityDto);
   }
 
   @Delete(':modalityId')

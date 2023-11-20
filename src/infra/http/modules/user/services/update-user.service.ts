@@ -11,8 +11,7 @@ export class UpdateUserService {
     private readonly userRepository: IUserRepository,
   ) {}
 
-  async execute(user: TLoggedUser, updateUserDto: CreateAndUpdateUserDto) {
-    const { id: userId } = user;
+  async execute(userId: string, updateUserDto: CreateAndUpdateUserDto) {
     return await this.userRepository.update(userId, updateUserDto);
   }
 }
