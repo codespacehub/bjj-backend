@@ -38,4 +38,22 @@ export class PrismaPresenceRepository implements IPresenceRepository {
       },
     });
   }
+
+  async delete(presenceId: string): Promise<any> {
+    const findPresence = await this.prisma.presence.findUnique({
+      where: {
+        id: presenceId,
+      },
+    });
+
+    if (!findPresence) {
+      return null;
+    }
+
+    await this.prisma.presence.delete({
+      where: {
+        id: presenceId,
+      },
+    });
+  }
 }

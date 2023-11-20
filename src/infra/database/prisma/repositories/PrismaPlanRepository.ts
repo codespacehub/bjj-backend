@@ -25,6 +25,9 @@ export class PrismaPlanRepository implements IPlanRepository {
       where: {
         id: planId,
       },
+      include: {
+        users: true,
+      },
     });
 
     if (!plan) {

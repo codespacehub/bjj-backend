@@ -14,7 +14,7 @@ export class DeleteGraduationService {
   ) {}
 
   async execute(graduationId: string) {
-    const findGraduation =
+    const findGraduation: any =
       await this.graduationRepository.findById(graduationId);
 
     if (!findGraduation) {

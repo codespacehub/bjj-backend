@@ -37,6 +37,10 @@ export class PrismaUserRepository implements IUserRepository {
       where: {
         id: String(userId),
       },
+      include: {
+        times: true,
+        Presence: true,
+      },
     });
 
     if (!findUser) {

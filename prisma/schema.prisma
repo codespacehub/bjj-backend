@@ -94,7 +94,8 @@ model User {
   payday   Int
   verified Boolean
 
-  times Time[]
+  times      Time[]
+  Presence   Presence[]
 
   Graduation    Graduation? @relation(fields: [graduation_id], references: [id])
   graduation_id String?
@@ -110,7 +111,6 @@ model User {
 
   updated_at DateTime?
   created_at DateTime   @default(now())
-  Presence   Presence[]
 
   @@map("users")
 }
