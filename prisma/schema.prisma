@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -94,8 +94,8 @@ model User {
   payday   Int
   verified Boolean
 
-  times      Time[]
-  Presence   Presence[]
+  times    Time[]
+  Presence Presence[]
 
   Graduation    Graduation? @relation(fields: [graduation_id], references: [id])
   graduation_id String?
@@ -110,7 +110,7 @@ model User {
   plan String?
 
   updated_at DateTime?
-  created_at DateTime   @default(now())
+  created_at DateTime  @default(now())
 
   @@map("users")
 }
