@@ -1,4 +1,4 @@
-import { Time } from '@/application/entities/Time';
+import { Time } from '../../../../../application/entities/time';
 import { Inject, Injectable } from '@nestjs/common';
 import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
 import { ITimeRepository } from '@/application/repositories/time.repository';

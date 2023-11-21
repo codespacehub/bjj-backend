@@ -1,4 +1,4 @@
-import { Time } from '@/application/entities/time';
+import { Time } from '../../../../application/entities/time';
 
 export class PrismaTimeMapper {
   static toPrisma(time: Time) {

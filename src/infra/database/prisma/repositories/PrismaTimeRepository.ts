@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { PrismaService } from '../prisma.service';
-import { Time } from '@/application/entities/Time';
+import { Time } from '../../../../application/entities/time';
 import { ITimeRepository } from '@/application/repositories/time.repository';
 import { PrismaTimeMapper } from '../mappers/PrismaTimeMapper';
 import { CreateTimeDto } from '@/infra/http/modules/time/dtos/create-or-update-time.dto';
