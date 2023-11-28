@@ -53,7 +53,7 @@ export class NodeMailerAdapter implements IMailer {
       hbs({
         viewEngine: {
           extname: '.hbs',
-          defaultLayout: 'false',
+          defaultLayout: false,
           layoutsDir: TEMPLATES_PATH,
           partialsDir: TEMPLATES_PATH,
         },
