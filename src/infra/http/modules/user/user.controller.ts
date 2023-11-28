@@ -66,7 +66,7 @@ export class UserController {
     return this.deleteUserService.execute(userId);
   }
 
-  @Patch(':userId')
+  @Patch('update/:userId')
   @ApiSecurity('bearerAuth')
   @UseGuards(JwtAuthzGuard)
   async updateUser(
@@ -82,7 +82,7 @@ export class UserController {
   @UseGuards(JwtAuthzGuard)
   updatePassword(
     @User() user: TLoggedUser,
-    @Body('newPassword') newPassword: string,
+    @Body('newPassword') newPassword: any,
   ) {
     return this.updatePasswordService.execute(user, newPassword);
   }
