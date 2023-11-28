@@ -5,6 +5,9 @@
   "author": "Nitro desenvolvimento",
   "private": true,
   "license": "UNLICENSED",
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "scripts": {
     "build": "nest build",
     "start": "nest start",
