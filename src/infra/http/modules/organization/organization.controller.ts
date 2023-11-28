@@ -16,6 +16,8 @@ import { UpdateOrganizationService } from './services/update-organization.servic
 import { FindAllOrganizationService } from './services/find-all-organization.service';
 import { FindOrganizationByIdService } from './services/find-organization-by-id.service';
 import { ApiTags } from '@nestjs/swagger';
+import { lastValueFrom } from 'rxjs';
+import { HttpService } from '@nestjs/axios';
 
 @ApiTags('Organização')
 @Controller({ version: '1', path: 'organizations' })
@@ -26,6 +28,8 @@ export class OrganizationController {
     private readonly deleteOrganizationService: DeleteOrganizationService,
     private readonly findAllOrganizationService: FindAllOrganizationService,
     private readonly findOrganizationByIdService: FindOrganizationByIdService,
+
+    private readonly httpService: HttpService,
   ) {}
 
   @Get()
@@ -54,5 +58,14 @@ export class OrganizationController {
   @Delete(':organizationId')
   deleteOrganization(@Param('organizationId') organizationId: string) {
     return this.deleteOrganizationService.execute(organizationId);
+  }
+
+  @Get('cep/:CEP')
+  async getCep(@Param('CEP') cep: string) {
+    const { data } = await lastValueFrom(
+      this.httpService.get(`http://viacep.com.br/ws/${cep}/json/`),
+    );
+
+    return data;
   }
 }

@@ -7,8 +7,10 @@ import { UpdateOrganizationService } from './services/update-organization.servic
 import { DeleteOrganizationService } from './services/delete-organization.service';
 import { FindAllOrganizationService } from './services/find-all-organization.service';
 import { FindOrganizationByIdService } from './services/find-organization-by-id.service';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
+  imports: [HttpModule],
   controllers: [OrganizationController],
   providers: [
     CreateAdminService,
