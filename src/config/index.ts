@@ -12,7 +12,7 @@ export default () => ({
     },
   },
 
-  baseUrlFront: 'http://localhost:3000',
+  baseUrlFront: process.env.BASE_URL_FRONT,
 
   urlStripe: 'http://localhost:3000',
 });
