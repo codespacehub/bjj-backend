@@ -1,19 +1,17 @@
 import {
   Inject,
   Injectable,
+  ForbiddenException,
   BadRequestException,
   UnauthorizedException,
-  ForbiddenException,
 } from '@nestjs/common';
-
-import { Cache } from 'cache-manager';
 
 import { ConfigService } from '@nestjs/config';
 import { JwtPayload, sign } from 'jsonwebtoken';
 
+import { compare } from 'bcrypt';
 import { IUserRepository } from 'src/application/repositories/user.repository';
 import { IOrganizationRepository } from 'src/application/repositories/organization.repository';
-import { compare } from 'bcrypt';
 
 @Injectable()
 export class LoginService {
@@ -31,14 +29,18 @@ export class LoginService {
 
   async execute(loginDto: any) {
     const findUser = await this.userRepository.findByEmail(loginDto.email);
-    if (findUser) {
-      // if (!findOrganization.active) {
-      //   throw new ForbiddenException('Sua organização está desabilitada');
-      // }
+    const findOrganization = await this.organizationRepository.findById(
+      findUser.organization_id,
+    );
 
-      // if (!findUser.active) {
-      //   throw new ForbiddenException('Seu usuário está desabilitado');
-      // }
+    if (findUser) {
+      if (!findOrganization.active) {
+        throw new ForbiddenException('Sua organização está desabilitada');
+      }
+
+      if (!findUser.active) {
+        throw new ForbiddenException('Seu usuário está desabilitado');
+      }
 
       const comparePasswordToHash = await compare(
         loginDto.password,
