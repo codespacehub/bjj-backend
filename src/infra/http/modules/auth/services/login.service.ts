@@ -31,14 +31,20 @@ export class LoginService {
 
   async execute(loginDto: any) {
     const findUser = await this.userRepository.findByEmail(loginDto.email);
-    if (findUser) {
-      // if (!findOrganization.active) {
-      //   throw new ForbiddenException('Sua organização está desabilitada');
-      // }
+    const findOrganization = await this.organizationRepository.findById(
+      findUser.organization_id,
+    );
 
-      // if (!findUser.active) {
-      //   throw new ForbiddenException('Seu usuário está desabilitado');
-      // }
+    if (findUser) {
+      if (!findOrganization.active) {
+        throw new ForbiddenException(
+          'Sua organização está desativada, entre em contato com a Gestor Combate',
+        );
+      }
+
+      if (!findUser.active) {
+        throw new ForbiddenException('Seu usuário está desabilitado');
+      }
 
       const comparePasswordToHash = await compare(
         loginDto.password,

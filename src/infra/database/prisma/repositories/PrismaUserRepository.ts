@@ -134,4 +134,21 @@ export class PrismaUserRepository implements IUserRepository {
       },
     });
   }
+
+  async updateActiveById(userId: string): Promise<void> {
+    const findUser = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    const updateActive = await this.prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        active: findUser.active ? false : true,
+      },
+    });
+  }
 }

@@ -11,6 +11,7 @@ import { FindAllModalitiesService } from '../modality/services/find-all-modaliti
 import { FindUserByEmailService } from './services/find-by-email.service';
 import { UpdatePasswordByIdService } from './services/update-password-by-id.service';
 import { CheckPaydayUserService } from './services/check-payday-user.service';
+import { UpdateActiveByIdService } from './services/update-active-user.service';
 
 @Module({
   controllers: [UserController],
@@ -23,6 +24,7 @@ import { CheckPaydayUserService } from './services/check-payday-user.service';
     UpdatePasswordService,
     CheckPaydayUserService,
     FindUserByEmailService,
+    UpdateActiveByIdService,
     FindAllModalitiesService,
     UpdatePasswordByIdService,
   ],

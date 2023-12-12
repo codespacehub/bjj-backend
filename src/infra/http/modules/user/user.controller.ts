@@ -26,6 +26,7 @@ import { UpdatePasswordService } from './services/update-password.service';
 import { FindUserByEmailService } from './services/find-by-email.service';
 import { UpdatePasswordByIdService } from './services/update-password-by-id.service';
 import { CheckPaydayUserService } from './services/check-payday-user.service';
+import { UpdateActiveByIdService } from './services/update-active-user.service';
 
 @ApiTags('Usuário')
 @Controller({ version: '1', path: 'users' })
@@ -39,6 +40,7 @@ export class UserController {
     private readonly updatePasswordService: UpdatePasswordService,
     private readonly findUserByEmailService: FindUserByEmailService,
     private readonly checkPaydayUserService: CheckPaydayUserService,
+    private readonly updateActiveByIdService: UpdateActiveByIdService,
     private readonly updatePasswordByIdService: UpdatePasswordByIdService,
   ) {}
 
@@ -111,5 +113,10 @@ export class UserController {
     @Body('newPassword') newPassword: any,
   ) {
     return this.updatePasswordByIdService.execute(userId, newPassword);
+  }
+
+  @Patch('active/:userId')
+  updateActiveById(@Param('userId') userId: string) {
+    return this.updateActiveByIdService.execute(userId);
   }
 }
