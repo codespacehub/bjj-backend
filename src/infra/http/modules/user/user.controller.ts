@@ -42,7 +42,7 @@ export class UserController {
     private readonly updatePasswordByIdService: UpdatePasswordByIdService,
   ) {}
 
-  // @Cron('* * * * *')
+  @Cron('0 9 * * *')
   @Get('check')
   checkPaydayUser() {
     return this.checkPaydayUserService.execute();
