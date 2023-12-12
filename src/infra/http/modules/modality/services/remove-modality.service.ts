@@ -27,8 +27,6 @@ export class RemoveModalityService {
       );
     }
 
-    console.log(findModality);
-
     if (findModality.users.length > 0) {
       throw new ConflictException(
         'Existem usuários conectados a essa graduação',

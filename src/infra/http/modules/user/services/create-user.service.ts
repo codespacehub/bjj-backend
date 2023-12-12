@@ -72,7 +72,7 @@ export class CreateUserService {
     });
 
     await this.mailer.sendMail({
-      subject: `🚀 ${userDto.name}! Chegou seu novo acesso ao BJJ Stars`,
+      subject: `🚀 ${userDto.name}! Chegou seu novo acesso ao Gestor Combate`,
       to: [userDto.email],
       context: {
         user: userDto.email,

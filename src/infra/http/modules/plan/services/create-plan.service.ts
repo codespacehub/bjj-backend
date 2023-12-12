@@ -21,8 +21,6 @@ export class CreatePlanService {
       description: createPlanDto.description,
     });
 
-    console.log(plan);
-
     return await this.planRepository.create(plan);
   }
 }

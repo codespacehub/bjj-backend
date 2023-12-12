@@ -24,7 +24,7 @@ export class NodeMailerAdapter implements IMailer {
       subject: params.subject,
       context: params.context,
       template: params.template,
-      from: `BJJ Stars <${this.mail.globalMail.user}>`,
+      from: `Gestor Combate <${this.mail.globalMail.user}>`,
     };
 
     const result = await transport.sendMail(options);

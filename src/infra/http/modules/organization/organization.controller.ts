@@ -18,6 +18,8 @@ import { FindOrganizationByIdService } from './services/find-organization-by-id.
 import { ApiTags } from '@nestjs/swagger';
 import { lastValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
+import { Cron, CronExpression } from '@nestjs/schedule';
+import { CheckPaydayUserService } from '../user/services/check-payday-user.service';
 
 @ApiTags('Organização')
 @Controller({ version: '1', path: 'organizations' })

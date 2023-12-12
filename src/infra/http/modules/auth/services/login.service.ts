@@ -51,13 +51,23 @@ export class LoginService {
       const email = findUser.email.toString().trim();
       const payload: JwtPayload = {
         sub: JSON.stringify({
-          email: email,
           id: findUser.id,
+          uf: findUser.uf,
           cpf: findUser.cpf,
+          cep: findUser.cep,
           name: findUser.name,
+          plan: findUser.plan,
           role: findUser.role,
+          city: findUser.city,
+          email: findUser.email,
           phone: findUser.phone,
+          street: findUser.street,
+          district: findUser.district,
           verified: findUser.verified,
+          modality: findUser.modality,
+          graduation: findUser.graduation,
+          birth_date: findUser.birth_date,
+          house_number: findUser.house_number,
           organization: findUser.organization_id,
         }),
       };

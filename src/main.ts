@@ -16,7 +16,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   const config = new DocumentBuilder()
-    .setTitle('BJJ Stars')
+    .setTitle('Gestor Combate')
     .setDescription(
       'Projeto criado com o objetivo de trazer o controle de presença e alunos das academias',
     )
@@ -37,7 +37,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document, {
     customfavIcon: '/docs/logo.svg',
-    customSiteTitle: 'BJJ Stars | Docs',
+    customSiteTitle: 'Gestor Combate | Docs',
     customCss: `
     .topbar-wrapper img {content:url(\'/docs/logo.svg\'); height: 90px; object-fit: contain}
     .swagger-ui .topbar { background-color: #4562B1; } `,

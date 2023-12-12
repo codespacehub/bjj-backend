@@ -7,6 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DatabaseModule } from './infra/database/database.module';
 
 import config from './config';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import config from './config';
       load: [config],
       envFilePath: ['.env', '.env.dev'],
     }),
+    ScheduleModule.forRoot(),
     CacheModule.register({
       isGlobal: true,
     }),

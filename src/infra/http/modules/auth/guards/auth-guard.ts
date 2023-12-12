@@ -37,12 +37,22 @@ export class JwtAuthzGuard {
 
           request.user = {
             id: jwt.id,
+            uf: jwt.uf,
             cpf: jwt.cpf,
+            cep: jwt.cep,
             name: jwt.name,
+            plan: jwt.plan,
             role: jwt.role,
+            city: jwt.city,
             email: jwt.email,
             phone: jwt.phone,
+            street: jwt.street,
+            district: jwt.district,
             verified: jwt.verified,
+            modality: jwt.modality,
+            graduation: jwt.graduation,
+            birth_date: jwt.birth_date,
+            house_number: jwt.house_number,
             organization: jwt.organization,
           } as TLoggedUser;
 

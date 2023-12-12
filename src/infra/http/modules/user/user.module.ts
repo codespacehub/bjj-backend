@@ -8,6 +8,9 @@ import { FindUserByIdService } from './services/find-by-id.service';
 import { findAllUsersService } from './services/find-all-users.service';
 import { UpdatePasswordService } from './services/update-password.service';
 import { FindAllModalitiesService } from '../modality/services/find-all-modalities.service';
+import { FindUserByEmailService } from './services/find-by-email.service';
+import { UpdatePasswordByIdService } from './services/update-password-by-id.service';
+import { CheckPaydayUserService } from './services/check-payday-user.service';
 
 @Module({
   controllers: [UserController],
@@ -18,7 +21,10 @@ import { FindAllModalitiesService } from '../modality/services/find-all-modaliti
     FindUserByIdService,
     findAllUsersService,
     UpdatePasswordService,
+    CheckPaydayUserService,
+    FindUserByEmailService,
     FindAllModalitiesService,
+    UpdatePasswordByIdService,
   ],
 })
 export class UserModule {}

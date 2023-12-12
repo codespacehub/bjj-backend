@@ -6,15 +6,17 @@ import { CreateOrganizationDto } from '../dtos/create-organization.dto';
 import { CreateAdminService } from '../../user/services/create-admin.service';
 import { ICreateHash } from '@/shared/interface/bcryptjs/create-hash.interface';
 import { IOrganizationRepository } from '@/application/repositories/organization.repository';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class CreateOrganizationService {
   constructor(
     @Inject('IOrganizationRepository')
     private readonly organizationRepository: IOrganizationRepository,
-    @Inject('IMailer') private readonly mailer: IMailer,
     @Inject('ICreateHash')
     private readonly createHashAdapterProvider: ICreateHash,
+    @Inject('IMailer') private readonly mailer: IMailer,
+    private readonly configService: ConfigService,
     private readonly createAdminService: CreateAdminService,
   ) {}
 
@@ -111,12 +113,14 @@ export class CreateOrganizationService {
 
     if (createOrganizationResponse.id) {
       await this.mailer.sendMail({
-        subject: `🚀 ${createUserResponse.name}! Chegou seu novo acesso ao BJJ Stars`,
+        subject: `🚀 ${createUserResponse.name}! Chegou seu novo acesso ao Gestor Combate`,
         to: [createUserResponse.email],
         context: {
           user: createUserResponse.email,
           password: passwordHashed.password,
-          url: 'http://locahost:3000',
+          url: `${this.configService.get('baseUrlFront')}/autenticacao?email=${
+            createUserResponse.email
+          }`,
         },
         template: 'credentials-user',
       });

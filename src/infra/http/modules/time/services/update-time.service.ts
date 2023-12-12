@@ -16,7 +16,6 @@ export class UpdateTimeService {
       throw new NotFoundException('Esse horário não existe, tente novamente.');
     }
 
-    console.log(timeDto);
     return this.timeRepository.update(timeId, timeDto);
   }
 }

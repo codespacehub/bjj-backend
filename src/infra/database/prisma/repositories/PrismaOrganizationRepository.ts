@@ -15,7 +15,11 @@ export class PrismaOrganizationRepository implements IOrganizationRepository {
         id: organizationId,
       },
       include: {
-        users: true,
+        users: {
+          include: {
+            Plan: true,
+          },
+        },
       },
     });
 
@@ -79,7 +83,11 @@ export class PrismaOrganizationRepository implements IOrganizationRepository {
   async findAll(): Promise<any[]> {
     const organization = await this.prisma.organization.findMany({
       include: {
-        users: true,
+        users: {
+          include: {
+            Plan: true,
+          },
+        },
         plans: true,
         modalities: true,
         graduations: true,

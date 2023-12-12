@@ -18,7 +18,9 @@ export class PrismaUserRepository implements IUserRepository {
     });
 
     if (!findUserByEmail) {
-      throw new NotFoundException('Usuário informado não existe');
+      throw new NotFoundException(
+        'E-mail informado não possui cadastro no gestor combate',
+      );
     }
 
     return findUserByEmail;
@@ -67,15 +69,20 @@ export class PrismaUserRepository implements IUserRepository {
         id: userId,
       },
       data: {
+        uf: updateUserDto.uf,
         cpf: updateUserDto.cpf,
-        name: updateUserDto.name,
+        cep: updateUserDto.cep,
         role: updateUserDto.role,
+        city: updateUserDto.city,
+        name: updateUserDto.name,
         email: updateUserDto.email,
         plan: updateUserDto.plan_id,
+        street: updateUserDto.street,
         payday: updateUserDto.payday,
         phone: updateUserDto.birth_date,
-        password: updateUserDto.password,
+        district: updateUserDto.district,
         birth_date: updateUserDto.birth_date,
+        house_number: updateUserDto.house_number,
       },
     });
 

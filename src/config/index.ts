@@ -11,4 +11,8 @@ export default () => ({
       password: process.env.MAIL_PASSWORD,
     },
   },
+
+  baseUrlFront: 'http://localhost:3000',
+
+  urlStripe: 'http://localhost:3000',
 });
