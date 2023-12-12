@@ -7,10 +7,6 @@ export class CreateAndUpdateGraduationDto {
 
   @IsString()
   @IsNotEmpty()
-  color_degree: string;
-
-  @IsString()
-  @IsNotEmpty()
   modality_id: string;
 
   @IsNumber()

@@ -22,15 +22,13 @@ export class UpdateGraduationService {
       );
     }
 
-    const { name, color_degree, amount_class, modality_id, order } =
-      newGraduation;
+    const { name, amount_class, modality_id, order } = newGraduation;
 
     const graduation = {
       name,
       order,
       modality_id,
       amount_class,
-      color_degree,
     };
 
     return this.graduationRepository.update(graduation, idGraduation);

@@ -32,9 +32,9 @@ model Organization {
 }
 
 model Modality {
-  id          String @id
+  id          String  @id
   name        String
-  description String
+  description String?
 
   users User[]
 
@@ -52,9 +52,8 @@ model Modality {
 }
 
 model Graduation {
-  id           String  @id
+  id           String @id
   name         String
-  color_degree String?
   amount_class Int?
 
   order Int?
@@ -137,9 +136,9 @@ model Time {
 }
 
 model Plan {
-  id          String @id
+  id          String  @id
   name        String
-  description String
+  description String?
   value       Int
 
   users User[]
