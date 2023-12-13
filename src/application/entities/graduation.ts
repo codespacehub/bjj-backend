@@ -7,7 +7,6 @@ import { PrismaGraduationRepository } from '@/infra/database/prisma/repositories
 
 interface GraduationProps {
   name: string;
-  color_degree: string;
   modality_id: string;
   amount_class: number;
 
@@ -76,14 +75,6 @@ export class Graduation {
 
   public get modality_id(): string {
     return this.props.modality_id;
-  }
-
-  public set color_degree(color_degree: string) {
-    this.props.color_degree = color_degree;
-  }
-
-  public get color_degree(): string {
-    return this.props.color_degree;
   }
 
   public set organization_id(organization_id: string) {

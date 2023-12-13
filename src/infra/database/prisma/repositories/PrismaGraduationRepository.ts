@@ -67,7 +67,6 @@ export class PrismaGraduationRepository implements IGraduationRepository {
         order: new_graduation.order,
         modality_id: new_graduation.modality_id,
         amount_class: new_graduation.amount_class,
-        color_degree: new_graduation.color_degree,
       },
     });
 

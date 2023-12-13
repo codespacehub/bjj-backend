@@ -1,19 +1,17 @@
 import {
   Inject,
   Injectable,
+  ForbiddenException,
   BadRequestException,
   UnauthorizedException,
-  ForbiddenException,
 } from '@nestjs/common';
-
-import { Cache } from 'cache-manager';
 
 import { ConfigService } from '@nestjs/config';
 import { JwtPayload, sign } from 'jsonwebtoken';
 
+import { compare } from 'bcrypt';
 import { IUserRepository } from 'src/application/repositories/user.repository';
 import { IOrganizationRepository } from 'src/application/repositories/organization.repository';
-import { compare } from 'bcrypt';
 
 @Injectable()
 export class LoginService {

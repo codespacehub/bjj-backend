@@ -1,4 +1,10 @@
-import { ConflictException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Inject,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Presence } from '@/application/entities/presence';
 import { CreatePresenceDto } from '../dtos/create-presence.dto';
 import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
@@ -24,6 +30,12 @@ export class CreatePresenceService {
     if (!findUser) {
       throw new ConflictException(
         '🥲 Esse usuário não existe, tente novamente',
+      );
+    }
+
+    if (!findUser.active) {
+      throw new UnauthorizedException(
+        'Esse usuário está em débito com a academia',
       );
     }
 
