@@ -20,11 +20,13 @@ import { lastValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { CheckPaydayUserService } from '../user/services/check-payday-user.service';
+import { UpdateActiveByIdService } from './services/update-active-organization.service';
 
 @ApiTags('Organização')
 @Controller({ version: '1', path: 'organizations' })
 export class OrganizationController {
   constructor(
+    private readonly updateActiveByIdService: UpdateActiveByIdService,
     private readonly createOrganizationService: CreateOrganizationService,
     private readonly updateOrganizationService: UpdateOrganizationService,
     private readonly deleteOrganizationService: DeleteOrganizationService,
@@ -69,5 +71,10 @@ export class OrganizationController {
     );
 
     return data;
+  }
+
+  @Patch('active/:organizationId')
+  updateActiveById(@Param('organizationId') organizationId: string) {
+    return this.updateActiveByIdService.execute(organizationId);
   }
 }

@@ -10,4 +10,5 @@ export interface IOrganizationRepository {
   findByCnpj(name: string): Promise<Organization | null>;
   findById(organizationId: string): Promise<Organization>;
   create(organization: Organization): Promise<Organization>;
+  updateActiveById(organizationId: string): Promise<void>;
 }

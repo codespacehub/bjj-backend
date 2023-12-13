@@ -142,7 +142,7 @@ export class PrismaUserRepository implements IUserRepository {
       },
     });
 
-    const updateActive = await this.prisma.user.update({
+    await this.prisma.user.update({
       where: {
         id: userId,
       },

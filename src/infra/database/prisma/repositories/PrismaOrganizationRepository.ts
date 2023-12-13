@@ -96,4 +96,21 @@ export class PrismaOrganizationRepository implements IOrganizationRepository {
 
     return organization;
   }
+
+  async updateActiveById(organizationId: string): Promise<void> {
+    const findOrganization = await this.prisma.organization.findUnique({
+      where: {
+        id: organizationId,
+      },
+    });
+
+    await this.prisma.organization.update({
+      where: {
+        id: organizationId,
+      },
+      data: {
+        active: findOrganization.active ? false : true,
+      },
+    });
+  }
 }
