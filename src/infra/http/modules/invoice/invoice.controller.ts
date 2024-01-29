@@ -17,6 +17,7 @@ import { UpdatePaidOutService } from './service/update-paid-out.service';
 import { FindAllInvoicesService } from './service/find-all-invoice.service';
 import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
 import { FindInvoicesByIdService } from './service/find-invoice-by-id.service';
+import { Cron } from '@nestjs/schedule';
 
 @Controller({ version: '1', path: 'invoices' })
 export class InvoiceController {
@@ -28,6 +29,7 @@ export class InvoiceController {
     private readonly updatePaidOutService: UpdatePaidOutService,
   ) {}
 
+  @Cron('0 9 01 * *')
   @Post()
   @ApiSecurity('bearerAuth')
   @UseGuards(JwtAuthzGuard)
