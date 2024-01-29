@@ -10,5 +10,6 @@ export interface IUserRepository {
   findAll(organization: string): Promise<User>;
   updateActiveById(userId: string): Promise<void>;
   updatePassword(userId: string, newPassword: string): Promise<User>;
+  updateGraduationForUser(userId: string, graduationId: string): Promise<User>;
   update(userId: string, updateUserDto: CreateAndUpdateUserDto): Promise<User>;
 }

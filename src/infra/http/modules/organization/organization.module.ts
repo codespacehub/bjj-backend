@@ -9,6 +9,7 @@ import { DeleteOrganizationService } from './services/delete-organization.servic
 import { FindAllOrganizationService } from './services/find-all-organization.service';
 import { UpdateActiveByIdService } from './services/update-active-organization.service';
 import { FindOrganizationByIdService } from './services/find-organization-by-id.service';
+import { FinancialCalculationService } from './services/financial-calculation-organization.service';
 
 @Module({
   imports: [HttpModule],
@@ -21,6 +22,7 @@ import { FindOrganizationByIdService } from './services/find-organization-by-id.
     DeleteOrganizationService,
     FindAllOrganizationService,
     FindOrganizationByIdService,
+    FinancialCalculationService,
   ],
 })
 export class OrganizationModule {}

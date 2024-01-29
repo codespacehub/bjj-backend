@@ -7,11 +7,12 @@ import { UpdateUserService } from './services/update-user.service';
 import { FindUserByIdService } from './services/find-by-id.service';
 import { findAllUsersService } from './services/find-all-users.service';
 import { UpdatePasswordService } from './services/update-password.service';
-import { FindAllModalitiesService } from '../modality/services/find-all-modalities.service';
 import { FindUserByEmailService } from './services/find-by-email.service';
-import { UpdatePasswordByIdService } from './services/update-password-by-id.service';
 import { CheckPaydayUserService } from './services/check-payday-user.service';
 import { UpdateActiveByIdService } from './services/update-active-user.service';
+import { UpdatePasswordByIdService } from './services/update-password-by-id.service';
+import { UpdateGraduationByIdService } from './services/update-graduation-by-id.service';
+import { FindAllModalitiesService } from '../modality/services/find-all-modalities.service';
 
 @Module({
   controllers: [UserController],
@@ -27,6 +28,7 @@ import { UpdateActiveByIdService } from './services/update-active-user.service';
     UpdateActiveByIdService,
     FindAllModalitiesService,
     UpdatePasswordByIdService,
+    UpdateGraduationByIdService,
   ],
 })
 export class UserModule {}

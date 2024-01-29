@@ -4,7 +4,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgres"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -19,9 +19,10 @@ model Organization {
   active Boolean?
 
   users       User[]
+  plans       Plan[]
+  invoices Invoice[]
   modalities  Modality[]
   graduations Graduation[]
-  plans       Plan[]
 
   updated_at DateTime?  @default(now())
   created_at DateTime   @default(now())
@@ -37,9 +38,8 @@ model Modality {
   description String?
 
   users User[]
-
-  graduations Graduation[]
   times       Time[]
+  graduations Graduation[]
 
   Organization    Organization? @relation(fields: [organization_id], references: [id])
   organization_id String?
@@ -96,6 +96,7 @@ model User {
 
   times    Time[]
   Presence Presence[]
+  Invoices Invoice[]
 
   Graduation    Graduation? @relation(fields: [graduation_id], references: [id])
   graduation_id String?
@@ -172,4 +173,22 @@ model Presence {
   created_at DateTime  @default(now())
 
   @@map("presencies")
+}
+
+model Invoice{
+  id String @id
+  value Int
+  paidDay String
+  paidOut Boolean
+
+  User    User?   @relation(fields: [user_id], references: [id])
+  user_id String?
+
+  Organization    Organization? @relation(fields: [organization_id], references: [id])
+  organization_id String?
+
+  updated_at DateTime?
+  created_at DateTime @default(now())
+
+  @@map("invoicies")
 }

@@ -8,19 +8,20 @@ import {
   Controller,
 } from '@nestjs/common';
 
+import { lastValueFrom } from 'rxjs';
+import { ApiTags } from '@nestjs/swagger';
+import { HttpService } from '@nestjs/axios';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { CreateOrganizationDto } from './dtos/create-organization.dto';
 import { updateOrganizationDto } from './dtos/update-organization.dto';
 import { CreateOrganizationService } from './services/create-organization.service';
 import { DeleteOrganizationService } from './services/delete-organization.service';
 import { UpdateOrganizationService } from './services/update-organization.service';
+import { CheckPaydayUserService } from '../user/services/check-payday-user.service';
 import { FindAllOrganizationService } from './services/find-all-organization.service';
 import { FindOrganizationByIdService } from './services/find-organization-by-id.service';
-import { ApiTags } from '@nestjs/swagger';
-import { lastValueFrom } from 'rxjs';
-import { HttpService } from '@nestjs/axios';
-import { Cron, CronExpression } from '@nestjs/schedule';
-import { CheckPaydayUserService } from '../user/services/check-payday-user.service';
 import { UpdateActiveByIdService } from './services/update-active-organization.service';
+import { FinancialCalculationService } from './services/financial-calculation-organization.service';
 
 @ApiTags('Organização')
 @Controller({ version: '1', path: 'organizations' })
@@ -32,6 +33,7 @@ export class OrganizationController {
     private readonly deleteOrganizationService: DeleteOrganizationService,
     private readonly findAllOrganizationService: FindAllOrganizationService,
     private readonly findOrganizationByIdService: FindOrganizationByIdService,
+    private readonly financialCalculationService: FinancialCalculationService,
 
     private readonly httpService: HttpService,
   ) {}
@@ -76,5 +78,10 @@ export class OrganizationController {
   @Patch('active/:organizationId')
   updateActiveById(@Param('organizationId') organizationId: string) {
     return this.updateActiveByIdService.execute(organizationId);
+  }
+
+  @Get('financial/:organizationId')
+  financialCalculate(@Param('organizationId') organizationId: string) {
+    return this.financialCalculationService.execute(organizationId);
   }
 }

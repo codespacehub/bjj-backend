@@ -35,6 +35,7 @@ export class PrismaPresenceRepository implements IPresenceRepository {
       include: {
         User: true,
         Time: true,
+        Modality: true,
       },
     });
   }

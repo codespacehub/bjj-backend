@@ -42,6 +42,7 @@ export class PrismaUserRepository implements IUserRepository {
       include: {
         times: true,
         Presence: true,
+        Graduation: true,
       },
     });
 
@@ -112,6 +113,7 @@ export class PrismaUserRepository implements IUserRepository {
         Plan: true,
         Modality: true,
         Graduation: true,
+        Invoices: true,
       },
     });
 
@@ -150,5 +152,21 @@ export class PrismaUserRepository implements IUserRepository {
         active: findUser.active ? false : true,
       },
     });
+  }
+
+  async updateGraduationForUser(
+    userId: string,
+    graduation_id: string,
+  ): Promise<any> {
+    const newGraduation = await this.prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        graduation_id,
+      },
+    });
+
+    return newGraduation;
   }
 }

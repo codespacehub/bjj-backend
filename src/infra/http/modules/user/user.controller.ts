@@ -27,6 +27,7 @@ import { FindUserByEmailService } from './services/find-by-email.service';
 import { UpdatePasswordByIdService } from './services/update-password-by-id.service';
 import { CheckPaydayUserService } from './services/check-payday-user.service';
 import { UpdateActiveByIdService } from './services/update-active-user.service';
+import { UpdateGraduationByIdService } from './services/update-graduation-by-id.service';
 
 @ApiTags('Usuário')
 @Controller({ version: '1', path: 'users' })
@@ -42,6 +43,7 @@ export class UserController {
     private readonly checkPaydayUserService: CheckPaydayUserService,
     private readonly updateActiveByIdService: UpdateActiveByIdService,
     private readonly updatePasswordByIdService: UpdatePasswordByIdService,
+    private readonly updateGraduationByIdService: UpdateGraduationByIdService,
   ) {}
 
   @Cron('0 9 * * *')
@@ -118,5 +120,10 @@ export class UserController {
   @Patch('active/:userId')
   updateActiveById(@Param('userId') userId: string) {
     return this.updateActiveByIdService.execute(userId);
+  }
+
+  @Patch('graduation/:userId')
+  updateGraduationById(@Param('userId') userId: string) {
+    return this.updateGraduationByIdService.execute(userId);
   }
 }

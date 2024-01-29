@@ -10,6 +10,7 @@ import { NodeMailerAdapterProvider } from './libs/nodemailer/nodemailer.adapter'
 import { GraduationRepositoryProvider } from '@/application/entities/graduation';
 import { OrganizationRepositoryProvider } from 'src/application/entities/organization';
 import { PresenceRepositoryProvider } from '@/application/entities/presence';
+import { InvoiceRepositoryProvider } from '@/application/entities/invoice';
 
 @Global()
 @Module({
@@ -20,6 +21,7 @@ import { PresenceRepositoryProvider } from '@/application/entities/presence';
     TimeRepositoryProvider,
     CreateHashAdapterProvider,
     NodeMailerAdapterProvider,
+    InvoiceRepositoryProvider,
     ModalityRepositoryProvider,
     PresenceRepositoryProvider,
     GraduationRepositoryProvider,
@@ -32,6 +34,7 @@ import { PresenceRepositoryProvider } from '@/application/entities/presence';
     TimeRepositoryProvider,
     CreateHashAdapterProvider,
     NodeMailerAdapterProvider,
+    InvoiceRepositoryProvider,
     ModalityRepositoryProvider,
     PresenceRepositoryProvider,
     GraduationRepositoryProvider,
