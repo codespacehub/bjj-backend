@@ -12,6 +12,7 @@ interface OrganizationProps {
   email: string;
   domain: string;
   active: boolean;
+  payment_value: number;
 
   updated_at?: Date;
   created_at: Date;
@@ -86,6 +87,14 @@ export class Organization {
 
   public set active(active: boolean) {
     this.props.active = active;
+  }
+
+  public get payment_value(): number {
+    return this.props.payment_value;
+  }
+
+  public set payment_value(payment_value: number) {
+    this.props.payment_value = payment_value;
   }
 
   public get domain(): string {

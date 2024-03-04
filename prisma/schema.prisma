@@ -9,25 +9,27 @@ datasource db {
 }
 
 model Organization {
-  id     String @id
-  name   String
-  cnpj   String @unique
-  phone  String
-  email  String
-  domain String
+  id            String @id
+  name          String
+  cnpj          String @unique
+  phone         String
+  email         String
+  domain        String
+  payment_value Int?
 
   active Boolean?
 
-  users       User[]
-  plans       Plan[]
-  invoices Invoice[]
-  modalities  Modality[]
-  graduations Graduation[]
+  users               User[]
+  Time                Time[]
+  plans               Plan[]
+  invoices            Invoice[]
+  modalities          Modality[]
+  Presence            Presence[]
+  graduations         Graduation[]
+  InvoiceOrganization InvoiceOrganization[]
 
-  updated_at DateTime?  @default(now())
-  created_at DateTime   @default(now())
-  Time       Time[]
-  Presence   Presence[]
+  updated_at DateTime? @default(now())
+  created_at DateTime  @default(now())
 
   @@map("organizations")
 }
@@ -37,7 +39,7 @@ model Modality {
   name        String
   description String?
 
-  users User[]
+  users       User[]
   times       Time[]
   graduations Graduation[]
 
@@ -73,21 +75,21 @@ model Graduation {
 }
 
 model User {
-  id         String @id
-  cpf        String @unique
+  id         String  @id
+  cpf        String? @unique
   name       String
   role       String
-  email      String @unique
+  email      String  @unique
   phone      String
   password   String
   birth_date String
 
-  uf           String
-  cep          String
-  city         String
-  street       String
-  district     String
-  house_number String
+  uf           String?
+  cep          String?
+  city         String?
+  street       String?
+  district     String?
+  house_number String?
   amount_class Int
 
   active   Boolean
@@ -175,9 +177,9 @@ model Presence {
   @@map("presencies")
 }
 
-model Invoice{
-  id String @id
-  value Int
+model Invoice {
+  id      String  @id
+  value   Int
   paidDay String
   paidOut Boolean
 
@@ -188,7 +190,22 @@ model Invoice{
   organization_id String?
 
   updated_at DateTime?
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
 
   @@map("invoicies")
+}
+
+model InvoiceOrganization {
+  id      String  @id
+  value   Int
+  paidDay String
+  paidOut Boolean
+
+  Organization    Organization? @relation(fields: [organization_id], references: [id])
+  organization_id String?
+
+  updated_at DateTime?
+  created_at DateTime  @default(now())
+
+  @@map("invoicies_organizations")
 }

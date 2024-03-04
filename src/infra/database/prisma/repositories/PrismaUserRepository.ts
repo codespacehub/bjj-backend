@@ -43,6 +43,9 @@ export class PrismaUserRepository implements IUserRepository {
         times: true,
         Presence: true,
         Graduation: true,
+        Invoices: true,
+        Modality: true,
+        Plan: true,
       },
     });
 
@@ -168,5 +171,19 @@ export class PrismaUserRepository implements IUserRepository {
     });
 
     return newGraduation;
+  }
+
+  async findByCpf(cpf: string): Promise<any> {
+    const findByCpf = await this.prisma.user.findUnique({
+      where: {
+        cpf
+      }
+    })
+
+    if(!findByCpf) {
+      return
+    }
+
+    return findByCpf
   }
 }

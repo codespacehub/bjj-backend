@@ -11,6 +11,7 @@ export class PrismaOrganizationMapper {
       email: organization.email,
       domain: organization.domain,
       active: organization.active,
+      payment_value: organization.payment_value,
       created_at: organization.created_at,
     };
   }
@@ -26,6 +27,7 @@ export class PrismaOrganizationMapper {
         email: raw.email,
         phone: raw.phone,
         domain: raw.domain,
+        payment_value: raw.payment_value,
       },
     };
   }

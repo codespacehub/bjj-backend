@@ -15,6 +15,6 @@ export class UpdatePaidOutService {
       throw new NotFoundException('Organização informada não existe');
     }
 
-    return this.invoicesRepository.update(invoice_id);
+    return this.invoicesRepository.updatePaidOut(invoice_id);
   }
 }

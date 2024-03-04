@@ -1,12 +1,10 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Invoice } from '@/application/entities/invoice';
-import { CreateAndUpdateInvoiceDto } from '../dtos/create-and-update';
-import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
 import { IInvoiceRepository } from '@/application/repositories/invoice.repository';
 import { IOrganizationRepository } from '@/application/repositories/organization.repository';
 
 @Injectable()
-export class CreateInvoiceService {
+export class CreateInvoiceUsersService {
   constructor(
     @Inject('IInvoiceRepository')
     private readonly invoiceRepository: IInvoiceRepository,

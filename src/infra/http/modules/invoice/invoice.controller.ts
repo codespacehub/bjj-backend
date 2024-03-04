@@ -12,29 +12,30 @@ import { ApiSecurity } from '@nestjs/swagger';
 import { JwtAuthzGuard } from '../auth/guards/auth-guard';
 import { User } from '@/shared/decorators/user.decorator';
 import { DeleteInvoiceService } from './service/delete-invoice.service';
-import { CreateInvoiceService } from './service/create-invoice.service';
+import { CreateInvoiceUsersService } from './service/create-invoice-users.service';
 import { UpdatePaidOutService } from './service/update-paid-out.service';
 import { FindAllInvoicesService } from './service/find-all-invoice.service';
 import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
 import { FindInvoicesByIdService } from './service/find-invoice-by-id.service';
 import { Cron } from '@nestjs/schedule';
+import { CreateAndUpdateInvoiceDto } from './dtos/create-and-update-invoice.dto';
+import { UpdateInvoiceService } from './service/update-invoice.service';
 
 @Controller({ version: '1', path: 'invoices' })
 export class InvoiceController {
   constructor(
-    private readonly createInvoiceService: CreateInvoiceService,
+    private readonly createInvoiceUsersService: CreateInvoiceUsersService,
     private readonly deleteInvoiceService: DeleteInvoiceService,
+    private readonly updatePaidOutService: UpdatePaidOutService,
+    private readonly updateInvoiceService: UpdateInvoiceService,
     private readonly findAllInvoiceService: FindAllInvoicesService,
     private readonly findInvoiceByIdService: FindInvoicesByIdService,
-    private readonly updatePaidOutService: UpdatePaidOutService,
   ) {}
 
-  @Cron('0 9 01 * *')
+  @Cron('0 09 1 * *')
   @Post()
-  @ApiSecurity('bearerAuth')
-  @UseGuards(JwtAuthzGuard)
   create() {
-    return this.createInvoiceService.execute();
+    return this.createInvoiceUsersService.execute();
   }
 
   @Get()
@@ -61,7 +62,16 @@ export class InvoiceController {
   @Patch(':invoice_id')
   @ApiSecurity('bearerAuth')
   @UseGuards(JwtAuthzGuard)
-  update(@Param('invoice_id') invoice_id: string) {
+  updateInvoice(
+    @Param('invoice_id') invoice_id: string,
+    @Body() invoiceDto: CreateAndUpdateInvoiceDto,
+  ) {
+    return this.updateInvoiceService.execute(invoice_id, invoiceDto);
+  }
+  @Patch('/paidout/:invoice_id')
+  @ApiSecurity('bearerAuth')
+  @UseGuards(JwtAuthzGuard)
+  updatePaidOut(@Param('invoice_id') invoice_id: string) {
     return this.updatePaidOutService.execute(invoice_id);
   }
 }

@@ -3,6 +3,7 @@ import { PrismaService } from '../prisma.service';
 import { Invoice } from '@/application/entities/invoice';
 import { PrismaInvoiceMapper } from '../mappers/PrismaInvoiceMapper';
 import { IInvoiceRepository } from '@/application/repositories/invoice.repository';
+import { CreateAndUpdateInvoiceDto } from '@/infra/http/modules/invoice/dtos/create-and-update-invoice.dto';
 
 @Injectable()
 export class PrismaInvoiceRepository implements IInvoiceRepository {
@@ -64,6 +65,11 @@ export class PrismaInvoiceRepository implements IInvoiceRepository {
         User: {
           include: {
             Plan: true,
+            times:true,
+            Invoices:true,
+            Modality:true,
+            Presence:true,
+            Graduation:true,
           },
         },
         Organization: true,
@@ -71,7 +77,7 @@ export class PrismaInvoiceRepository implements IInvoiceRepository {
     });
   }
 
-  async update(invoice_id: string): Promise<any> {
+  async updatePaidOut(invoice_id: string): Promise<any> {
     const findInvoice = await this.prisma.invoice.findUnique({
       where: {
         id: invoice_id,
@@ -101,6 +107,31 @@ export class PrismaInvoiceRepository implements IInvoiceRepository {
       data: {
         paidOut: true,
         paidDay: String(new Date()),
+      },
+    });
+  }
+  async updateInvoice(
+    invoice_id: string,
+    invoiceDto: CreateAndUpdateInvoiceDto,
+  ): Promise<any> {
+    const findInvoice = await this.prisma.invoice.findUnique({
+      where: {
+        id: invoice_id,
+      },
+    });
+
+    if (!findInvoice) {
+      return null;
+    }
+
+    return this.prisma.invoice.update({
+      where: {
+        id: invoice_id,
+      },
+      data: {
+        value: invoiceDto.value,
+        paidDay: invoiceDto.paidDay,
+        user_id: invoiceDto.user_id,
       },
     });
   }

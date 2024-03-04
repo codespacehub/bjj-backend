@@ -11,6 +11,7 @@ import { GraduationRepositoryProvider } from '@/application/entities/graduation'
 import { OrganizationRepositoryProvider } from 'src/application/entities/organization';
 import { PresenceRepositoryProvider } from '@/application/entities/presence';
 import { InvoiceRepositoryProvider } from '@/application/entities/invoice';
+import { InvoiceOrganizationRepositoryProvider } from '@/application/entities/invoice-organization';
 
 @Global()
 @Module({
@@ -26,6 +27,7 @@ import { InvoiceRepositoryProvider } from '@/application/entities/invoice';
     PresenceRepositoryProvider,
     GraduationRepositoryProvider,
     OrganizationRepositoryProvider,
+    InvoiceOrganizationRepositoryProvider,
   ],
   exports: [
     PrismaService,
@@ -39,6 +41,7 @@ import { InvoiceRepositoryProvider } from '@/application/entities/invoice';
     PresenceRepositoryProvider,
     GraduationRepositoryProvider,
     OrganizationRepositoryProvider,
+    InvoiceOrganizationRepositoryProvider,
   ],
 })
 export class SharedModule {}

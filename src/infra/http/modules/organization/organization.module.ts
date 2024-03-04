@@ -9,7 +9,8 @@ import { DeleteOrganizationService } from './services/delete-organization.servic
 import { FindAllOrganizationService } from './services/find-all-organization.service';
 import { UpdateActiveByIdService } from './services/update-active-organization.service';
 import { FindOrganizationByIdService } from './services/find-organization-by-id.service';
-import { FinancialCalculationService } from './services/financial-calculation-organization.service';
+import { CalculationInvoiceUsersService } from './services/calculation-invoice-users.service';
+import { CalculationInvoiceOrganizationsService } from './services/calculation-invoice-organizations.service';
 
 @Module({
   imports: [HttpModule],
@@ -22,7 +23,8 @@ import { FinancialCalculationService } from './services/financial-calculation-or
     DeleteOrganizationService,
     FindAllOrganizationService,
     FindOrganizationByIdService,
-    FinancialCalculationService,
+    CalculationInvoiceUsersService,
+    CalculationInvoiceOrganizationsService,
   ],
 })
 export class OrganizationModule {}

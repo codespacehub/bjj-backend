@@ -21,7 +21,8 @@ import { CheckPaydayUserService } from '../user/services/check-payday-user.servi
 import { FindAllOrganizationService } from './services/find-all-organization.service';
 import { FindOrganizationByIdService } from './services/find-organization-by-id.service';
 import { UpdateActiveByIdService } from './services/update-active-organization.service';
-import { FinancialCalculationService } from './services/financial-calculation-organization.service';
+import { CalculationInvoiceUsersService } from './services/calculation-invoice-users.service';
+import { CalculationInvoiceOrganizationsService } from './services/calculation-invoice-organizations.service';
 
 @ApiTags('Organização')
 @Controller({ version: '1', path: 'organizations' })
@@ -33,7 +34,8 @@ export class OrganizationController {
     private readonly deleteOrganizationService: DeleteOrganizationService,
     private readonly findAllOrganizationService: FindAllOrganizationService,
     private readonly findOrganizationByIdService: FindOrganizationByIdService,
-    private readonly financialCalculationService: FinancialCalculationService,
+    private readonly calculationInvoiceUsersService: CalculationInvoiceUsersService,
+    private readonly calculationInvoiceOrganizationsService: CalculationInvoiceOrganizationsService,
 
     private readonly httpService: HttpService,
   ) {}
@@ -80,8 +82,13 @@ export class OrganizationController {
     return this.updateActiveByIdService.execute(organizationId);
   }
 
-  @Get('financial/:organizationId')
-  financialCalculate(@Param('organizationId') organizationId: string) {
-    return this.financialCalculationService.execute(organizationId);
+  @Get('invoices-users/:organizationId')
+  financialCalculateUsers(@Param('organizationId') organizationId: string) {
+    return this.calculationInvoiceUsersService.execute(organizationId);
+  }
+
+  @Get('invoices/value')
+  financialCalculateOrganizations() {
+    return this.calculationInvoiceOrganizationsService.execute();
   }
 }
