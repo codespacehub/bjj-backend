@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 
 import { PrismaService } from '../prisma.service';
 import { User } from 'src/application/entities/user';
@@ -21,6 +21,20 @@ export class PrismaUserRepository implements IUserRepository {
       throw new NotFoundException(
         'E-mail informado não possui cadastro no gestor combate',
       );
+    }
+
+    return findUserByEmail;
+  }
+
+  async findExistUserByEmail(email: string): Promise<any> {
+    const findUserByEmail = await this.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!findUserByEmail) {
+      return
     }
 
     return findUserByEmail;

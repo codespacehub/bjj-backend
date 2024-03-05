@@ -101,18 +101,17 @@ export class CreateOrganizationService {
       createOrganizationDto.user_master.cpf,
     );
 
-    if(findUserExistsCpf) {
+    if (findUserExistsCpf) {
       throw new ConflictException(
         '🥲 O cpf do usuário já foi utilizado, tente novamente',
       );
     }
 
-
-    const findUserExistsEmail = await this.userRepository.findByEmail(
+    const findUserExistsEmail = await this.userRepository.findExistUserByEmail(
       createOrganizationDto.user_master.email,
     );
 
-    if(findUserExistsEmail) {
+    if (findUserExistsEmail) {
       throw new ConflictException(
         '🥲 O e-mail do usuário já foi utilizado, tente novamente',
       );
