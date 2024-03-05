@@ -17,6 +17,7 @@ import { FindAllInvoicesOrganizationService } from './services/find-all-invoice-
 import { FindInvoicesOrganizationByIdService } from './services/find-invoice-organization-by-id.service';
 import { CreateAndUpdateInvoiceOrganizationDto } from './dtos/create-and-update-invoice-organization.dto';
 import { UpdatePaidOutInvoiceOrganizationService } from './services/update-invoice-organization-paid-out.service';
+import { Cron } from '@nestjs/schedule';
 
 
 @Controller({ version: '1', path: 'invoices-organizations' })
@@ -31,7 +32,7 @@ export class InvoiceOrganizationController {
     
   ) {}
 
-  // @Cron('0 09 1 * *')
+  @Cron('0 09 1 * *')
   @Post()
   create() {
     return this.createInvoicesOrganizationService.execute();
