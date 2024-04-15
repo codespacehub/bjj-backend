@@ -68,8 +68,8 @@ export class LoginService {
           street: findUser.street,
           district: findUser.district,
           verified: findUser.verified,
-          modality: findUser.modality,
-          graduation: findUser.graduation,
+          modality: findUser.modality_id,
+          graduation: findUser.graduation_id,
           birth_date: findUser.birth_date,
           house_number: findUser.house_number,
           organization: findUser.organization_id,
@@ -77,15 +77,15 @@ export class LoginService {
       };
 
       const expiresIn = this.jwtExpiresIn
-        ? Number(this.jwtExpiresIn) * 1000
+        ? this.jwtExpiresIn * 1000
         : this.DAY_IN_MILLISECONDS;
-
-      const access_token = sign(payload, this.jwtSecret, {
-        expiresIn: expiresIn,
-      });
+        
+        const access_token = sign(payload, this.jwtSecret, {
+          expiresIn: expiresIn,
+        });
 
       return {
-        token: access_token.toString(),
+        token: access_token,
       };
     }
 

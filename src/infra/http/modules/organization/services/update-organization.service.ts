@@ -18,7 +18,7 @@ export class UpdateOrganizationService {
       throw new NotFoundException('Organização não encontrada meu faixa preta');
     }
 
-    const { cnpj, domain, email, name, phone, payment_value } = updateOrg;
+    const { cnpj, domain, email, name, phone, payment_value, payment_method_value } = updateOrg;
 
     const organization = {
       cnpj,
@@ -27,6 +27,7 @@ export class UpdateOrganizationService {
       name,
       phone,
       payment_value,
+      payment_method_value,
     };
 
     return this.organizationRepository.updateOrganization(

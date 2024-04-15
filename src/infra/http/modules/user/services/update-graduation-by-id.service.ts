@@ -34,7 +34,6 @@ export class UpdateGraduationByIdService {
     );
 
     if (findGraduationByUserGraduationOrder) {
-      console.log(userId, findGraduationByUserGraduationOrder.id);
       await this.userRepository.updateGraduationForUser(
         userId,
         findGraduationByUserGraduationOrder.id,

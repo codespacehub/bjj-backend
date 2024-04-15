@@ -17,7 +17,7 @@ export class CreateInvoiceUsersService {
 
     for (let organization of getOrganizations) {
       for (let user of organization.users) {
-        if (user.role === 'Aluno') {
+        if (user.role === 'Aluno') {  
           const invoice = new Invoice({
             value: user.Plan.value,
             paidDay: '0',
@@ -27,7 +27,7 @@ export class CreateInvoiceUsersService {
           });
           await this.invoiceRepository.create(invoice);
         }
-      }
+      } 
     }
   }
 }

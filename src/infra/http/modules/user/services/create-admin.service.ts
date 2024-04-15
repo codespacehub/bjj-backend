@@ -63,8 +63,8 @@ export class CreateAdminService {
       amount_class,
       plan: plan_id,
       organization_id: org,
-      modality: modality_id,
-      graduation: graduation_id,
+      modality_id: modality_id,
+      graduation_id: graduation_id,
     });
 
     return await this.userRepository.create(new_user);

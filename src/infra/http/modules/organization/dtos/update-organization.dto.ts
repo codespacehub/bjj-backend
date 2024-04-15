@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class updateOrganizationDto {
   @IsString({ message: 'Esse campo precisa ser um texto' })
@@ -27,9 +27,13 @@ export class updateOrganizationDto {
   })
   domain: string;
 
-  @IsString({ message: 'Esse campo precisa ser um número' })
+  @IsNumber()
   @IsNotEmpty({
     message: 'Por favor preencha o campo de mensalidade da organização',
   })
   payment_value: number;
+
+  @IsString({ message: 'Esse campo precisa ser um texto' })
+  @IsOptional()
+  payment_method_value: string;
 }

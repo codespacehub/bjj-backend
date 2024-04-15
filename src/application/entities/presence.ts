@@ -10,6 +10,7 @@ interface PresenceProps {
   user_id: string;
   time_id: string;
   modality_id: string;
+  confirmation: boolean;
   organization_id: string;
 
   updated_at?: Date;
@@ -73,6 +74,14 @@ export class Presence {
 
   public get modality_id(): string {
     return this.props.modality_id;
+  }
+
+  public set confirmation(confirmation: boolean) {
+    this.props.confirmation = confirmation;
+  }
+
+  public get confirmation(): boolean {
+    return this.props.confirmation;
   }
 
   public set organization_id(organization_id: string) {

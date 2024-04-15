@@ -68,6 +68,7 @@ export class PrismaOrganizationRepository implements IOrganizationRepository {
         phone: organization.phone,
         domain: organization.domain,
         payment_value: organization.payment_value,
+        payment_method_value: organization.payment_method_value,
       },
     });
 

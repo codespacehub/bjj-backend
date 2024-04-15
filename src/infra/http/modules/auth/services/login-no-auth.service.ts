@@ -36,11 +36,11 @@ export class LoginNoAuthService {
         street: findUser.street,
         district: findUser.district,
         verified: findUser.verified,
-        modality: findUser.modality,
-        graduation: findUser.graduation,
+        modality: findUser.modality_id,
+        graduation: findUser.graduation_id,
         birth_date: findUser.birth_date,
         house_number: findUser.house_number,
-        organization: findUser.organization_id,
+        organization: findUser.organization_id, 
       }),
     };
 

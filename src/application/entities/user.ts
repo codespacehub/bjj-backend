@@ -15,10 +15,10 @@ interface UserProps {
   payday: number;
   active: boolean;
   password: string;
-  modality?: string;
+  modality_id?: string;
   verified: boolean;
   birth_date: string;
-  graduation: string;
+  graduation_id: string;
   organization_id: string;
   amount_class: number;
 
@@ -190,12 +190,12 @@ export class User {
     return this.props.house_number;
   }
 
-  public set graduation(graduation: string) {
-    this.props.graduation = graduation;
+  public set graduation_id(graduation_id: string) {
+    this.props.graduation_id = graduation_id;
   }
 
-  public get graduation(): string {
-    return this.props.graduation;
+  public get graduation_id(): string {
+    return this.props.graduation_id;
   }
 
   public set organization_id(organization_id: string) {
@@ -206,12 +206,12 @@ export class User {
     return this.props.organization_id;
   }
 
-  public set modality(modality: string) {
-    this.props.modality = modality;
+  public set modality_id(modality_id: string) {
+    this.props.modality_id = modality_id;
   }
 
-  public get modality(): string {
-    return this.props.modality;
+  public get modality_id(): string {
+    return this.props.modality_id;
   }
 
   public get verified(): boolean {

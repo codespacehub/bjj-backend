@@ -1,11 +1,9 @@
 import { ConfigService } from '@nestjs/config';
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
 
 import * as jwt from 'jsonwebtoken';
 import { Cache } from 'cache-manager';
 
 import {
-  Inject,
   Injectable,
   ExecutionContext,
   UnauthorizedException,
@@ -18,12 +16,11 @@ export class JwtAuthzGuard {
 
   constructor(
     private readonly configService: ConfigService,
-    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
   async canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest();
-
+    
     const token = request.headers.authorization?.split(' ')[1];
 
     if (token && token != 'undefined') {
@@ -32,9 +29,7 @@ export class JwtAuthzGuard {
 
         if (decoded) {
           const jwt = await JSON.parse(decoded.sub.toString());
-
-          const validJwt = await this.cacheManager.get(jwt.email.toString());
-
+          
           request.user = {
             id: jwt.id,
             uf: jwt.uf,
@@ -56,9 +51,6 @@ export class JwtAuthzGuard {
             organization: jwt.organization,
           } as TLoggedUser;
 
-          if (validJwt === token) {
-            return true;
-          }
           return true;
         } else {
           throw new UnauthorizedException(

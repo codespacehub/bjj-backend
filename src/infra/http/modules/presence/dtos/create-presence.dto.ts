@@ -1,5 +1,4 @@
-import { Type } from 'class-transformer';
-import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsDateString, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreatePresenceDto {
   @IsDateString()
@@ -17,4 +16,8 @@ export class CreatePresenceDto {
   @IsString()
   @IsNotEmpty()
   modality_id: string;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  confirmation: boolean;
 }

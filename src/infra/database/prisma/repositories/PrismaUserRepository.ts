@@ -15,6 +15,9 @@ export class PrismaUserRepository implements IUserRepository {
       where: {
         email,
       },
+      include: {
+        Organization: true,
+      }
     });
 
     if (!findUserByEmail) {

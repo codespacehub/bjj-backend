@@ -9,13 +9,14 @@ datasource db {
 }
 
 model Organization {
-  id            String @id
-  name          String
-  cnpj          String @unique
-  phone         String
-  email         String
-  domain        String
-  payment_value Int?
+  id                   String  @id
+  name                 String
+  cnpj                 String  @unique
+  phone                String
+  email                String
+  domain               String
+  payment_value        Int?
+  payment_method_value String?
 
   active Boolean?
 
@@ -143,6 +144,7 @@ model Plan {
   name        String
   description String?
   value       Int
+  limit       Int?
 
   users User[]
 
@@ -156,8 +158,9 @@ model Plan {
 }
 
 model Presence {
-  id  String   @id
-  day DateTime
+  id           String   @id
+  day          DateTime
+  confirmation Boolean?
 
   User    User?   @relation(fields: [user_id], references: [id])
   user_id String?

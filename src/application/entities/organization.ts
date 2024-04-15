@@ -14,6 +14,8 @@ interface OrganizationProps {
   active: boolean;
   payment_value: number;
 
+  payment_method_value: string;
+
   updated_at?: Date;
   created_at: Date;
 }
@@ -95,6 +97,14 @@ export class Organization {
 
   public set payment_value(payment_value: number) {
     this.props.payment_value = payment_value;
+  }
+
+  public set payment_method_value(payment_method_value: string) {
+    this.props.payment_method_value = payment_method_value;
+  }
+
+  public get payment_method_value(): string {
+    return this.props.payment_method_value;
   }
 
   public get domain(): string {

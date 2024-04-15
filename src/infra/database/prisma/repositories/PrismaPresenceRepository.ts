@@ -57,4 +57,25 @@ export class PrismaPresenceRepository implements IPresenceRepository {
       },
     });
   }
+
+  async updateConfirmation(presenceId: string): Promise<any> {
+    const findPresence = await this.prisma.presence.findUnique({
+      where: {
+        id: presenceId,
+      }
+    })
+
+    if (!findPresence) {
+      return null;
+    }
+
+    await this.prisma.presence.update({
+      where: {
+        id: presenceId,
+      },
+      data: {
+        confirmation: findPresence.confirmation ? false : true
+      }
+    })
+  }
 }

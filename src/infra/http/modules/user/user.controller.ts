@@ -92,7 +92,6 @@ export class UserController {
   @ApiSecurity('bearerAuth')
   @UseGuards(JwtAuthzGuard)
   async updateUser(
-    @User() user: TLoggedUser,
     @Param('userId') userId: string,
     @Body() updateUserDto: CreateAndUpdateUserDto,
   ) {

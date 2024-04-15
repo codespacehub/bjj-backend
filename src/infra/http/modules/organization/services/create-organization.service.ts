@@ -78,6 +78,7 @@ export class CreateOrganizationService {
       email: createOrganizationDto.organization_info.email,
       domain: createOrganizationDto.organization_info.domain,
       payment_value: createOrganizationDto.organization_info.payment_value,
+      payment_method_value: createOrganizationDto.organization_info.payment_method_value,
     });
 
     const organization =

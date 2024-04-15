@@ -33,11 +33,15 @@ class OrganizationInfo {
   })
   domain: string;
 
-  @IsString({ message: 'Esse campo precisa ser um número' })
+  @IsNumber()
   @IsNotEmpty({
     message: 'Por favor preencha o campo de mensalidade da organização',
   })
   payment_value: number;
+
+  @IsString({ message: 'Esse campo precisa ser um texto' })
+  @IsOptional()
+  payment_method_value: string;
 }
 
 class UserMaster {

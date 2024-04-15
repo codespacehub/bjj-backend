@@ -12,10 +12,12 @@ import {
   Delete,
   UseGuards,
   Controller,
+  Patch,
 } from '@nestjs/common';
 import { DeletePresenceService } from './services/delete-presence.service';
 import { FindAllPresenciesService } from './services/find-all-presencies.service';
 import { FindByDatePresenceService } from './services/find-by-date-presence.service';
+import { UpdateConfirmationPresenceService } from './services/update-confirmation-presence.service';
 
 @Controller({ version: '1', path: 'presences' })
 export class PresenceController {
@@ -24,8 +26,9 @@ export class PresenceController {
     private readonly deletePresenceService: DeletePresenceService,
     private readonly findAllPresenciesService: FindAllPresenciesService,
     private readonly findByDatePresenceService: FindByDatePresenceService,
+    private readonly updateConfirmationPresenceService: UpdateConfirmationPresenceService,
   ) {}
-
+  
   @Post()
   @ApiSecurity('bearerAuth')
   @UseGuards(JwtAuthzGuard)
@@ -48,6 +51,13 @@ export class PresenceController {
   @UseGuards(JwtAuthzGuard)
   findByDate(@Param('date') date: string, @User() user: TLoggedUser) {
     return this.findByDatePresenceService.execute(user, date);
+  }
+
+  @Patch(':presenceId')
+  @ApiSecurity('bearerAuth')
+  @UseGuards(JwtAuthzGuard)
+  UpdateConfirmation(@Param('presenceId') presenceId: string) {
+    return this.updateConfirmationPresenceService.execute(presenceId);
   }
 
   @Delete(':presenceId')
