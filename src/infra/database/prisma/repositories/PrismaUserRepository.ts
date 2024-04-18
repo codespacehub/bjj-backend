@@ -189,18 +189,4 @@ export class PrismaUserRepository implements IUserRepository {
 
     return newGraduation;
   }
-
-  async findByCpf(cpf: string): Promise<any> {
-    const findByCpf = await this.prisma.user.findUnique({
-      where: {
-        cpf
-      }
-    })
-
-    if(!findByCpf) {
-      return
-    }
-
-    return findByCpf
-  }
 }

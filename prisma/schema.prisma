@@ -77,7 +77,7 @@ model Graduation {
 
 model User {
   id         String  @id
-  cpf        String? @unique
+  cpf        String?
   name       String
   role       String
   email      String  @unique

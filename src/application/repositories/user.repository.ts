@@ -8,7 +8,6 @@ export interface IUserRepository {
   findById(userId: string): Promise<User>;
   findByEmail(email: string): Promise<User>;
   findExistUserByEmail(email: string): Promise<User>;
-  findByCpf(cpf: string): Promise<User>;
   findAll(organization: string): Promise<User>;
   updateActiveById(userId: string): Promise<void>;
   updatePassword(userId: string, newPassword: string): Promise<User>;

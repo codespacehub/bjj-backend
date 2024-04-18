@@ -98,16 +98,6 @@ export class CreateOrganizationService {
       );
     }
 
-    const findUserExistsCpf = await this.userRepository.findByCpf(
-      createOrganizationDto.user_master.cpf,
-    );
-
-    if (findUserExistsCpf) {
-      throw new ConflictException(
-        '🥲 O cpf do usuário já foi utilizado, tente novamente',
-      );
-    }
-
     const findUserExistsEmail = await this.userRepository.findExistUserByEmail(
       createOrganizationDto.user_master.email,
     );
