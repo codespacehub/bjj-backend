@@ -51,8 +51,8 @@ export class CreateUserService {
     } = userDto;
     const new_user = new User({
       uf,
-      cpf,
-      cep,
+      cpf: cpf || null,
+      cep,             
       name,
       plan: plan_id,
       city,
