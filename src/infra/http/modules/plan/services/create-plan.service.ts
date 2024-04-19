@@ -18,6 +18,7 @@ export class CreatePlanService {
       organization_id,
       name: createPlanDto.name,
       value: createPlanDto.value,
+      limit: createPlanDto.limit,
       description: createPlanDto.description,
     });
 

@@ -9,6 +9,10 @@ export class CreateAndUpdatePlanDto {
   @IsNotEmpty()
   value: number;
 
+  @IsNumber()
+  @IsNotEmpty()
+  limit: number;
+
   @IsString()
   @IsOptional()
   description: string;
