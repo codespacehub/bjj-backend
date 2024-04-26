@@ -15,7 +15,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "docker:database": "docker run -d --name conectaclinica-db -e POSTGRES_PASSWORD=99f771cd3962470ba1775914b01a8d45 -p 5432:5432 postgres"
+    "docker:database": "docker run -d --name bjj-database -e POSTGRES_PASSWORD=1f4320ef808441a2a0cbe754ff29783f -p 5432:5432 postgres"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.7.1",

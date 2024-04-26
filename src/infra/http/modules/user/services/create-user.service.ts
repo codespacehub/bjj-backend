@@ -1,5 +1,5 @@
 import { ConfigService } from '@nestjs/config';
-import { Inject, Injectable } from '@nestjs/common';
+import { ConflictException, Inject, Injectable } from '@nestjs/common';
 
 import { User } from 'src/application/entities/user';
 import { IMailer } from '@/shared/interface/mail/mailer.interface';
@@ -29,6 +29,16 @@ export class CreateUserService {
     const crypt_password = generateTemporaryPassword();
     const passwordHash =
       await this.createHashAdapterProvider.execute(crypt_password);
+
+      const findUserExistsEmail = await this.userRepository.findExistUserByEmail(
+        userDto.email,
+      );
+  
+      if (findUserExistsEmail) {
+        throw new ConflictException(
+          '🥲 O e-mail do usuário já foi utilizado, tente novamente',
+        );
+      }
 
     const {
       uf,
@@ -71,19 +81,19 @@ export class CreateUserService {
       house_number,
     });
 
-    await this.mailer.sendMail({
-      subject: `🚀 ${userDto.name}! Chegou seu novo acesso ao Gestor Combate`,
-      to: [userDto.email],
-      context: {
-        user: userDto.email,
-        password: crypt_password,
-        url: `${this.configService.get('baseUrlFront')}/autenticacao?email=${
-          userDto.email
-        }`,
-      },
-      template: 'credentials-user',
-    });
+      await this.mailer.sendMail({
+        subject: `🚀 ${userDto.name}! Chegou seu novo acesso ao Gestor Combate`,
+        to: [userDto.email],
+        context: {
+          user: userDto.email,
+          password: crypt_password,
+          url: `${this.configService.get('baseUrlFront')}/autenticacao?email=${
+            userDto.email
+          }`,
+        },
+        template: 'credentials-user',
+      });
 
-    return await this.userRepository.create(new_user);
+      return await this.userRepository.create(new_user);
   }
 }
