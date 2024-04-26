@@ -12,7 +12,7 @@ import { ApiSecurity } from '@nestjs/swagger';
 import { JwtAuthzGuard } from '../auth/guards/auth-guard';
 import { User } from '@/shared/decorators/user.decorator';
 import { DeleteInvoiceService } from './service/delete-invoice.service';
-import { CreateInvoiceUsersService } from './service/create-invoice-users.service';
+import { CreateInvoiceUsersForCronService } from './service/create-invoices-users-for-cron.service';
 import { UpdatePaidOutService } from './service/update-paid-out.service';
 import { FindAllInvoicesService } from './service/find-all-invoice.service';
 import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
@@ -20,22 +20,34 @@ import { FindInvoicesByIdService } from './service/find-invoice-by-id.service';
 import { Cron } from '@nestjs/schedule';
 import { CreateAndUpdateInvoiceDto } from './dtos/create-and-update-invoice.dto';
 import { UpdateInvoiceService } from './service/update-invoice.service';
+import { CreateInvoiceUserService } from './service/create-invoice-user.service';
 
 @Controller({ version: '1', path: 'invoices' })
 export class InvoiceController {
   constructor(
-    private readonly createInvoiceUsersService: CreateInvoiceUsersService,
     private readonly deleteInvoiceService: DeleteInvoiceService,
     private readonly updatePaidOutService: UpdatePaidOutService,
     private readonly updateInvoiceService: UpdateInvoiceService,
     private readonly findAllInvoiceService: FindAllInvoicesService,
     private readonly findInvoiceByIdService: FindInvoicesByIdService,
+    private readonly createInvoiceUserService: CreateInvoiceUserService,
+    private readonly createInvoiceUsersForCronService: CreateInvoiceUsersForCronService,
   ) {}
 
   @Cron('0 09 1 * *')
   @Post()
-  create() {
-    return this.createInvoiceUsersService.execute();
+  createInvoiceUserByCron() {
+    return this.createInvoiceUsersForCronService.execute();
+  }
+
+  @Post(':user_id')
+  @ApiSecurity('bearerAuth')
+  @UseGuards(JwtAuthzGuard)
+  createInvoiceUser(
+    @User() user: TLoggedUser,
+    @Param('user_id') user_id: string,
+  ) {
+    return this.createInvoiceUserService.execute(user, user_id);
   }
 
   @Get()
@@ -68,6 +80,7 @@ export class InvoiceController {
   ) {
     return this.updateInvoiceService.execute(invoice_id, invoiceDto);
   }
+
   @Patch('/paidout/:invoice_id')
   @ApiSecurity('bearerAuth')
   @UseGuards(JwtAuthzGuard)

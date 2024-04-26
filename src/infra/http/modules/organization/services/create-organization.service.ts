@@ -6,7 +6,6 @@ import { CreateOrganizationDto } from '../dtos/create-organization.dto';
 import { CreateAdminService } from '../../user/services/create-admin.service';
 import { ICreateHash } from '@/shared/interface/bcryptjs/create-hash.interface';
 import { IOrganizationRepository } from '@/application/repositories/organization.repository';
-import { ConfigService } from '@nestjs/config';
 import { IUserRepository } from '@/application/repositories/user.repository';
 
 @Injectable()
@@ -19,7 +18,6 @@ export class CreateOrganizationService {
     @Inject('ICreateHash')
     private readonly createHashAdapterProvider: ICreateHash,
     @Inject('IMailer') private readonly mailer: IMailer,
-    private readonly configService: ConfigService,
     private readonly createAdminService: CreateAdminService,
   ) {}
 
@@ -30,7 +28,7 @@ export class CreateOrganizationService {
   ) {
     const content = {
       payday: 0,
-      role: createOrganizationDto.admin ? 'AdminGestor' : 'Admin',
+      role: 'AdminGestor',
       active: true,
       plan_id: null,
       amount_class: 0,
