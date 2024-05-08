@@ -7,12 +7,16 @@ import { CreateAdminService } from '../../user/services/create-admin.service';
 import { ICreateHash } from '@/shared/interface/bcryptjs/create-hash.interface';
 import { IOrganizationRepository } from '@/application/repositories/organization.repository';
 import { IUserRepository } from '@/application/repositories/user.repository';
+import { IInvoiceOrganizationRepository } from '@/application/repositories/invoice-organization.repository';
+import { InvoiceOrganization } from '@/application/entities/invoice-organization';
 
 @Injectable()
 export class CreateOrganizationService {
   constructor(
     @Inject('IOrganizationRepository')
     private readonly organizationRepository: IOrganizationRepository,
+    @Inject('IInvoiceOrganizationRepository')
+    private readonly invoiceOrganizationRepository: IInvoiceOrganizationRepository,
     @Inject('IUserRepository')
     private readonly userRepository: IUserRepository,
     @Inject('ICreateHash')
@@ -118,9 +122,18 @@ export class CreateOrganizationService {
       passwordHashed.passwordHash,
     );
 
+    const invoiceOrganization = new InvoiceOrganization({
+      value: createOrganizationResponse.payment_value,
+      paidDay: '0',
+      organization_id: createOrganizationResponse.id,
+      paidOut: false,
+    });
+
+    await this.invoiceOrganizationRepository.create(invoiceOrganization)
+
     if (!createUserResponse) {
       throw new ConflictException(
-        '🥲 O usuário não foi criado por favor, verifique se os dados estão corretos.',
+        '🥲 O usuário não foi criado por favor, verifique se os dados informados estão corretos.',
       );
     }
 

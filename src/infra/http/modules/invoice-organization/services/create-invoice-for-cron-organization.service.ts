@@ -4,7 +4,7 @@ import { IOrganizationRepository } from '@/application/repositories/organization
 import { IInvoiceOrganizationRepository } from '@/application/repositories/invoice-organization.repository';
 
 @Injectable()
-export class CreateInvoicesOrganizationService {
+export class CreateInvoicesForCronOrganizationService {
   constructor(
     @Inject('IInvoiceOrganizationRepository')
     private readonly invoiceOrganizationRepository: IInvoiceOrganizationRepository,

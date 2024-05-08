@@ -1,5 +1,5 @@
 import { ConfigService } from '@nestjs/config';
-import { ConflictException, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, ConflictException, Inject, Injectable } from '@nestjs/common';
 
 import { User } from 'src/application/entities/user';
 import { IMailer } from '@/shared/interface/mail/mailer.interface';
@@ -8,6 +8,10 @@ import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
 import { IUserRepository } from 'src/application/repositories/user.repository';
 import { ICreateHash } from '@/shared/interface/bcryptjs/create-hash.interface';
 import { generateTemporaryPassword } from '@/shared/utils/generate-temporary-password';
+import { IInvoiceRepository } from '@/application/repositories/invoice.repository';
+import { Invoice } from '@/application/entities/invoice';
+import { IPlanRepository } from '@/application/repositories/plan.repository';
+import { create } from 'node:domain';
 
 @Injectable()
 export class CreateUserService {
@@ -16,29 +20,30 @@ export class CreateUserService {
     private readonly userRepository: IUserRepository,
     @Inject('ICreateHash')
     private readonly createHashAdapterProvider: ICreateHash,
+    @Inject('IInvoiceRepository')
+    private readonly invoiceRepository: IInvoiceRepository,
+    @Inject('IPlanRepository')
+    private readonly planRepository: IPlanRepository,
     @Inject('IMailer') private readonly mailer: IMailer,
     private readonly configService: ConfigService,
-  ) {}
+  ) { }
 
-  async execute(
+  async handleCreateUser(
     userDto: CreateAndUpdateUserDto,
-    user?: TLoggedUser,
-  ): Promise<any> {
+    user: TLoggedUser,
+    passwordHash: string
+  ) {
     const org = user.organization;
 
-    const crypt_password = generateTemporaryPassword();
-    const passwordHash =
-      await this.createHashAdapterProvider.execute(crypt_password);
+    const findUserExistsEmail = await this.userRepository.findExistUserByEmail(
+      userDto.email,
+    );
 
-      const findUserExistsEmail = await this.userRepository.findExistUserByEmail(
-        userDto.email,
+    if (findUserExistsEmail) {
+      throw new ConflictException(
+        '🥲 O e-mail do usuário já foi utilizado, tente novamente',
       );
-  
-      if (findUserExistsEmail) {
-        throw new ConflictException(
-          '🥲 O e-mail do usuário já foi utilizado, tente novamente',
-        );
-      }
+    }
 
     const {
       uf,
@@ -62,7 +67,7 @@ export class CreateUserService {
     const new_user = new User({
       uf,
       cpf: cpf || null,
-      cep,             
+      cep,
       name,
       plan: plan_id,
       city,
@@ -81,19 +86,72 @@ export class CreateUserService {
       house_number,
     });
 
-      await this.mailer.sendMail({
-        subject: `🚀 ${userDto.name}! Chegou seu novo acesso ao Gestor Combate`,
-        to: [userDto.email],
-        context: {
-          user: userDto.email,
-          password: crypt_password,
-          url: `${this.configService.get('baseUrlFront')}/autenticacao?email=${
-            userDto.email
-          }`,
+    return await this.userRepository.create(new_user);
+  }
+
+  async handleCreateFirstInvoice(
+    user_id: string,
+    organization_id: string,
+    userCurrentPlan_id: string,
+  ) {
+    const findCurrentPlan = await this.planRepository.findById(userCurrentPlan_id)
+
+    if (!findCurrentPlan) {
+      throw new BadRequestException(
+        '🥲 O plano informado não existe!',
+      );
+    }
+
+    const new_invoice = new Invoice({
+      value: Number(findCurrentPlan.value),
+      paidDay: '0',
+      user_id,
+      organization_id,
+      paidOut: false,
+    })
+
+    await this.invoiceRepository.create(new_invoice)
+  }
+
+  async execute(
+    userDto: CreateAndUpdateUserDto,
+    user?: TLoggedUser,
+  ): Promise<any> {
+
+    const crypt_password = generateTemporaryPassword();
+    const passwordHash =
+      await this.createHashAdapterProvider.execute(crypt_password);
+
+    const createUser = await this.handleCreateUser(userDto, user, passwordHash)
+
+    const createFirstInvoice = await this.handleCreateFirstInvoice(
+      createUser.id, 
+      createUser.organization_id, 
+      createUser.plan
+    )
+
+    if (!createUser) {
+      throw new ConflictException(
+        '🥲 O usuário não foi criado por favor, verifique se os dados informados estão corretos.',
+      );
+    }
+
+    await this.mailer.sendMail({
+      subject: `🚀 ${userDto.name}! Chegou seu novo acesso ao Gestor Combate`,
+      to: [userDto.email],
+      context: {
+        user: userDto.email,
+        password: crypt_password,
+        url: `${this.configService.get('baseUrlFront')}/autenticacao?email=${
+          userDto.email
+        }`,
         },
         template: 'credentials-user',
       });
 
-      return await this.userRepository.create(new_user);
+      return {
+        createUser,
+        createFirstInvoice
+      }
   }
 }

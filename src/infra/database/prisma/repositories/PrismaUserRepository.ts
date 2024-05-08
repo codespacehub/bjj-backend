@@ -103,7 +103,10 @@ export class PrismaUserRepository implements IUserRepository {
         phone: updateUserDto.birth_date,
         district: updateUserDto.district,
         birth_date: updateUserDto.birth_date,
+        modality_id: updateUserDto.modality_id,
+        amount_class: updateUserDto.amount_class,
         house_number: updateUserDto.house_number,
+        graduation_id: updateUserDto.graduation_id,
       },
     });
 
