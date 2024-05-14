@@ -1,22 +1,14 @@
-import { ConfigService } from '@nestjs/config';
 import { Inject, Injectable } from '@nestjs/common';
-
 import { User } from 'src/application/entities/user';
-import { IMailer } from '@/shared/interface/mail/mailer.interface';
 import { CreateAndUpdateUserDto } from '../dtos/create-and-update-user.dto';
 import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
 import { IUserRepository } from 'src/application/repositories/user.repository';
-import { ICreateHash } from '@/shared/interface/bcryptjs/create-hash.interface';
 
 @Injectable()
 export class CreateAdminService {
   constructor(
     @Inject('IUserRepository')
     private readonly userRepository: IUserRepository,
-    @Inject('ICreateHash')
-    private readonly createHashAdapterProvider: ICreateHash,
-    @Inject('IMailer') private readonly mailer: IMailer,
-    private readonly configService: ConfigService,
   ) {}
 
   async execute(
@@ -58,6 +50,7 @@ export class CreateAdminService {
       street,
       password,
       district,
+      photo_url: '',
       birth_date,
       house_number,
       amount_class,

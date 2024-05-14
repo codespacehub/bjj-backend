@@ -1,6 +1,10 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateAndUpdateUserDto {
+  @IsString({ message: 'Esse campo precisa ser um texto' })
+  @IsOptional()
+  id?: string;
+
   @IsString({ message: 'Esse campo precisa ser um texto' })
   @IsOptional()
   plan_id?: string;
@@ -70,4 +74,8 @@ export class CreateAndUpdateUserDto {
   @IsString({ message: 'Esse campo precisa ser um texto' })
   @IsOptional()
   house_number?: string;
+
+  @IsString({ message: 'Esse campo precisa ser um texto' })
+  @IsOptional()
+  photo_url?: string;
 }

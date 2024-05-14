@@ -6,6 +6,7 @@ import { removeCharacterString } from 'src/shared/utils/remove-character-string'
 import { PrismaUserRepository } from 'src/infra/database/prisma/repositories/PrismaUserRepository';
 
 interface UserProps {
+  id?: string;
   cpf: string;
   name: string;
   plan: string;
@@ -15,12 +16,13 @@ interface UserProps {
   payday: number;
   active: boolean;
   password: string;
-  modality_id?: string;
+  photo_url: string;
   verified: boolean;
   birth_date: string;
+  amount_class: number;
+  modality_id?: string;
   graduation_id: string;
   organization_id: string;
-  amount_class: number;
 
   uf: string;
   cep: string;
@@ -49,7 +51,7 @@ export class User {
     >,
     id?: string,
   ) {
-    this._id = id ?? removeCharacterString({ value: randomUUID() });
+    this._id = id || props.id || removeCharacterString({ value: randomUUID() });
     this.props = {
       ...props,
       active: props.active ?? true,
@@ -60,6 +62,10 @@ export class User {
 
   public get id(): string {
     return this._id;
+  }
+
+  public set id(id: string) {
+    this.props.id = id;
   }
 
   public set name(name: string) {
@@ -108,6 +114,14 @@ export class User {
 
   public get phone(): string {
     return this.props.phone;
+  }
+
+  public get photo_url(): string {
+    return this.props.photo_url;
+  }
+
+  public set photo_url(photo_url: string) {
+    this.props.photo_url = photo_url;
   }
 
   public get birth_date(): string {

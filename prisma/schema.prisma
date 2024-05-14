@@ -85,6 +85,8 @@ model User {
   password   String
   birth_date String
 
+  photo_url String?
+
   uf           String?
   cep          String?
   city         String?

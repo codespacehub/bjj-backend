@@ -2,19 +2,19 @@ import { ConfigService } from '@nestjs/config';
 import { BadRequestException, ConflictException, Inject, Injectable } from '@nestjs/common';
 
 import { User } from 'src/application/entities/user';
+import { Invoice } from '@/application/entities/invoice';
 import { IMailer } from '@/shared/interface/mail/mailer.interface';
 import { CreateAndUpdateUserDto } from '../dtos/create-and-update-user.dto';
 import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
+import { IPlanRepository } from '@/application/repositories/plan.repository';
 import { IUserRepository } from 'src/application/repositories/user.repository';
 import { ICreateHash } from '@/shared/interface/bcryptjs/create-hash.interface';
-import { generateTemporaryPassword } from '@/shared/utils/generate-temporary-password';
 import { IInvoiceRepository } from '@/application/repositories/invoice.repository';
-import { Invoice } from '@/application/entities/invoice';
-import { IPlanRepository } from '@/application/repositories/plan.repository';
-import { create } from 'node:domain';
+import { generateTemporaryPassword } from '@/shared/utils/generate-temporary-password';
 
 @Injectable()
 export class CreateUserService {
+
   constructor(
     @Inject('IUserRepository')
     private readonly userRepository: IUserRepository,
@@ -31,7 +31,7 @@ export class CreateUserService {
   async handleCreateUser(
     userDto: CreateAndUpdateUserDto,
     user: TLoggedUser,
-    passwordHash: string
+    passwordHash: string,
   ) {
     const org = user.organization;
 
@@ -46,6 +46,7 @@ export class CreateUserService {
     }
 
     const {
+      id,
       uf,
       cpf,
       cep,
@@ -58,6 +59,7 @@ export class CreateUserService {
       street,
       plan_id,
       district,
+      photo_url,
       birth_date,
       modality_id,
       amount_class,
@@ -65,6 +67,7 @@ export class CreateUserService {
       graduation_id,
     } = userDto;
     const new_user = new User({
+      id,
       uf,
       cpf: cpf || null,
       cep,
@@ -81,6 +84,7 @@ export class CreateUserService {
       modality_id: modality_id,
       birth_date,
       graduation_id: graduation_id,
+      photo_url: photo_url,
       organization_id: org,
       amount_class,
       house_number,
@@ -118,17 +122,18 @@ export class CreateUserService {
     user?: TLoggedUser,
   ): Promise<any> {
 
+
     const crypt_password = generateTemporaryPassword();
     const passwordHash =
       await this.createHashAdapterProvider.execute(crypt_password);
-
-    const createUser = await this.handleCreateUser(userDto, user, passwordHash)
-
-    const createFirstInvoice = await this.handleCreateFirstInvoice(
-      createUser.id, 
-      createUser.organization_id, 
-      createUser.plan
-    )
+      
+      const createUser = await this.handleCreateUser(userDto, user, passwordHash)
+      
+      const createFirstInvoice = await this.handleCreateFirstInvoice(
+        createUser.id, 
+        createUser.organization_id, 
+        createUser.plan
+      )
 
     if (!createUser) {
       throw new ConflictException(

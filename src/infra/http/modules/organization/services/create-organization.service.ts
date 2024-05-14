@@ -32,7 +32,7 @@ export class CreateOrganizationService {
   ) {
     const content = {
       payday: 0,
-      role: 'AdminGestor',
+      role: 'Admin',
       active: true,
       plan_id: null,
       amount_class: 0,
