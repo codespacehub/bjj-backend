@@ -5,6 +5,7 @@ import { FindByDatePresenceService } from './services/find-by-date-presence.serv
 import { FindAllPresenciesService } from './services/find-all-presencies.service';
 import { DeletePresenceService } from './services/delete-presence.service';
 import { UpdateConfirmationPresenceService } from './services/update-confirmation-presence.service';
+import { FindPresenceByUserIdService } from './services/find-presence-by-user-id.service';
 
 @Module({
   controllers: [PresenceController],
@@ -13,6 +14,7 @@ import { UpdateConfirmationPresenceService } from './services/update-confirmatio
     DeletePresenceService,
     FindAllPresenciesService,
     FindByDatePresenceService,
+    FindPresenceByUserIdService,
     UpdateConfirmationPresenceService,
   ],
 })

@@ -4,7 +4,7 @@ import { Graduation } from '@/application/entities/graduation';
 import { IPlanRepository } from '@/application/repositories/plan.repository';
 import { PrismaPlanMapper } from '../mappers/PrismaPlanMapper';
 import { Plan } from '@/application/entities/plan';
-import { CreateAndUpdatePlanDto } from '@/infra/http/modules/plan/services/dtos/create-and-update-plan.dto';
+import { CreateAndUpdatePlanDto } from '@/infra/http/modules/plan/dtos/create-and-update-plan.dto';
 
 @Injectable()
 export class PrismaPlanRepository implements IPlanRepository {
@@ -66,6 +66,8 @@ export class PrismaPlanRepository implements IPlanRepository {
       data: {
         name: planDto.name,
         value: planDto.value,
+        class_limit: planDto.class_limit,
+        plan_period: planDto.plan_period,
         description: planDto.description,
       },
     });

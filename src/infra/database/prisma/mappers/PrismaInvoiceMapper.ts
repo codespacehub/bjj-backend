@@ -9,6 +9,7 @@ export class PrismaInvoiceMapper {
       paidOut: invoice.paidOut,
       user_id: String(invoice.user_id),
       organization_id: invoice.organization_id,
+      created_at: invoice.created_at
     };
   }
 }

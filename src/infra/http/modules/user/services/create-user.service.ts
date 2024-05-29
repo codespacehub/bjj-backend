@@ -11,6 +11,7 @@ import { IUserRepository } from 'src/application/repositories/user.repository';
 import { ICreateHash } from '@/shared/interface/bcryptjs/create-hash.interface';
 import { IInvoiceRepository } from '@/application/repositories/invoice.repository';
 import { generateTemporaryPassword } from '@/shared/utils/generate-temporary-password';
+import { addMonths, getMonth, getYear } from 'date-fns';
 
 @Injectable()
 export class CreateUserService {
@@ -97,6 +98,8 @@ export class CreateUserService {
     user_id: string,
     organization_id: string,
     userCurrentPlan_id: string,
+    payday: number,
+    invoicesPaid: boolean,
   ) {
     const findCurrentPlan = await this.planRepository.findById(userCurrentPlan_id)
 
@@ -106,15 +109,25 @@ export class CreateUserService {
       );
     }
 
-    const new_invoice = new Invoice({
-      value: Number(findCurrentPlan.value),
-      paidDay: '0',
-      user_id,
-      organization_id,
-      paidOut: false,
-    })
+    for (let i = 0; i < findCurrentPlan.plan_period; i++) {
+      const currentDate = addMonths(new Date(), i + 1)
 
-    await this.invoiceRepository.create(new_invoice)
+      const currentMonth = getMonth(currentDate)
+      const currentYear = getYear(currentDate)
+
+      const createdAt = new Date(currentYear, currentMonth, payday)
+
+      const new_invoice = new Invoice({
+        user_id,
+        paidDay: Boolean(invoicesPaid) ? String(new Date()) : '0',
+        paidOut: Boolean(invoicesPaid) ? true : false,
+        organization_id,
+        value: Number(Math.floor(findCurrentPlan.value / findCurrentPlan.plan_period)),
+        created_at: createdAt
+      });
+
+      await this.invoiceRepository.create(new_invoice)
+    }
   }
 
   async execute(
@@ -122,18 +135,16 @@ export class CreateUserService {
     user?: TLoggedUser,
   ): Promise<any> {
 
-
     const crypt_password = generateTemporaryPassword();
-    const passwordHash =
-      await this.createHashAdapterProvider.execute(crypt_password);
-      
-      const createUser = await this.handleCreateUser(userDto, user, passwordHash)
-      
-      const createFirstInvoice = await this.handleCreateFirstInvoice(
-        createUser.id, 
-        createUser.organization_id, 
-        createUser.plan
-      )
+    const passwordHash = await this.createHashAdapterProvider.execute(crypt_password);
+    const createUser = await this.handleCreateUser(userDto, user, passwordHash)
+    const createFirstInvoice = await this.handleCreateFirstInvoice(
+      createUser.id,
+      createUser.organization_id,
+      createUser.plan,
+      createUser.payday,
+      userDto.invoicesPaid,
+    )
 
     if (!createUser) {
       throw new ConflictException(
@@ -147,16 +158,16 @@ export class CreateUserService {
       context: {
         user: userDto.email,
         password: crypt_password,
-        url: `${this.configService.get('baseUrlFront')}/autenticacao?email=${
-          userDto.email
-        }`,
-        },
-        template: 'credentials-user',
-      });
+        url: `${this.configService.get('baseUrlFront')}/autenticacao?email=${userDto.email
+          }`,
+      },
+      template: 'credentials-user',
+    });
 
-      return {
-        createUser,
-        createFirstInvoice
-      }
+    return {
+      createUser,
+      createFirstInvoice
+    }
+
   }
 }

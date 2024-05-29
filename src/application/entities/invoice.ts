@@ -84,6 +84,10 @@ export class Invoice {
   public get created_at(): Date {
     return this.props.created_at;
   }
+
+  public set created_at(created_at: Date) {
+    this.props.created_at = created_at;
+  }
 }
 
 export const InvoiceRepositoryProvider = {

@@ -15,16 +15,18 @@ export class FindUserByEmailService {
   async execute(userEmail: string) {
     const findUserByEmail = await this.userRepository.findByEmail(userEmail);
 
-    // await this.mailer.sendMail({
-    //   subject: `🚀 ${findUserByEmail.name}! Esqueceu sua senha? Clique no link abaixo para trocá-la.`,
-    //   to: [findUserByEmail.email],
-    //   context: {
-    //     url: `${this.configService.get('baseUrlFront')}/atualizar?id=${
-    //       findUserByEmail.id
-    //     }`,
-    //   },
-    //   template: 'new-password-user',
-    // });
+    console.log(findUserByEmail)
+
+    await this.mailer.sendMail({
+      subject: `🚀 ${findUserByEmail.name}! Esqueceu sua senha? Clique no link abaixo para trocá-la.`,
+      to: [findUserByEmail.email],
+      context: {
+        url: `${this.configService.get('baseUrlFront')}/atualizar?id=${
+          findUserByEmail.id
+        }`,
+      },
+      template: 'new-password-user',
+    });
 
     return findUserByEmail;
   }

@@ -7,7 +7,8 @@ export interface UserProps extends User {
     id: string;
     name: string;
     value: number;
-    limit: number;
+    class_limit: number;
+    plan_period: number;
     description?: string;
     organization_id: string;
     updated_at: Date | null;

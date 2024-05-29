@@ -9,7 +9,8 @@ import { PrismaPlanRepository } from '@/infra/database/prisma/repositories/Prism
 interface PlanProps {
   name: string;
   value: number;
-  limit: number;
+  class_limit: number;
+  plan_period: number;
   description: string;
 
   organization_id: string;
@@ -69,12 +70,20 @@ export class Plan {
     return this.props.value;
   }
 
-  public set limit(limit: number) {
-    this.props.limit = limit;
+  public set class_limit(class_limit: number) {
+    this.props.class_limit = class_limit;
   }
 
-  public get limit(): number {
-    return this.props.limit;
+  public get class_limit(): number {
+    return this.props.class_limit;
+  }
+
+  public set plan_period(plan_period: number) {
+    this.props.plan_period = plan_period;
+  }
+
+  public get plan_period(): number {
+    return this.props.plan_period;
   }
 
   public set organization_id(organization_id: string) {

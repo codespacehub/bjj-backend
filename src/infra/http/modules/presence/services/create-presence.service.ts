@@ -10,7 +10,7 @@ import { CreatePresenceDto } from '../dtos/create-presence.dto';
 import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
 import { IPresenceRepository } from '@/application/repositories/presence.repository';
 import { PrismaUserRepository } from '@/infra/database/prisma/repositories/PrismaUserRepository';
-import { eachDayOfInterval, endOfWeek, getDay, getWeek, startOfWeek } from 'date-fns';
+import { endOfWeek, format, startOfWeek } from 'date-fns';
 
 @Injectable()
 export class CreatePresenceService {
@@ -19,7 +19,7 @@ export class CreatePresenceService {
     private readonly userRepository: PrismaUserRepository,
     @Inject('IPresenceRepository')
     private readonly presenceRepository: IPresenceRepository,
-  ) {}
+  ) { }
 
   async execute(user: TLoggedUser, presenceDto: CreatePresenceDto) {
     const org = user.organization;
@@ -40,42 +40,51 @@ export class CreatePresenceService {
       );
     }
 
-    const getPresences = await this.presenceRepository.findAll(user.organization)
-    const weekStarted = startOfWeek(new Date())
-    const weekEnd = endOfWeek(new Date())
+    const getPresencesUser = await this.presenceRepository.findByUserId(user_id)
+    const weekStarted = startOfWeek(new Date(day))
+    const weekEnd = endOfWeek(new Date(day))
 
-    let presenceUsers = []
-
-    for (let presence of getPresences) {
-      if (presence.user_id === user.id) {
-        
-        presenceUsers.push(presence)
-      }
-    }
-
-    const filterPresencesByStartWeekAndEndWeek = presenceUsers.filter(obj => {
+    const filterPresencesByStartWeekAndEndWeek = getPresencesUser.filter(obj => {
       const dateCreate = obj.created_at
       return dateCreate >= weekStarted && dateCreate <= weekEnd
     })
-    
 
-    if (filterPresencesByStartWeekAndEndWeek.length - findUser.Plan.limit <=0) {
-      const newPresence = new Presence({
-        day,
-        time_id,
-        user_id,
-        modality_id,
-        confirmation,
-        organization_id: org,
-      });
-  
-      const presence = await this.presenceRepository.create(newPresence);
-      const updateClass = await this.userRepository.updateAmountClass(user_id);
-  
-      return {
-        presence,
-        updateClass,
-      };
+    console.log(filterPresencesByStartWeekAndEndWeek.length - findUser.Plan.class_limit)
+
+    if (findUser.Plan.class_limit - filterPresencesByStartWeekAndEndWeek.length > 0) {
+      const getPresences = await this.presenceRepository.findAll(user.organization)
+      const formatCurrentDate = format(new Date(day), 'dd/MM/yyyy')
+      const userPresences = getPresences.filter(presence => {
+        const formatDateInvoice = format(presence.day, 'dd/MM/yyyy')
+        if (
+          presence.user_id === user_id
+          && formatCurrentDate === formatDateInvoice
+          && time_id === presence.time_id
+        ) {
+          return presence
+        }
+      })
+
+      if (userPresences.length <= 0) {
+        const newPresence = new Presence({
+          day,
+          time_id,
+          user_id,
+          modality_id,
+          confirmation,
+          organization_id: org,
+        });
+
+        const presence = await this.presenceRepository.create(newPresence);
+        const updateAmountClass = await this.userRepository.updateAmountClass(user_id);
+
+        return {
+          presence,
+          updateAmountClass,
+        };
+      } else {
+        throw new BadRequestException("Você já tem uma presença nesta aula.")
+      }
     } else {
       throw new BadRequestException("Você já atingiu a quantidade de presenças da semana.")
     }

@@ -144,9 +144,10 @@ model Time {
 model Plan {
   id          String  @id
   name        String
-  description String?
   value       Int
-  limit       Int?
+  class_limit Int?
+  plan_period Int?
+  description String?
 
   users User[]
 

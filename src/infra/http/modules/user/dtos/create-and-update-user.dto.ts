@@ -1,4 +1,4 @@
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateAndUpdateUserDto {
   @IsString({ message: 'Esse campo precisa ser um texto' })
@@ -78,4 +78,8 @@ export class CreateAndUpdateUserDto {
   @IsString({ message: 'Esse campo precisa ser um texto' })
   @IsOptional()
   photo_url?: string;
+
+  @IsBoolean()
+  @IsOptional()
+  invoicesPaid?: boolean
 }

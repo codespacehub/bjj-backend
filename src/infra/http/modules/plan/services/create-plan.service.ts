@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IPlanRepository } from '@/application/repositories/plan.repository';
 import { Plan } from '@/application/entities/plan';
-import { CreateAndUpdatePlanDto } from './dtos/create-and-update-plan.dto';
+import { CreateAndUpdatePlanDto } from '../dtos/create-and-update-plan.dto';
 
 @Injectable()
 export class CreatePlanService {
@@ -18,7 +18,8 @@ export class CreatePlanService {
       organization_id,
       name: createPlanDto.name,
       value: createPlanDto.value,
-      limit: createPlanDto.limit,
+      class_limit: createPlanDto.class_limit,
+      plan_period: createPlanDto.plan_period,
       description: createPlanDto.description,
     });
 

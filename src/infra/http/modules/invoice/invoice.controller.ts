@@ -18,9 +18,9 @@ import { FindAllInvoicesService } from './service/find-all-invoice.service';
 import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
 import { FindInvoicesByIdService } from './service/find-invoice-by-id.service';
 import { Cron } from '@nestjs/schedule';
-import { CreateAndUpdateInvoiceDto } from './dtos/create-and-update-invoice.dto';
 import { UpdateInvoiceService } from './service/update-invoice.service';
 import { CreateInvoiceUserService } from './service/create-invoice-user.service';
+import { CreateAndUpdateInvoiceDto } from './dtos/create-and-update-invoice.dto';
 
 @Controller({ version: '1', path: 'invoices' })
 export class InvoiceController {
@@ -46,6 +46,7 @@ export class InvoiceController {
   createInvoiceUser(
     @User() user: TLoggedUser,
     @Param('user_id') user_id: string,
+    @Body() invoiceDto: CreateAndUpdateInvoiceDto,
   ) {
     return this.createInvoiceUserService.execute(user, user_id);
   }

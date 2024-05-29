@@ -6,7 +6,8 @@ export class PrismaPlanMapper {
       id: plan.id,
       name: plan.name,
       value: plan.value,
-      limit: plan.limit,
+      class_limit: plan.class_limit,
+      plan_period: plan.plan_period,
       description: plan.description,
       organization_id: plan.organization_id,
     };

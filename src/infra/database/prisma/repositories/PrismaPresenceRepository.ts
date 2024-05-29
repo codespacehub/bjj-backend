@@ -8,7 +8,7 @@ import { PrismaPresenceMapper } from '../mappers/PrismaPresenceMapper';
 
 @Injectable()
 export class PrismaPresenceRepository implements IPresenceRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(presence: Presence): Promise<any> {
     const raw = PrismaPresenceMapper.toPrisma(presence);
@@ -75,6 +75,19 @@ export class PrismaPresenceRepository implements IPresenceRepository {
       },
       data: {
         confirmation: findPresence.confirmation ? false : true
+      }
+    })
+  }
+
+  async findByUserId(user_id: string): Promise<any> {
+    return await this.prisma.presence.findMany({
+      where: {
+        user_id,
+      },
+      include: {
+        User: true,
+        Time: true,
+        Modality: true,
       }
     })
   }

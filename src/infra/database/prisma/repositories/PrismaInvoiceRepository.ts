@@ -15,11 +15,12 @@ export class PrismaInvoiceRepository implements IInvoiceRepository {
     return this.prisma.invoice.create({
       data: {
         id: raw.id,
-        paidOut: false,
+        paidOut: raw.paidOut,
         value: raw.value,
         user_id: raw.user_id,
         paidDay: String(raw.paidDay),
         organization_id: raw.organization_id,
+        created_at: raw.created_at ?? new Date()
       },
     });
   }

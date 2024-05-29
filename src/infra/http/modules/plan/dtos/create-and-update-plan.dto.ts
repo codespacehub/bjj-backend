@@ -11,7 +11,11 @@ export class CreateAndUpdatePlanDto {
 
   @IsNumber()
   @IsNotEmpty()
-  limit: number;
+  class_limit: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  plan_period: number;
 
   @IsString()
   @IsOptional()

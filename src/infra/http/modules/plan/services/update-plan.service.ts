@@ -1,5 +1,5 @@
 import { Injectable, Inject, NotFoundException } from '@nestjs/common';
-import { CreateAndUpdatePlanDto } from './dtos/create-and-update-plan.dto';
+import { CreateAndUpdatePlanDto } from '../dtos/create-and-update-plan.dto';
 import { IPlanRepository } from '@/application/repositories/plan.repository';
 
 @Injectable()

@@ -1,5 +1,5 @@
 import { Plan } from '../entities/plan';
-import { CreateAndUpdatePlanDto } from '@/infra/http/modules/plan/services/dtos/create-and-update-plan.dto';
+import { CreateAndUpdatePlanDto } from '@/infra/http/modules/plan/dtos/create-and-update-plan.dto';
 
 export interface IPlanRepository {
   remove(planId: string): Promise<Plan>;

@@ -23,34 +23,20 @@ export class DeleteUserService {
   ) {}
 
   async execute(userId: string) {
+    console.time("delete-user")
     const findUser: any = await this.userRepository.findById(userId);
 
     if (!findUser) {
       throw new NotFoundException('Usuário informado não existe');
     }
+    
+    const presenceDeletions = findUser.Presence.map(presence => this.presenceRepository.delete(presence.id));
+    const timeDeletions = findUser.times.map(time => this.timeRepository.remove(time.id));
+    const invoiceDeletions = findUser.Invoices.map(invoice => this.invoiceRepository.delete(invoice.id));
 
-    if (findUser.times.length > 0) {
-      throw new ConflictException('Existem horários conectados a esse usuário');
-    }
+    await Promise.all([...presenceDeletions, ...timeDeletions, ...invoiceDeletions]);
 
-    if (findUser.Presence.length > 0) {
-      for (let presence of findUser.Presence) {
-        await this.presenceRepository.delete(presence.id);
-      }
-    }
-
-    if (findUser.times.length > 0) {
-      for (let time of findUser.times) {
-        await this.timeRepository.remove(time.id);
-      }
-    }
-
-    if (findUser.Invoices.length > 0) {
-      for (let invoice of findUser.Invoices) {
-        await this.invoiceRepository.delete(invoice.id);
-      }
-    }
-
+    console.timeEnd("delete-user")
     return await this.userRepository.remove(userId);
   }
 }

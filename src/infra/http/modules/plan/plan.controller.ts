@@ -17,7 +17,7 @@ import {
 import { User } from '@/shared/decorators/user.decorator';
 import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
 import { FindPlanByIdService } from './services/find-plan-by-id.service';
-import { CreateAndUpdatePlanDto } from './services/dtos/create-and-update-plan.dto';
+import { CreateAndUpdatePlanDto } from './dtos/create-and-update-plan.dto';
 import { UpdatePlanService } from './services/update-plan.service';
 
 @ApiTags('Plano')
