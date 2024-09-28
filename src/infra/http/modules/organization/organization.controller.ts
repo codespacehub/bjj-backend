@@ -74,6 +74,10 @@ export class OrganizationController {
       this.httpService.get(`http://viacep.com.br/ws/${cep}/json/`),
     );
 
+    if(data.erro === "true") {
+      throw new Error("Cep inválido");
+    }
+
     return data;
   }
 

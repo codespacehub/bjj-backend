@@ -1,31 +1,23 @@
 import { Injectable, Inject, NotFoundException, BadRequestException } from '@nestjs/common';
+
 import { Invoice } from '@/application/entities/invoice';
-import { IInvoiceRepository } from '@/application/repositories/invoice.repository';
-import { IOrganizationRepository } from '@/application/repositories/organization.repository';
 import { TLoggedUser } from '@/shared/interface/user/logged-user.interface';
 import { IUserRepository } from '@/application/repositories/user.repository';
+import { IInvoiceRepository } from '@/application/repositories/invoice.repository';
 
 @Injectable()
 export class CreateInvoiceUserService {
   constructor(
     @Inject('IInvoiceRepository')
     private readonly invoiceRepository: IInvoiceRepository,
-    @Inject('IOrganizationRepository')
-    private readonly organizationRepository: IOrganizationRepository,
     @Inject('IUserRepository')
     private readonly userRepository: IUserRepository,
   ) { }
 
-  async execute(user: TLoggedUser, user_id: string) {
-    const currentDate = new Date();
-    const currentMonth = currentDate.getMonth() + 1;
-    const currentYear = currentDate.getFullYear();
-
-    const findOrganization = this.organizationRepository.findById(user.organization)
-
-    if (!findOrganization) {
-      throw new NotFoundException("Esta organização não existe em nosso sistema.")
-    }
+  async execute(user_id: string) {
+    const currentDate = new Date()
+    const currentMonth = currentDate.getMonth() + 1
+    const currentYear = currentDate.getFullYear()
 
     const findUser = await this.userRepository.findById(user_id)
 
@@ -51,10 +43,10 @@ export class CreateInvoiceUserService {
         paidDay: '0',
         paidOut: false,
         value: findUser.Plan.value,
-        organization_id: user.organization,
-      });
+        organization_id: findUser.organization_id,
+      })
 
-      return await this.invoiceRepository.create(invoice);
+      return await this.invoiceRepository.create(invoice)
     }
   }
 }

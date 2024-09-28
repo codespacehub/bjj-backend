@@ -44,11 +44,9 @@ export class InvoiceController {
   @ApiSecurity('bearerAuth')
   @UseGuards(JwtAuthzGuard)
   createInvoiceUser(
-    @User() user: TLoggedUser,
     @Param('user_id') user_id: string,
-    @Body() invoiceDto: CreateAndUpdateInvoiceDto,
   ) {
-    return this.createInvoiceUserService.execute(user, user_id);
+    return this.createInvoiceUserService.execute(user_id)
   }
 
   @Get()
