@@ -20,15 +20,16 @@ export class CreateTimeService {
 
     for (let time of allTimes) {
       if (time.hour === hour && time.modality_id === modality) {
+        console.log('cai em erro')
         throw new BadRequestException("Já existe o mesmo horário criado para esta modalidade")
-      } else {
-        const time = new Time({
-          hour,
-          modality,
-          organization: org,
-        });
-        return this.timeRepository.create(time);
       }
     }
+
+    const time = new Time({
+      hour,
+      modality,
+      organization: org,
+    });
+    return this.timeRepository.create(time);
   }
 }

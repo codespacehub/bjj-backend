@@ -29,9 +29,16 @@ export class LoginService {
 
   async execute(loginDto: any) {
     const findUser = await this.userRepository.findByEmail(loginDto.email);
+
     const findOrganization = await this.organizationRepository.findById(
       findUser.organization_id,
     );
+
+    if (!findOrganization) {
+      throw new ForbiddenException(
+        'Este usuário não está vinculado a uma organização, entre em contato com a Gestor Combate',
+      );
+    }
 
     if (findUser) {
       if (!findOrganization.active) {
